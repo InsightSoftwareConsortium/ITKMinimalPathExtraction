@@ -126,6 +126,8 @@ private:
  * \author Dan Mueller, Queensland University of Technology, dan.muel[at]gmail.com
  *
  * \ingroup ImageToPathFilters
+ *
+ * \ingroup MinimalPathExtraction
  */
 template <class TInputImage,
           class TOutputPath = PolyLineParametricPath<TInputImage::ImageDimension> >

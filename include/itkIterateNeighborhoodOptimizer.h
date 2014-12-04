@@ -22,7 +22,7 @@
 
 namespace itk
 {
-  
+
 /** \class IterateNeighborhoodOptimizer
  * \brief Finds the local minima/maxima by iteratively choosing the
  *        minimum/maximum value in a neighborhood.
@@ -30,9 +30,11 @@ namespace itk
  * This optimizer is designed to operate on a monotonic cost function
  * WITHOUT using gradient information (derivatives). The user must set
  * the Neighborhood size, and optionally the connectivity.
- * 
+ *
  * \ingroup Numerics Optimizers
- */  
+ *
+ * \ingroup MinimalPathExtraction
+ */
 class IterateNeighborhoodOptimizer :
     public SingleValuedNonLinearOptimizer
 {
