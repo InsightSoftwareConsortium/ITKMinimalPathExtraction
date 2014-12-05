@@ -127,7 +127,6 @@ IterateNeighborhoodOptimizer
   const unsigned int spaceDimension = m_CostFunction->GetNumberOfParameters();
   const ParametersType & currentPosition = this->GetCurrentPosition();
   ParametersType newPosition( spaceDimension );
-  ParametersType neighborPosition( currentPosition );
   double bestValue = m_CurrentValue;
 
   if ( !m_FullyConnected )
