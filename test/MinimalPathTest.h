@@ -50,7 +50,7 @@
 
 /////////////////////////////////////////////////////////////
 // Reads a *.path file and adds the path info to the given filter
-template <class PathFilterType, int VDimension>
+template <class PathFilterType, unsigned int VDimension>
 int ReadPathFile( const char * PathFilename, typename PathFilterType::Pointer pathFilter )
 {
     // Path file example:
@@ -116,7 +116,7 @@ int ReadPathFile( const char * PathFilename, typename PathFilterType::Pointer pa
 
 /////////////////////////////////////////////////////////////
 // Template for SpeedToPath with GradientDescentOptimizer
-template <int VDimension>
+template <unsigned int VDimension>
 int Test_SpeedToPath_GradientDescent_ND(int argc, char* argv[])
 {
 	const unsigned int Dimension = VDimension;
@@ -251,7 +251,7 @@ int Test_SpeedToPath_GradientDescent_ND(int argc, char* argv[])
 
 /////////////////////////////////////////////////////////////
 // Template for SpeedToPath with RegularStepGradientDescentOptimizer
-template <int VDimension>
+template <unsigned int VDimension>
 int Test_SpeedToPath_RegularStepGradientDescent_ND(int argc, char* argv[])
 {
 	const unsigned int Dimension = VDimension;
@@ -399,7 +399,7 @@ int Test_SpeedToPath_RegularStepGradientDescent_ND(int argc, char* argv[])
 
 /////////////////////////////////////////////////////////////
 // Template for SpeedToPath with IterateNeighborhoodOptimizer
-template <int VDimension>
+template <unsigned int VDimension>
 int Test_SpeedToPath_IterateNeighborhood_ND(int argc, char* argv[])
 {
 	const unsigned int Dimension = VDimension;
