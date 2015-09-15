@@ -14,8 +14,8 @@
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
-#ifndef __itkSingleImageCostFunction_h
-#define __itkSingleImageCostFunction_h
+#ifndef itkSingleImageCostFunction_h
+#define itkSingleImageCostFunction_h
 
 #include "itkNumericTraits.h"
 #include "itkExceptionObject.h"
@@ -89,7 +89,7 @@ public:
   typedef Superclass::ParametersValueType CoordRepType;
 
   /** Type for locations */
-  typedef Index< ImageDimension > IndexType;
+  typedef Index< ImageDimension >               IndexType;
   typedef Point< CoordRepType, ImageDimension > PointType;
   typedef ContinuousIndex< CoordRepType, ImageDimension >
     ContinuousIndexType;

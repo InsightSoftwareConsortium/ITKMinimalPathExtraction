@@ -58,7 +58,7 @@ int ReadPathFile( const char * PathFilename, typename PathFilterType::Pointer pa
     // Path: [272.00, 128.00] [381.00, 001.00]
     // Path: [272.00, 128.00] [002.00, 130.00]
     // Path: [272.00, 128.00] [274.00, 268.00]
-    typedef itk::Point< double, VDimension >    PointType;
+    typedef itk::Point< double, VDimension >             PointType;
     typedef itk::SpeedFunctionPathInformation<PointType> PathInfoType;
     typename PathInfoType::Pointer info = PathInfoType::New();
     // NOTE: No checking is done on the path file: the user must ensure it is valid!!!

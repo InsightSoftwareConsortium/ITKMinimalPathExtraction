@@ -14,8 +14,8 @@
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
-#ifndef __itkArrivalFunctionToPathFilter_h
-#define __itkArrivalFunctionToPathFilter_h
+#ifndef itkArrivalFunctionToPathFilter_h
+#define itkArrivalFunctionToPathFilter_h
 
 #include "itkImage.h"
 #include "itkCommand.h"
@@ -27,16 +27,20 @@
 
 namespace itk
 {
+/**
+ * \class ArrivalFunctionToPathCommand
+ * \brief A command to listen for Optimizer Iteration events.
+ * 
+ */
 
-/** A command to listen for Optimizer Iteration events. */
 template <class TFilter>
 class ArrivalFunctionToPathCommand : public itk::Command
 {
 public:
   /** Standard class typedefs. */
-  typedef  ArrivalFunctionToPathCommand   Self;
-  typedef  itk::Command             Superclass;
-  typedef  itk::SmartPointer<Self>  Pointer;
+  typedef  ArrivalFunctionToPathCommand Self;
+  typedef  itk::Command                 Superclass;
+  typedef  itk::SmartPointer<Self>      Pointer;
 
   /** Method for creation through the object factory. */
   itkNewMacro( Self );
@@ -188,7 +192,7 @@ public:
   virtual void AddPathEndPoint( const PointType & point );
 
   /** Clear the list of end points. */
-  virtual void ClearPathEndPoints();;
+  virtual void ClearPathEndPoints();
 
   /** Get/set the termination. Once the current optimizer value falls below
    *  TerminationValue, no further points will be appended to the path.

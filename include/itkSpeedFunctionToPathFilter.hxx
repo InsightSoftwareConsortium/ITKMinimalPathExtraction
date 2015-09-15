@@ -15,13 +15,12 @@
 
 =========================================================================*/
 
-#ifndef __itkSpeedFunctionToPathFilter_hxx
-#define __itkSpeedFunctionToPathFilter_hxx
+#ifndef itkSpeedFunctionToPathFilter_hxx
+#define itkSpeedFunctionToPathFilter_hxx
 
 #include "vnl/vnl_math.h"
 #include "itkSpeedFunctionToPathFilter.h"
 #include "itkFastMarchingUpwindGradientImageFilter.h"
-
 
 
 namespace itk
@@ -87,6 +86,7 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
   // Set the fast marching method for computing the arrival function
   typedef FastMarchingUpwindGradientImageFilter< TInputImage, TInputImage >
     FastMarchingType;
+    
   typedef typename FastMarchingType::NodeContainer NodeContainer;
   typedef typename FastMarchingType::NodeType NodeType;
   typename FastMarchingType::Pointer marching = FastMarchingType::New();
