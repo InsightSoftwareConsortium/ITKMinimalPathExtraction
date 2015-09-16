@@ -42,7 +42,7 @@ ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 template <class TInputImage, class TOutputPath>
 void
 ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
-::SetPathEndPoint(const ArrivalFunctionToPathFilter::PointType &point)
+::SetPathEndPoint(const PointType &point)
 {
   this->ClearPathEndPoints();
   this->AddPathEndPoint( point );
@@ -51,7 +51,7 @@ ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 template <class TInputImage, class TOutputPath>
 void
 ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
-::AddPathEndPoint(const ArrivalFunctionToPathFilter::PointType &point)
+::AddPathEndPoint(const PointType &point)
 {
   m_PointList.push_back( point );
   this->Modified();
