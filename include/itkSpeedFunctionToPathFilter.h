@@ -91,7 +91,7 @@ public:
   typedef typename InputImageType::PixelType      InputImagePixelType;
   
   /** Some path typedefs. */
-  typedef                                         TOutputPath OutputPathType;
+  typedef TOutputPath                             OutputPathType;
   typedef typename OutputPathType::Pointer        OutputPathPointer;
   typedef typename OutputPathType::ConstPointer   OutputPathConstPointer;
 

@@ -88,7 +88,7 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
     FastMarchingType;
     
   typedef typename FastMarchingType::NodeContainer NodeContainer;
-  typedef typename FastMarchingType::NodeType NodeType;
+  typedef typename FastMarchingType::NodeType      NodeType;
   typename FastMarchingType::Pointer marching = FastMarchingType::New();
   marching->SetInput( speed );
   marching->SetGenerateGradientImage( false );
