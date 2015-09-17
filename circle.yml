@@ -1,0 +1,14 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  override:
+    - docker info
+    - docker pull insighttoolkit/minimalpathextraction-test
+
+test:
+  override:
+    - mkdir ~/ITKMinimialPathExtraction-build
+    - docker run -v ~/ITKMinimalPathExtraction:/usr/src/ITKMinimalPathExtraction -v ~/ITKMinimalPathExtraction-build:/usr/src/ITKMinimalPathExtraction-build insighttoolkit/minimalpathextraction-test /usr/src/ITKMinimalPathExtraction/test/Docker/test.sh
+
