@@ -1,7 +1,7 @@
 /*=========================================================================
 
   Program:   Insight Segmentation & Registration Toolkit
-  Module:    $RCSfile: itkPhysicalCentralDifferenceImageFunction.txx,v $
+  Module:    $RCSfile: itkPhysicalCentralDifferenceImageFunction.hxx,v $
   Language:  C++
   Date:      $Date$
   Version:   $Revision$
@@ -14,8 +14,8 @@
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
-#ifndef __itkPhysicalCentralDifferenceImageFunction_txx
-#define __itkPhysicalCentralDifferenceImageFunction_txx
+#ifndef itkPhysicalCentralDifferenceImageFunction_hxx
+#define itkPhysicalCentralDifferenceImageFunction_hxx
 
 #include "itkPhysicalCentralDifferenceImageFunction.h"
 

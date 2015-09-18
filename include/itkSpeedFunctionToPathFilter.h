@@ -14,8 +14,8 @@
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
-#ifndef __itkSpeedFunctionToPathFilter_h
-#define __itkSpeedFunctionToPathFilter_h
+#ifndef itkSpeedFunctionToPathFilter_h
+#define itkSpeedFunctionToPathFilter_h
 
 #include "itkArrivalFunctionToPathFilter.h"
 #include "itkSpeedFunctionPathInformation.h"
@@ -68,7 +68,7 @@ class ITK_EXPORT SpeedFunctionToPathFilter :
 {
 public:
   /** Standard class typedefs. */
-  typedef SpeedFunctionToPathFilter                Self;
+  typedef SpeedFunctionToPathFilter                            Self;
   typedef ArrivalFunctionToPathFilter<TInputImage,TOutputPath> Superclass;
   typedef SmartPointer<Self>                                   Pointer;
   typedef SmartPointer<const Self>                             ConstPointer;
@@ -84,14 +84,14 @@ public:
                       TInputImage::ImageDimension);
 
   /** Some image typedefs. */
-  typedef TInputImage InputImageType;
+  typedef TInputImage                             InputImageType;
   typedef typename InputImageType::Pointer        InputImagePointer;
   typedef typename InputImageType::ConstPointer   InputImageConstPointer;
   typedef typename InputImageType::RegionType     InputImageRegionType; 
   typedef typename InputImageType::PixelType      InputImagePixelType;
   
   /** Some path typedefs. */
-  typedef TOutputPath OutputPathType;
+  typedef TOutputPath                             OutputPathType;
   typedef typename OutputPathType::Pointer        OutputPathPointer;
   typedef typename OutputPathType::ConstPointer   OutputPathConstPointer;
 
@@ -166,7 +166,7 @@ protected:
   virtual const PointType & GetNextEndPoint( );
 
   std::vector< typename PathInformation::Pointer > m_Info;
-  InputImagePointer m_CurrentArrivalFunction;
+  InputImagePointer                                m_CurrentArrivalFunction;
 
 private:
   SpeedFunctionToPathFilter( const Self& ); //purposely not implemented
