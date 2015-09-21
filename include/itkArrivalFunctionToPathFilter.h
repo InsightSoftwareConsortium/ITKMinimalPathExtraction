@@ -9,7 +9,7 @@
   Copyright (c) Insight Software Consortium. All rights reserved.
   See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
 
-     This software is distributed WITHOUT ANY WARRANTY; without even 
+     This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.  See the above copyright notices for more information.
 
@@ -30,12 +30,12 @@ namespace itk
 /**
  * \class ArrivalFunctionToPathCommand
  * \brief A command to listen for Optimizer Iteration events.
- * \author Dan Mueller, Queensland University of Technology, 
+ * \author Dan Mueller, Queensland University of Technology,
  * dan.muel[at]gmail.com
  *
  *
  * \ingroup MinimalPathExtraction
- * 
+ *
  */
 
 template <class TFilter>
@@ -49,7 +49,7 @@ public:
 
   /** Method for creation through the object factory. */
   itkNewMacro( Self );
-  
+
   /** Some useful typedefs. */
   typedef TFilter FilterType;
 
@@ -80,7 +80,7 @@ public:
 protected:
   ArrivalFunctionToPathCommand(){}
   ~ArrivalFunctionToPathCommand(){}
-  
+
 private:
   ArrivalFunctionToPathCommand( const Self& );
   void operator = ( const Self& );
@@ -88,7 +88,7 @@ private:
   typename FilterType::Pointer m_Filter;
 };
 
-  
+
 /** \class ArrivalFunctionToPathFilter
  * \brief Extracts a path from a Fast Marching arrival function.
  *
@@ -152,7 +152,7 @@ public:
 
   /** Run-time type information (and related methods). */
   itkTypeMacro(ArrivalFunctionToPathFilter,ImageToPathFilter);
-  
+
   /** Method for creation through the object factory. */
   itkNewMacro(Self);
 
@@ -160,9 +160,9 @@ public:
   typedef TInputImage                             InputImageType;
   typedef typename InputImageType::Pointer        InputImagePointer;
   typedef typename InputImageType::ConstPointer   InputImageConstPointer;
-  typedef typename InputImageType::RegionType     InputImageRegionType; 
+  typedef typename InputImageType::RegionType     InputImageRegionType;
   typedef typename InputImageType::PixelType      InputImagePixelType;
-  
+
   /** Some path typedefs. */
   typedef TOutputPath                             OutputPathType;
   typedef typename OutputPathType::Pointer        OutputPathPointer;
@@ -229,7 +229,7 @@ protected:
   /** Get the next end point from which to back propagate. */
   virtual const PointType & GetNextEndPoint( );
 
-  typename CostFunctionType::Pointer m_CostFunction; 
+  typename CostFunctionType::Pointer m_CostFunction;
   typename OptimizerType::Pointer m_Optimizer;
   typename OptimizerType::MeasureType m_TerminationValue;
   std::vector<PointType> m_PointList;

@@ -9,8 +9,8 @@
   Copyright (c) Insight Software Consortium. All rights reserved.
   See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
 
-     This software is distributed WITHOUT ANY WARRANTY; without even 
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+     This software is distributed WITHOUT ANY WARRANTY; without even
+     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
@@ -28,7 +28,7 @@
 
 namespace itk
 {
-  
+
 /** \class SingleImageCostFunction
  * \brief This class is a cost function which queries
  *        an underlying image for the single value.
@@ -37,7 +37,7 @@ namespace itk
  * underlying cost function. The user may also provide an image
  * interpolator (if not provided the LinearInterpolateImageFunction
  * is used by default). The gradient is computed using central
- * differences in physical space. 
+ * differences in physical space.
  *
  * The parameters are the physical location (itkPoint) of the current
  * position. Initialize() must be called before using this cost function.
@@ -48,7 +48,7 @@ namespace itk
  *
  * \ingroup MinimalPathExtraction
  */
-template <class TImage> 
+template <class TImage>
 class ITK_EXPORT SingleImageCostFunction :
     public SingleValuedCostFunction
 {
@@ -72,7 +72,7 @@ public:
   /** DerivativeType typedef.
    *  It defines a type used to return the cost function derivative. */
   typedef typename Superclass::DerivativeType       DerivativeType;
- 
+
   /** ParametersType typedef.
    *  It defines a position in the optimization search space. */
   typedef typename Superclass::ParametersType       ParametersType;
@@ -116,7 +116,7 @@ public:
   virtual void Initialize(void) throw ( ExceptionObject );
 
   /** Return the number of parameters required by the Transform */
-  unsigned int GetNumberOfParameters(void) const 
+  unsigned int GetNumberOfParameters(void) const
   { return ImageDimension; }
 
   /** This method returns the value of the cost function corresponding

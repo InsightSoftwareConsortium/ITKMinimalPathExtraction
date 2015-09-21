@@ -9,8 +9,8 @@
   Copyright (c) Insight Software Consortium. All rights reserved.
   See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
 
-     This software is distributed WITHOUT ANY WARRANTY; without even 
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+     This software is distributed WITHOUT ANY WARRANTY; without even
+     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
@@ -176,7 +176,7 @@ ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
     // Set the output index
     // NOTE: m_CurrentOutput is used in Execute() and GetNextEndPoint()
     m_CurrentOutput = n;
-        
+
     // Make the output
     OutputPathPointer output = static_cast<TOutputPath*>( this->MakeOutput(n).GetPointer() );
     this->ProcessObject::SetNthOutput( n, output.GetPointer() );
@@ -201,11 +201,11 @@ ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 
     // Initialize optimizer
     m_Optimizer->SetInitialPosition( end );
-   
+
     // Use optimizer to back propagate from end point
     m_Optimizer->StartOptimization( );
     }
-    
+
   // Clean up by removing observer
   m_Optimizer->RemoveObserver( observerTag );
 }
@@ -238,7 +238,7 @@ ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
     {
     return;
     }
-      
+
   // Convert parameters to point
   bool valid = false;
   unsigned int numparams = optimizer->GetCurrentPosition().GetSize();
@@ -253,7 +253,7 @@ ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
     {
     return;
     }
-    
+
   // Convert point to continuous index
   InputImagePointer input = const_cast<InputImageType*>( this->GetInput() );
   ContinuousIndexType cindex;
@@ -265,7 +265,7 @@ ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 }
 
 template<class TInputImage, class TOutputPath>
-void 
+void
 ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 ::PrintSelf(std::ostream& os, Indent indent) const
 {

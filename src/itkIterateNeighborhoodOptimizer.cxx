@@ -9,8 +9,8 @@
   Copyright (c) Insight Software Consortium. All rights reserved.
   See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
 
-     This software is distributed WITHOUT ANY WARRANTY; without even 
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+     This software is distributed WITHOUT ANY WARRANTY; without even
+     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
@@ -97,7 +97,7 @@ IterateNeighborhoodOptimizer
       {
       break;
       }
-  
+
     AdvanceOneStep();
 
     m_CurrentIteration++;
@@ -139,7 +139,7 @@ IterateNeighborhoodOptimizer
         // Get the neighborhood position
         ParametersType neighborPosition( currentPosition );
         neighborPosition[j] += i * m_NeighborhoodSize[j];
-        
+
         // Check if this value is better than current
         double neighborValue = m_CostFunction->GetValue( neighborPosition );
         if ( m_Maximize && neighborValue > bestValue )
@@ -168,7 +168,7 @@ IterateNeighborhoodOptimizer
           ParametersType neighborPosition( currentPosition );
           neighborPosition[0] += i * m_NeighborhoodSize[0];
           neighborPosition[1] += j * m_NeighborhoodSize[1];
-        
+
           // Check if this value is better than current
           double neighborValue = m_CostFunction->GetValue( neighborPosition );
           if ( m_Maximize && neighborValue > bestValue )

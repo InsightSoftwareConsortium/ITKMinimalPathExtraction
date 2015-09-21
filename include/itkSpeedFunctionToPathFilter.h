@@ -9,8 +9,8 @@
   Copyright (c) Insight Software Consortium. All rights reserved.
   See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
 
-     This software is distributed WITHOUT ANY WARRANTY; without even 
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+     This software is distributed WITHOUT ANY WARRANTY; without even
+     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
@@ -75,7 +75,7 @@ public:
 
   /** Run-time type information (and related methods). */
   itkTypeMacro(SpeedFunctionToPathFilter,ArrivalFunctionToPathFilter);
-  
+
   /** Method for creation through the object factory. */
   itkNewMacro(Self);
 
@@ -87,9 +87,9 @@ public:
   typedef TInputImage                             InputImageType;
   typedef typename InputImageType::Pointer        InputImagePointer;
   typedef typename InputImageType::ConstPointer   InputImageConstPointer;
-  typedef typename InputImageType::RegionType     InputImageRegionType; 
+  typedef typename InputImageType::RegionType     InputImageRegionType;
   typedef typename InputImageType::PixelType      InputImagePixelType;
-  
+
   /** Some path typedefs. */
   typedef TOutputPath                             OutputPathType;
   typedef typename OutputPathType::Pointer        OutputPathPointer;
@@ -101,10 +101,10 @@ public:
   typedef typename Superclass::PointType           PointType;
   typedef typename Superclass::CostFunctionType    CostFunctionType;
   typedef typename Superclass::OptimizerType       OptimizerType;
-  
+
   /** Path information typedef. */
   typedef SpeedFunctionPathInformation<PointType> PathInformation;
-  
+
   /** Override superclass behaviour.
    *  Warning: SetPathEndPoint() is not valid for this filter.
    *  This method is provided by the superclass, however it is not
@@ -152,7 +152,7 @@ protected:
   SpeedFunctionToPathFilter( );
   ~SpeedFunctionToPathFilter( );
   virtual void PrintSelf( std::ostream& os, Indent indent ) const;
-  
+
   /** Implemention of algorithm. */
   void GenerateData( void );
 
@@ -171,7 +171,7 @@ protected:
 private:
   SpeedFunctionToPathFilter( const Self& ); //purposely not implemented
   void operator=( const Self& ); //purposely not implemented
-    
+
 };
 
 } // end namespace itk
