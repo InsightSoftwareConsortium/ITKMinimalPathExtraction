@@ -9,8 +9,8 @@
   Copyright (c) Insight Software Consortium. All rights reserved.
   See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
 
-     This software is distributed WITHOUT ANY WARRANTY; without even 
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+     This software is distributed WITHOUT ANY WARRANTY; without even
+     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
@@ -55,7 +55,7 @@ SingleImageCostFunction<TImage>
     {
     m_Interpolator = DefaultInterpolatorType::New();
     }
-    
+
   // Ensure gradient image function is initialized
   if( !m_GradientImageFunction )
     {
@@ -118,14 +118,14 @@ SingleImageCostFunction<TImage>
   // Init the derivative
   derivative.SetSize(ImageDimension);
   derivative.Fill( 0.0 );
-    
+
   // Convert parameters to point
   PointType point;
   for (unsigned int i=0; i<ImageDimension; i++)
     {
     point[i] = static_cast<typename PointType::ValueType>( parameters[i] );
     }
-  
+
   // Ensure point is inside image
   typename GradientImageFunctionType::OutputType output;
   output.Fill( 0.0 );
@@ -140,7 +140,7 @@ SingleImageCostFunction<TImage>
   for (int i=0; i<ImageDimension; i++)
     {
     derivative[i] = static_cast<typename DerivativeType::ValueType>( output[i] );
-    
+
     // NOTE: The cost function may undefined / unreachable areas
     //           (indicated by very large values) which may skew the gradient.
     //           To avoid this skewing effect, we reset gradient values larger

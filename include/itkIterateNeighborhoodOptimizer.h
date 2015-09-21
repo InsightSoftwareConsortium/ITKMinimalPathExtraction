@@ -9,8 +9,8 @@
   Copyright (c) Insight Software Consortium. All rights reserved.
   See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
 
-     This software is distributed WITHOUT ANY WARRANTY; without even 
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+     This software is distributed WITHOUT ANY WARRANTY; without even
+     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
@@ -78,7 +78,7 @@ public:
   /** Stop optimization.
    * \sa ResumeOptimization */
   void StopOptimization( void );
-  
+
   /**
    * Get/set whether the nieghborhood is defined by face connectivity or
    * by face+edge+vertex connectivity.  Default is FullyConnectedOn.
@@ -108,7 +108,7 @@ protected:
 private:
   IterateNeighborhoodOptimizer(const Self&); //purposely not implemented
   void operator=(const Self&); //purposely not implemented
-  
+
   bool                 m_Stop;
   bool                 m_Maximize;
   bool                 m_FullyConnected;

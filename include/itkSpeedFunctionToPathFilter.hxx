@@ -9,7 +9,7 @@
   Copyright (c) Insight Software Consortium. All rights reserved.
   See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
 
-     This software is distributed WITHOUT ANY WARRANTY; without even 
+     This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.  See the above copyright notices for more information.
 
@@ -80,13 +80,13 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 ::ComputeArrivalFunction()
 {
   // Get the speed image
-  InputImagePointer speed = 
+  InputImagePointer speed =
     const_cast< InputImageType * >( this->GetInput() );
 
   // Set the fast marching method for computing the arrival function
   typedef FastMarchingUpwindGradientImageFilter< TInputImage, TInputImage >
     FastMarchingType;
-    
+
   typedef typename FastMarchingType::NodeContainer NodeContainer;
   typedef typename FastMarchingType::NodeType      NodeType;
   typename FastMarchingType::Pointer marching = FastMarchingType::New();
@@ -153,7 +153,7 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 ::GenerateData( void )
 {
   // Get the speed function
-  InputImagePointer speed = 
+  InputImagePointer speed =
     const_cast< InputImageType * >( this->GetInput() );
   if ( speed.IsNull() )
     {
@@ -209,7 +209,7 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
     {
     // We have terminated the current path segment,
     // but there are more fronts to propagate
-    
+
     // TODO: The path has not actually reached the path point.
     //       Change the next front point to be the current point.
 
@@ -235,7 +235,7 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
  *
  */
 template<class TInputImage, class TOutputPath>
-void 
+void
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 ::PrintSelf(std::ostream& os, Indent indent) const
 {

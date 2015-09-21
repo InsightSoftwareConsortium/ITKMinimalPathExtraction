@@ -9,8 +9,8 @@
   Copyright (c) Insight Software Consortium. All rights reserved.
   See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
 
-     This software is distributed WITHOUT ANY WARRANTY; without even 
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+     This software is distributed WITHOUT ANY WARRANTY; without even
+     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
@@ -39,10 +39,10 @@ namespace itk
  * \ingroup MinimalPathExtraction
  */
 template <
-  class TInputImage, 
+  class TInputImage,
   class TCoordRep = float >
 class ITK_EXPORT PhysicalCentralDifferenceImageFunction :
-  public ImageFunction< TInputImage, 
+  public ImageFunction< TInputImage,
                         CovariantVector<double, TInputImage::ImageDimension>,
                         TCoordRep >
 {
@@ -54,12 +54,12 @@ public:
   /** Standard class typedefs. */
   typedef PhysicalCentralDifferenceImageFunction Self;
   typedef ImageFunction<TInputImage,
-                        CovariantVector<double, 
+                        CovariantVector<double,
                         itkGetStaticConstMacro(ImageDimension)>,
                         TCoordRep>       Superclass;
   typedef SmartPointer<Self>             Pointer;
   typedef SmartPointer<const Self>       ConstPointer;
-  
+
   /** Run-time type information (and related methods). */
   itkTypeMacro(PhysicalCentralDifferenceImageFunction, ImageFunction);
 
@@ -74,17 +74,17 @@ public:
 
   /** Index typedef support. */
   typedef typename Superclass::IndexType IndexType;
-  
+
   /** ContinuousIndex typedef support. */
   typedef typename Superclass::ContinuousIndexType ContinuousIndexType;
 
   /** Point typedef support. */
   typedef typename Superclass::PointType PointType;
-  
+
   /** Linear interpolate function typedef. */
   typedef LinearInterpolateImageFunction<TInputImage, TCoordRep>
      InterpolateImageFunctionType;
-  
+
   /** Set the input image.
    * \warning this method caches BufferedRegion information.
    * If the BufferedRegion has changed, user must call
@@ -118,12 +118,12 @@ public:
    *  bounds before calling this method. */
   virtual OutputType EvaluateAtContinuousIndex(
     const ContinuousIndexType& cindex ) const
-    { 
+    {
     PointType point;
     m_Interpolator->GetInputImage()->TransformContinuousIndexToPhysicalPoint( cindex, point );
     return this->Evaluate( point );
     }
-    
+
   /** Evalulate the image derivative by central differencing at specified
    *  physical point.
    *
@@ -140,7 +140,7 @@ protected:
 private:
   PhysicalCentralDifferenceImageFunction( const Self& ); //purposely not implemented
   void operator=( const Self& ); //purposely not implemented
-  
+
   typename InterpolateImageFunctionType::Pointer m_Interpolator;
 
 };
