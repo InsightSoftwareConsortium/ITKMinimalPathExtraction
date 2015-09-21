@@ -59,13 +59,13 @@ public:
 
   /** Execute */
   void Execute(itk::Object *caller, const itk::EventObject & event)
-  {
+    {
     Execute( (const itk::Object *)caller, event);
-  }
+    }
 
   /** Execute */
   void Execute(const itk::Object * object, const itk::EventObject & event)
-  {
+    {
     if( ! itk::IterationEvent().CheckEvent( &event ) )
       {
       return;
@@ -75,7 +75,7 @@ public:
       {
       m_Filter->Execute( object, event );
       }
-  }
+    }
 
 protected:
   ArrivalFunctionToPathCommand(){}
@@ -130,7 +130,7 @@ private:
  *     Cambridge Press, 2nd edition, 1999.
  * [2] J. Andrews and J. Sethian. Fast marching methods for the continuous
  *     traveling salesman problem. Proceedings of the National Academy of
- *     Sciences (PNAS), 104(4):11181123, 2007.
+ *     Sciences (PNAS), 104(4):1118/1123, 2007.
  *
  * \author Dan Mueller, Queensland University of Technology, dan.muel[at]gmail.com
  *
