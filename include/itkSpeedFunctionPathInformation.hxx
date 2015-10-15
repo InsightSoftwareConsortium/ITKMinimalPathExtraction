@@ -42,8 +42,8 @@ template <typename TPoint>
 void SpeedFunctionPathInformation<TPoint>
 ::ClearInfo()
 {
-  m_Info.clear();
-  m_Info.resize(2);
+  m_Information.clear();
+  m_Information.resize(2);
   m_Front = 1;
 }
 
@@ -52,7 +52,7 @@ template <typename TPoint>
 void SpeedFunctionPathInformation<TPoint>
 ::SetStartPoint( const PointType & start )
 {
-  m_Info[1] = start;
+  m_Information[1] = start;
 }
 
 
@@ -60,7 +60,7 @@ template <typename TPoint>
 void SpeedFunctionPathInformation<TPoint>
 ::SetEndPoint( const PointType & end )
 {
-  m_Info[0] = end;
+  m_Information[0] = end;
 }
 
 
@@ -68,7 +68,7 @@ template <typename TPoint>
 void SpeedFunctionPathInformation<TPoint>
 ::AddWayPoint( const PointType & way )
 {
-  m_Info.push_back( way );
+  m_Information.push_back( way );
   m_Front++;
 }
 
@@ -77,7 +77,7 @@ template <typename TPoint>
 unsigned int SpeedFunctionPathInformation<TPoint>
 ::GetNumberOfPoints( ) const
 {
-  return m_Info.size();
+  return m_Information.size();
 }
 
 
@@ -86,7 +86,7 @@ const typename SpeedFunctionPathInformation<TPoint>::PointType &
 SpeedFunctionPathInformation<TPoint>
 ::GetStartPoint( ) const
 {
-  return m_Info[1];
+  return m_Information[1];
 }
 
 
@@ -95,7 +95,7 @@ const typename SpeedFunctionPathInformation<TPoint>::PointType &
 SpeedFunctionPathInformation<TPoint>
 ::GetEndPoint( ) const
 {
-  return m_Info[0];
+  return m_Information[0];
 }
 
 
@@ -104,7 +104,7 @@ const typename SpeedFunctionPathInformation<TPoint>::PointType &
 SpeedFunctionPathInformation<TPoint>
 ::GetWayPoint( SizeValueType i ) const
 {
-  return m_Info[2+i];
+  return m_Information[2+i];
 }
 
 
@@ -122,7 +122,7 @@ const typename SpeedFunctionPathInformation<TPoint>::PointType &
 SpeedFunctionPathInformation<TPoint>
 ::GetCurrentFrontAndAdvance( )
 {
-  return m_Info[m_Front--];
+  return m_Information[m_Front--];
 }
 
 
@@ -131,7 +131,7 @@ const typename SpeedFunctionPathInformation<TPoint>::PointType &
 SpeedFunctionPathInformation<TPoint>
 ::PeekCurrentFront( ) const
 {
-  return m_Info[m_Front];
+  return m_Information[m_Front];
 }
 
 
@@ -142,11 +142,11 @@ SpeedFunctionPathInformation<TPoint>
 {
   if ( m_Front <= 1 )
   {
-  return m_Info[1];
+  return m_Information[1];
   }
   else
   {
-  return m_Info[m_Front-1];
+  return m_Information[m_Front-1];
   }
 }
 
@@ -156,13 +156,13 @@ const typename SpeedFunctionPathInformation<TPoint>::PointType &
 SpeedFunctionPathInformation<TPoint>
 ::PeekPreviousFront( ) const
 {
-  if ( m_Front == m_Info.size()-1 )
+  if ( m_Front == m_Information.size()-1 )
   {
-  return m_Info[0];
+  return m_Information[0];
   }
   else
   {
-  return m_Info[m_Front+1];
+  return m_Information[m_Front+1];
   }
 }
 

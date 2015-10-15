@@ -1,23 +1,18 @@
-# The header files
-SET(HEADERS
-  ${CMAKE_SOURCE_DIR}/include/itkImageToPathFilter.h
-  ${CMAKE_SOURCE_DIR}/include/itkSingleImageCostFunction.h
-  ${CMAKE_SOURCE_DIR}/include/itkArrivalFunctionToPathFilter.h
-  ${CMAKE_SOURCE_DIR}/include/itkSpeedFunctionToPathFilter.h
-  ${CMAKE_SOURCE_DIR}/include/itkImageToPathFilter.hxx
-  ${CMAKE_SOURCE_DIR}/include/itkSingleImageCostFunction.hxx
-  ${CMAKE_SOURCE_DIR}/include/itkArrivalFunctionToPathFilter.hxx
-  ${CMAKE_SOURCE_DIR}/include/itkSpeedFunctionToPathFilter.hxx
-)
+cmake_minimum_required(VERSION 2.8)
+project(MinimalPathExtractionExamples)
 
-# Add this as include directory
-INCLUDE_DIRECTORIES(
-  ${CMAKE_SOURCE_DIR}
-)
+find_package(ITK REQUIRED
+  COMPONENTS MinimalPathExtraction
+    ITKIOImageBase
+    ITKImageFunction
+    ITKOptimizers
+    ITKPath
+    ITKIOMeta
+    ITKIOPNG
+    ITKIOJPEG
+    )
 
-# Main library
-ADD_EXECUTABLE(MinimalPathMain main.cxx ${HEADERS} )
-TARGET_LINK_LIBRARIES(MinimalPathMain ${ITK_LIBRARIES})
+include(${ITK_USE_FILE})
 
-ADD_EXECUTABLE(MinimalPathExamples example.cxx ${HEADERS} )
-TARGET_LINK_LIBRARIES(MinimalPathExamples ${ITK_LIBRARIES})
+add_executable(MinimalPathExamples example.cxx)
+target_link_libraries(MinimalPathExamples ${ITK_LIBRARIES})

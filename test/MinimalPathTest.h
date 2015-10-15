@@ -1,5 +1,5 @@
 /*=========================================================================
-  
+
   Filter:    MinimalPath
   Program:   Insight Segmentation & Registration Toolkit
   Module:    MinimalPathTests.cxx
@@ -84,8 +84,8 @@ int ReadPathFile( const char * PathFilename, typename PathFilterType::Pointer pa
     while ( itksys::SystemTools::GetLineFromStream(file, line, &has_newline) )
     {
         if (has_newline)
-        {   
-	    typename PathInfoType::Pointer info = PathInfoType::New();  
+        {
+	    typename PathInfoType::Pointer info = PathInfoType::New();
             itksys::SystemTools::ReplaceString( line, "Path: ", "" );
             itksys::SystemTools::ReplaceString( line, " ", "" );
             itksys::SystemTools::ReplaceString( line, "[", "" );
@@ -93,7 +93,7 @@ int ReadPathFile( const char * PathFilename, typename PathFilterType::Pointer pa
             parts = itksys::SystemTools::SplitString( line.c_str(), ']' );
             unsigned int numNonNullParts = 0;
             for (unsigned int i=0; i<parts.size(); i++)
-                if ( parts[i].length() != 0 ) numNonNullParts++;                
+                if ( parts[i].length() != 0 ) numNonNullParts++;
             for (unsigned int i=0; i<numNonNullParts; i++)
             {
                 if ( parts[i].length() != 0 )
@@ -108,7 +108,7 @@ int ReadPathFile( const char * PathFilename, typename PathFilterType::Pointer pa
                     else info->AddWayPoint( point );
                 }
             }
-            pathFilter->AddPathInfo( info );
+            pathFilter->AddPathInformation( info );
         }
     }
 
@@ -203,7 +203,7 @@ int Test_SpeedToPath_GradientDescent_ND(int argc, char* argv[])
         std::cout << std::setprecision(3) << "Path computed in: " << time.GetMean() << " seconds" << std::endl;
 
         // Allocate output image
-        typename OutputImageType::Pointer output = OutputImageType::New();    
+        typename OutputImageType::Pointer output = OutputImageType::New();
         output->SetRegions( speed->GetLargestPossibleRegion() );
         output->SetSpacing( speed->GetSpacing() );
         output->SetOrigin( speed->GetOrigin() );
@@ -240,9 +240,9 @@ int Test_SpeedToPath_GradientDescent_ND(int argc, char* argv[])
         writer->Update();
     }
     catch (itk::ExceptionObject & err)
-    { 
-        std::cerr << "ExceptionObject caught !" << std::endl; 
-        std::cerr << err << std::endl; 
+    {
+        std::cerr << "ExceptionObject caught !" << std::endl;
+        std::cerr << err << std::endl;
         return EXIT_FAILURE;
     }
 
@@ -351,7 +351,7 @@ int Test_SpeedToPath_RegularStepGradientDescent_ND(int argc, char* argv[])
         std::cout << std::setprecision(3) << "Path computed in: " << time.GetMean() << " seconds" << std::endl;
 
         // Allocate output image
-        typename OutputImageType::Pointer output = OutputImageType::New();    
+        typename OutputImageType::Pointer output = OutputImageType::New();
         output->SetRegions( speed->GetLargestPossibleRegion() );
         output->SetSpacing( speed->GetSpacing() );
         output->SetOrigin( speed->GetOrigin() );
@@ -388,9 +388,9 @@ int Test_SpeedToPath_RegularStepGradientDescent_ND(int argc, char* argv[])
         writer->Update();
     }
     catch (itk::ExceptionObject & err)
-    { 
-        std::cerr << "ExceptionObject caught !" << std::endl; 
-        std::cerr << err << std::endl; 
+    {
+        std::cerr << "ExceptionObject caught !" << std::endl;
+        std::cerr << err << std::endl;
         return EXIT_FAILURE;
     }
 
@@ -491,7 +491,7 @@ int Test_SpeedToPath_IterateNeighborhood_ND(int argc, char* argv[])
         std::cout << std::setprecision(3) << "Path computed in: " << time.GetMean() << " seconds" << std::endl;
 
         // Allocate output image
-        typename OutputImageType::Pointer output = OutputImageType::New();    
+        typename OutputImageType::Pointer output = OutputImageType::New();
         output->SetRegions( speed->GetLargestPossibleRegion() );
         output->SetSpacing( speed->GetSpacing() );
         output->SetOrigin( speed->GetOrigin() );
@@ -528,9 +528,9 @@ int Test_SpeedToPath_IterateNeighborhood_ND(int argc, char* argv[])
         writer->Update();
     }
     catch (itk::ExceptionObject & err)
-    { 
-        std::cerr << "ExceptionObject caught !" << std::endl; 
-        std::cerr << err << std::endl; 
+    {
+        std::cerr << "ExceptionObject caught !" << std::endl;
+        std::cerr << err << std::endl;
         return EXIT_FAILURE;
     }
 

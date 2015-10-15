@@ -55,7 +55,7 @@ unsigned int
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 ::GetNumberOfPathsToExtract() const
 {
-  return m_Info.size();
+  return m_Information.size();
 }
 
 
@@ -67,7 +67,7 @@ const typename SpeedFunctionToPathFilter<TInputImage,TOutputPath>::PointType &
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 ::GetNextEndPoint()
 {
-  return m_Info[Superclass::m_CurrentOutput]->GetEndPoint();
+  return m_Information[Superclass::m_CurrentOutput]->GetEndPoint();
 }
 
 
@@ -101,12 +101,12 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
   IndexType indexTargetNext;
   speed->TransformPhysicalPointToIndex
     (
-    m_Info[Superclass::m_CurrentOutput]->PeekPreviousFront(),
+    m_Information[Superclass::m_CurrentOutput]->PeekPreviousFront(),
     indexTargetPrevious
     );
   speed->TransformPhysicalPointToIndex
     (
-    m_Info[Superclass::m_CurrentOutput]->PeekNextFront(),
+    m_Information[Superclass::m_CurrentOutput]->PeekNextFront(),
     indexTargetNext
     );
   NodeType nodeTargetPrevious;
@@ -125,7 +125,7 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
   IndexType indexTrial;
   speed->TransformPhysicalPointToIndex
     (
-    m_Info[Superclass::m_CurrentOutput]->GetCurrentFrontAndAdvance(),
+    m_Information[Superclass::m_CurrentOutput]->GetCurrentFrontAndAdvance(),
     indexTrial
     );
   NodeType nodeTrial;
@@ -161,7 +161,7 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
     }
 
   // Ensure the user has added at least one path info object
-  if ( m_Info.size() == 0 )
+  if ( m_Information.size() == 0 )
     {
     itkExceptionMacro( "No PathInfo objects: at least one must be added." );
     }
@@ -205,7 +205,7 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 
   // Check if we have reached the termination value
   if ( currentValue < Superclass::m_TerminationValue &&
-       m_Info[Superclass::m_CurrentOutput]->HasNextFront() )
+       m_Information[Superclass::m_CurrentOutput]->HasNextFront() )
     {
     // We have terminated the current path segment,
     // but there are more fronts to propagate

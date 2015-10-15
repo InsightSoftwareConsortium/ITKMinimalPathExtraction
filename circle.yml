@@ -6,6 +6,7 @@ dependencies:
   override:
     - docker info
     - docker pull insighttoolkit/minimalpathextraction-test
+    - ~/ITKMinimalPathExtraction/test/Docker/build.sh
 
 test:
   override:

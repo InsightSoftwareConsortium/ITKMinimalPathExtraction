@@ -73,11 +73,12 @@ end[0] = 100; end[1] = 10;
 way1[0] = 10; way1[1] = 10;
 
 // Add path information
-PathFilterType::PathInfo info;
-info.SetStartPoint( start );
-info.SetEndPoint( end );
-info.AddWayPoint( way1 );
-pathFilter->AddPathInfo( info );
+typedef PathFilterType::PathInformationType PathInformationType;
+PathInformationType::Pointer info = PathInformationType::New();
+info->SetStartPoint( start );
+info->SetEndPoint( end );
+info->AddWayPoint( way1 );
+pathFilter->AddPathInformation( info );
 
 // Compute the path
 pathFilter->Update( );
@@ -180,11 +181,12 @@ end[0] = 100; end[1] = 10;
 way1[0] = 10; way1[1] = 10;
 
 // Add path information
-PathFilterType::PathInfo info;
-info.SetStartPoint( start );
-info.SetEndPoint( end );
-info.AddWayPoint( way1 );
-pathFilter->AddPathInfo( info );
+typedef PathFilterType::PathInformationType PathInformationType;
+PathInformationType::Pointer info = PathInformationType::New();
+info->SetStartPoint( start );
+info->SetEndPoint( end );
+info->AddWayPoint( way1 );
+pathFilter->AddPathInformation( info );
 
 // Compute the path
 pathFilter->Update( );
