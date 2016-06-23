@@ -71,7 +71,7 @@ public:
   virtual void AdvanceOneStep( void );
 
   /** Start optimization. */
-  void StartOptimization( void );
+  void StartOptimization( void ) ITK_OVERRIDE;
 
   /** Resume previously stopped optimization with current parameters
    * \sa StopOptimization. */
@@ -105,7 +105,7 @@ public:
 protected:
   IterateNeighborhoodOptimizer();
   virtual ~IterateNeighborhoodOptimizer() {};
-  void PrintSelf(std::ostream& os, Indent indent) const;
+  void PrintSelf(std::ostream& os, Indent indent) const ITK_OVERRIDE;
 
 private:
   IterateNeighborhoodOptimizer(const Self&); //purposely not implemented

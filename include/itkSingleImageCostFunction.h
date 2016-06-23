@@ -116,22 +116,22 @@ public:
   virtual void Initialize(void) throw ( ExceptionObject );
 
   /** Return the number of parameters required by the Transform */
-  unsigned int GetNumberOfParameters(void) const
+  unsigned int GetNumberOfParameters(void) const ITK_OVERRIDE
   { return ImageDimension; }
 
   /** This method returns the value of the cost function corresponding
     * to the specified parameters. */
-  virtual MeasureType GetValue( const ParametersType & parameters ) const;
+  virtual MeasureType GetValue( const ParametersType & parameters ) const ITK_OVERRIDE;
 
   /** This method returns the derivative of the cost function corresponding
     * to the specified parameters. */
   virtual void GetDerivative( const ParametersType & parameters,
-                              DerivativeType & derivative ) const;
+                              DerivativeType & derivative ) const ITK_OVERRIDE;
 
 protected:
   SingleImageCostFunction();
   virtual ~SingleImageCostFunction() {}
-  void PrintSelf(std::ostream& os, Indent indent) const;
+  void PrintSelf(std::ostream& os, Indent indent) const ITK_OVERRIDE;
 
 private:
   SingleImageCostFunction(const Self&); //purposely not implemented
