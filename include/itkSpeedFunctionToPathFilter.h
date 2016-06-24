@@ -109,7 +109,7 @@ public:
    *  Warning: SetPathEndPoint() is not valid for this filter.
    *  This method is provided by the superclass, however it is not
    *  used by this subclass. Use AddPathInfo() instead.*/
-  void SetPathEndPoint( const PointType& )
+  void SetPathEndPoint( const PointType& ) ITK_OVERRIDE
   {
     itkWarningMacro("SetPathEndPoint() is not valid for this filter. Use AddPathInfo() instead.");
   }
@@ -118,7 +118,7 @@ public:
    *  Warning: AddPathEndPoint() is not valid for this filter.
    *  This method is provided by the superclass, however it is not
    *  used by this subclass. Use AddPathInfo() instead.*/
-  void AddPathEndPoint( const PointType& )
+  void AddPathEndPoint( const PointType& ) ITK_OVERRIDE
   {
     itkWarningMacro("AddPathEndPoint() is not valid for this filter. Use AddPathInfo() instead.");
   }
@@ -127,7 +127,7 @@ public:
    *  Warning: ClearPathEndPoints() is not valid for this filter.
    *  This method is provided by the superclass, however it is not
    *  used by this subclass. Use ClearPathInfo() instead.*/
-  void ClearPathEndPoints()
+  void ClearPathEndPoints() ITK_OVERRIDE
   {
     itkWarningMacro("ClearPathEndPoints() is not valid for this filter. Use ClearPathInfo() instead.");
   }
@@ -146,24 +146,24 @@ public:
   }
 
   /** Handle optimizer iteration events. */
-  virtual void Execute( const itk::Object * object, const itk::EventObject & event );
+  virtual void Execute( const itk::Object * object, const itk::EventObject & event ) ITK_OVERRIDE;
 
 protected:
   SpeedFunctionToPathFilter( );
   ~SpeedFunctionToPathFilter( );
-  virtual void PrintSelf( std::ostream& os, Indent indent ) const;
+  virtual void PrintSelf( std::ostream& os, Indent indent ) const ITK_OVERRIDE;
 
   /** Implemention of algorithm. */
-  void GenerateData( void );
+  void GenerateData( void ) ITK_OVERRIDE;
 
   /** Get the number of paths which the user has instructed to extracted. */
-  virtual unsigned int GetNumberOfPathsToExtract( ) const;
+  virtual unsigned int GetNumberOfPathsToExtract( ) const ITK_OVERRIDE;
 
   /** Compute the arrival function from which to extract the path. */
-  virtual InputImageType * ComputeArrivalFunction( );
+  virtual InputImageType * ComputeArrivalFunction( ) ITK_OVERRIDE;
 
   /** Override handling of optimizer iteration events to accomodate way points. */
-  virtual const PointType & GetNextEndPoint( );
+  virtual const PointType & GetNextEndPoint( ) ITK_OVERRIDE;
 
   std::vector< typename PathInformationType::Pointer > m_Information;
   InputImagePointer                                    m_CurrentArrivalFunction;

@@ -94,7 +94,7 @@ public:
 protected:
   SpeedFunctionPathInformation( );
   virtual ~SpeedFunctionPathInformation( );
-  virtual void PrintSelf( std::ostream& os, Indent indent ) const;
+  virtual void PrintSelf( std::ostream& os, Indent indent ) const ITK_OVERRIDE;
 
   std::vector< PointType > m_Information;
   SizeValueType            m_Front;
