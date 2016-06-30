@@ -21,8 +21,8 @@ RUN apt-get update && apt-get install -y \
 RUN mkdir -p /usr/src/ITKMinimalPathExtraction-build
 WORKDIR /usr/src
 
-# 2015-10-13
-ENV ITK_GIT_TAG 3b9767eeb61ed1e20cd6018a40b5a91868dade04
+# release 2016-06-30
+ENV ITK_GIT_TAG 8565bd9b4bc4446b05554e11ccb27bda1d6db647
 RUN git clone git://itk.org/ITK.git && \
   cd ITK && \
   git checkout ${ITK_GIT_TAG} && \
