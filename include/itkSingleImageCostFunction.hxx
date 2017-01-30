@@ -72,6 +72,7 @@ SingleImageCostFunction<TImage>
   m_Interpolator->SetInputImage( m_Image );
   m_GradientImageFunction->SetInputImage( m_Image );
 
+  this->SetMinimize();
   // If there are any objects observing the cost function,
   // call them to give the user code a chance to set parameters
   this->InvokeEvent( InitializeEvent() );
@@ -101,7 +102,7 @@ SingleImageCostFunction<TImage>
     }
   else
     {
-    return 0.0;
+    return m_OutsideValue;
     }
 }
 

@@ -53,7 +53,9 @@ void
 ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 ::AddPathEndPoint(const PointType &point)
 {
-  m_PointList.push_back( point );
+  PointTypeVec V(1);
+  V[0] = point;
+  m_PointList.push_back( V );
   this->Modified();
 }
 
@@ -95,7 +97,7 @@ ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 }
 
 template<class TInputImage, class TOutputPath>
-const typename ArrivalFunctionToPathFilter<TInputImage,TOutputPath>::PointType &
+const typename ArrivalFunctionToPathFilter<TInputImage,TOutputPath>::PointTypeVec &
 ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 ::GetNextEndPoint()
 {
@@ -190,7 +192,8 @@ ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
     }
 
     // Get the end point to back propagate from
-    PointType pointEnd = this->GetNextEndPoint();
+    PointTypeVec allpoints = this->GetNextEndPoint();
+    PointType pointEnd = allpoints[0];
 
     // Convert end point to parameters type
     typename CostFunctionType::ParametersType end(InputImageDimension);

@@ -52,7 +52,7 @@ template <typename TPoint>
 void SpeedFunctionPathInformation<TPoint>
 ::SetStartPoint( const PointType & start )
 {
-  m_Information[1] = start;
+  m_Information[1] = PtoPVec(start);
 }
 
 
@@ -60,7 +60,7 @@ template <typename TPoint>
 void SpeedFunctionPathInformation<TPoint>
 ::SetEndPoint( const PointType & end )
 {
-  m_Information[0] = end;
+  m_Information[0] = PtoPVec( end );
 }
 
 
@@ -68,10 +68,100 @@ template <typename TPoint>
 void SpeedFunctionPathInformation<TPoint>
 ::AddWayPoint( const PointType & way )
 {
+  m_Information.push_back( PtoPVec(way) );
+  m_Front++;
+}
+  
+template <typename TPoint>
+void SpeedFunctionPathInformation<TPoint>
+::SetCurrent( const PointType & newcurrent )
+{
+  m_Information[m_Front] = PtoPVec(newcurrent);
+}
+
+template <typename TPoint>
+void SpeedFunctionPathInformation<TPoint>
+::Advance( void )
+{
+  m_Front--;
+}
+
+template <typename TPoint>
+void SpeedFunctionPathInformation<TPoint>
+::SetStartPoint( const PointTypeVec & start )
+{
+  m_Information[1] = start;
+}
+
+
+template <typename TPoint>
+void SpeedFunctionPathInformation<TPoint>
+::SetEndPoint( const PointTypeVec & end )
+{
+  m_Information[0] = end;
+}
+
+
+template <typename TPoint>
+void SpeedFunctionPathInformation<TPoint>
+::AddWayPoint( const PointTypeVec & way )
+{
   m_Information.push_back( way );
   m_Front++;
 }
 
+template <typename TPoint>
+void SpeedFunctionPathInformation<TPoint>
+::SetCurrent( const PointTypeVec & newcurrent )
+{
+  m_Information[m_Front] = newcurrent;
+}
+  
+template <typename TPoint>
+void SpeedFunctionPathInformation<TPoint>
+::SetPrevious( const PointTypeVec & newprevious )
+{
+   SizeValueType F;
+  if ( m_Front == m_Information.size()-1 )
+  {
+    F=0;
+  }
+  else
+  {
+    F = m_Front+1;
+  }
+  m_Information[F] = newprevious;
+}
+template <typename TPoint>
+void SpeedFunctionPathInformation<TPoint>
+::SetNext( const PointTypeVec & newnext )
+{
+  SizeValueType F;
+  if (m_Front <= 1)
+    {
+      F=1;
+    }
+  else
+    {
+      F = m_Front - 1;
+    }
+  m_Information[F] = newnext;
+}
+
+template <typename TPoint>
+void SpeedFunctionPathInformation<TPoint>
+::SetPrevious( const PointType & newprevious )
+{
+  SetPrevious(PtoPVec(newprevious));
+}
+
+template <typename TPoint>
+void SpeedFunctionPathInformation<TPoint>
+::SetNext( const PointType & newnext )
+{
+  SetNext(PtoPVec(newnext));
+}
+  
 
 template <typename TPoint>
 unsigned int SpeedFunctionPathInformation<TPoint>
@@ -82,7 +172,7 @@ unsigned int SpeedFunctionPathInformation<TPoint>
 
 
 template <typename TPoint>
-const typename SpeedFunctionPathInformation<TPoint>::PointType &
+const typename SpeedFunctionPathInformation<TPoint>::PointTypeVec &
 SpeedFunctionPathInformation<TPoint>
 ::GetStartPoint( ) const
 {
@@ -91,7 +181,7 @@ SpeedFunctionPathInformation<TPoint>
 
 
 template <typename TPoint>
-const typename SpeedFunctionPathInformation<TPoint>::PointType &
+const typename SpeedFunctionPathInformation<TPoint>::PointTypeVec &
 SpeedFunctionPathInformation<TPoint>
 ::GetEndPoint( ) const
 {
@@ -100,7 +190,7 @@ SpeedFunctionPathInformation<TPoint>
 
 
 template <typename TPoint>
-const typename SpeedFunctionPathInformation<TPoint>::PointType &
+const typename SpeedFunctionPathInformation<TPoint>::PointTypeVec &
 SpeedFunctionPathInformation<TPoint>
 ::GetWayPoint( SizeValueType i ) const
 {
@@ -118,7 +208,7 @@ bool SpeedFunctionPathInformation<TPoint>
 
 
 template <typename TPoint>
-const typename SpeedFunctionPathInformation<TPoint>::PointType &
+const typename SpeedFunctionPathInformation<TPoint>::PointTypeVec &
 SpeedFunctionPathInformation<TPoint>
 ::GetCurrentFrontAndAdvance( )
 {
@@ -127,7 +217,7 @@ SpeedFunctionPathInformation<TPoint>
 
 
 template <typename TPoint>
-const typename SpeedFunctionPathInformation<TPoint>::PointType &
+const typename SpeedFunctionPathInformation<TPoint>::PointTypeVec &
 SpeedFunctionPathInformation<TPoint>
 ::PeekCurrentFront( ) const
 {
@@ -136,7 +226,7 @@ SpeedFunctionPathInformation<TPoint>
 
 
 template <typename TPoint>
-const typename SpeedFunctionPathInformation<TPoint>::PointType &
+const typename SpeedFunctionPathInformation<TPoint>::PointTypeVec &
 SpeedFunctionPathInformation<TPoint>
 ::PeekNextFront( ) const
 {
@@ -152,7 +242,7 @@ SpeedFunctionPathInformation<TPoint>
 
 
 template <typename TPoint>
-const typename SpeedFunctionPathInformation<TPoint>::PointType &
+const typename SpeedFunctionPathInformation<TPoint>::PointTypeVec &
 SpeedFunctionPathInformation<TPoint>
 ::PeekPreviousFront( ) const
 {
