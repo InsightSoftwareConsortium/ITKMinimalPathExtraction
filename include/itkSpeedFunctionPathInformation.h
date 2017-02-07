@@ -68,7 +68,7 @@ public:
 
   /** Some point typedefs. */
   typedef TPoint                   PointType;
-  typedef std::vector< PointType > PointTypeVec;
+  typedef std::vector< PointType > PointsContainerType;
 
   void ClearInfo();
 
@@ -80,17 +80,17 @@ public:
 
 
   /** Methods for adding extended path components **/
-  void SetStartPoint( const PointTypeVec & start );
+  void SetStartPoint( const PointsContainerType & start );
 
-  void SetEndPoint( const PointTypeVec & end );
+  void SetEndPoint( const PointsContainerType & end );
 
-  void AddWayPoint( const PointTypeVec & way );
+  void AddWayPoint( const PointsContainerType & way );
 
   // methods for modifying path seeds - needed when using
   // an extended seed.
-  void SetCurrent( const PointTypeVec & newcurrent );
-  void SetPrevious( const PointTypeVec & newprevious );
-  void SetNext( const PointTypeVec & newnext );
+  void SetCurrent( const PointsContainerType & newcurrent );
+  void SetPrevious( const PointsContainerType & newprevious );
+  void SetNext( const PointsContainerType & newnext );
   
   void SetCurrent( const PointType & current );
   void SetPrevious( const PointType & newprevious );
@@ -100,21 +100,21 @@ public:
 
   unsigned int GetNumberOfPoints( ) const;
 
-  const PointTypeVec & GetStartPoint( ) const;
+  const PointsContainerType & GetStartPoint( ) const;
 
-  const PointTypeVec & GetEndPoint( ) const;
+  const PointsContainerType & GetEndPoint( ) const;
 
-  const PointTypeVec & GetWayPoint( SizeValueType i ) const;
+  const PointsContainerType & GetWayPoint( SizeValueType i ) const;
 
   bool HasNextFront( ) const;
 
-  const PointTypeVec & GetCurrentFrontAndAdvance( );
+  const PointsContainerType & GetCurrentFrontAndAdvance( );
 
-  const PointTypeVec & PeekCurrentFront( ) const;
+  const PointsContainerType & PeekCurrentFront( ) const;
 
-  const PointTypeVec & PeekNextFront( ) const;
+  const PointsContainerType & PeekNextFront( ) const;
 
-  const PointTypeVec & PeekPreviousFront( ) const;
+  const PointsContainerType & PeekPreviousFront( ) const;
   
 
 protected:
@@ -122,13 +122,13 @@ protected:
   virtual ~SpeedFunctionPathInformation( );
   virtual void PrintSelf( std::ostream& os, Indent indent ) const ITK_OVERRIDE;
 
-  std::vector< PointTypeVec > m_Information;
+  std::vector< PointsContainerType > m_Information;
   SizeValueType               m_Front;
 
 
-  PointTypeVec PtoPVec(const PointType & P)
+  PointsContainerType PtoPVec(const PointType & P)
   {
-    PointTypeVec V(1);
+    PointsContainerType V(1);
     V[0]=P;
     return(V);
   }

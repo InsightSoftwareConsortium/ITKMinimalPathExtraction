@@ -124,7 +124,7 @@ int ReadPathImage( const char * PathImagename, typename PathFilterType::Pointer 
 
     typedef itk::Point< double, VDimension >             PointType;
     typedef itk::SpeedFunctionPathInformation<PointType> PathInfoType;
-    typedef std::vector< PointType >                     PointTypeVec;
+    typedef std::vector< PointType >                     PointsContainerType;
     
     typedef itk::Image< unsigned char, VDimension > ImageType;
     typedef itk::ImageFileReader< ImageType >       ReaderType;
@@ -138,7 +138,7 @@ int ReadPathImage( const char * PathImagename, typename PathFilterType::Pointer 
     labelIm->DisconnectPipeline();
       
     // iterate over the image and collect PointType locations for each non zero entry
-    typedef std::map< unsigned char, PointTypeVec> PointMapType;
+    typedef std::map< unsigned char, PointsContainerType> PointMapType;
 
     PointMapType pmap;
 

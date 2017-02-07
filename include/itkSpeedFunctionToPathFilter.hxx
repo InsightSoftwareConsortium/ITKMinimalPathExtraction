@@ -63,7 +63,7 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
  *
  */
 template<class TInputImage, class TOutputPath>
-const typename SpeedFunctionToPathFilter<TInputImage,TOutputPath>::PointTypeVec &
+const typename SpeedFunctionToPathFilter<TInputImage,TOutputPath>::PointsContainerType &
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 ::GetNextEndPoint()
 {
@@ -97,8 +97,8 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 
   // Add next and previous front sources as target points to
   // limit the front propagation to just the required zones
-  PointTypeVec PrevFront = m_Information[Superclass::m_CurrentOutput]->PeekPreviousFront();
-  PointTypeVec NextFront = m_Information[Superclass::m_CurrentOutput]->PeekNextFront();
+  PointsContainerType PrevFront = m_Information[Superclass::m_CurrentOutput]->PeekPreviousFront();
+  PointsContainerType NextFront = m_Information[Superclass::m_CurrentOutput]->PeekNextFront();
   typedef std::vector < IndexType > IndexTypeVec;
   IndexTypeVec PrevIndexVec(0);
 
@@ -106,7 +106,7 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
   typename NodeContainer::Pointer targets = NodeContainer::New();
   targets->Initialize();
 
-  for (typename PointTypeVec::iterator it = PrevFront.begin(); it != PrevFront.end(); it++)
+  for (typename PointsContainerType::iterator it = PrevFront.begin(); it != PrevFront.end(); it++)
     {
       IndexType indexTargetPrevious;
       NodeType nodeTargetPrevious;
@@ -117,7 +117,7 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
       PrevIndexVec.push_back(indexTargetPrevious);
     }
   
-  for (typename PointTypeVec::iterator it = NextFront.begin(); it != NextFront.end(); it++)
+  for (typename PointsContainerType::iterator it = NextFront.begin(); it != NextFront.end(); it++)
     {
       IndexType indexTargetNext;
       NodeType nodeTargetNext;
@@ -131,10 +131,10 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
   // Get the next Front source point and add as trial point
   typename NodeContainer::Pointer trial = NodeContainer::New();
   trial->Initialize();
-  PointTypeVec CurrentFront =   m_Information[Superclass::m_CurrentOutput]->PeekCurrentFront(); //FrontAndAdvance();
+  PointsContainerType CurrentFront =   m_Information[Superclass::m_CurrentOutput]->PeekCurrentFront(); //FrontAndAdvance();
   IndexTypeVec CurrentIndexVec(0);
 
-  for (typename PointTypeVec::iterator it = CurrentFront.begin(); it != CurrentFront.end(); it++)
+  for (typename PointsContainerType::iterator it = CurrentFront.begin(); it != CurrentFront.end(); it++)
     {
       IndexType indexTrial;
       NodeType nodeTrial;
