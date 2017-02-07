@@ -103,7 +103,7 @@ public:
   typedef typename Superclass::OptimizerType       OptimizerType;
 
   /** Path information typedef. */
-  typedef SpeedFunctionPathInformation<PointType>    PathInformationType;
+  typedef SpeedFunctionPathInformation<PointType>           PathInformationType;
   typedef typename PathInformationType::PointsContainerType PointsContainerType;
 
   /** Override superclass behaviour.

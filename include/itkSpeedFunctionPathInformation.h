@@ -123,7 +123,7 @@ protected:
   virtual void PrintSelf( std::ostream& os, Indent indent ) const ITK_OVERRIDE;
 
   std::vector< PointsContainerType > m_Information;
-  SizeValueType               m_Front;
+  SizeValueType                      m_Front;
 
 
   PointsContainerType PtoPVec(const PointType & P)
