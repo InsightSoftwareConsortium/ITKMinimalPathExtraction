@@ -110,7 +110,7 @@ public:
    *  Warning: SetPathEndPoint() is not valid for this filter.
    *  This method is provided by the superclass, however it is not
    *  used by this subclass. Use AddPathInfo() instead.*/
-  void SetPathEndPoint( const PointType& ) ITK_OVERRIDE
+  void SetPathEndPoint( const PointType& ) override
   {
     itkWarningMacro("SetPathEndPoint() is not valid for this filter. Use AddPathInfo() instead.");
   }
@@ -119,7 +119,7 @@ public:
    *  Warning: AddPathEndPoint() is not valid for this filter.
    *  This method is provided by the superclass, however it is not
    *  used by this subclass. Use AddPathInfo() instead.*/
-  void AddPathEndPoint( const PointType& ) ITK_OVERRIDE
+  void AddPathEndPoint( const PointType& ) override
   {
     itkWarningMacro("AddPathEndPoint() is not valid for this filter. Use AddPathInfo() instead.");
   }
@@ -128,7 +128,7 @@ public:
    *  Warning: ClearPathEndPoints() is not valid for this filter.
    *  This method is provided by the superclass, however it is not
    *  used by this subclass. Use ClearPathInfo() instead.*/
-  void ClearPathEndPoints() ITK_OVERRIDE
+  void ClearPathEndPoints() override
   {
     itkWarningMacro("ClearPathEndPoints() is not valid for this filter. Use ClearPathInfo() instead.");
   }
@@ -147,27 +147,27 @@ public:
   }
 
   /** Handle optimizer iteration events. */
-  void Execute( const itk::Object * object, const itk::EventObject & event ) ITK_OVERRIDE;
+  void Execute( const itk::Object * object, const itk::EventObject & event ) override;
 
   /** access the arrival image for debugging purposes */
   itkGetConstMacro( CurrentArrivalFunction, InputImagePointer );
 
 protected:
   SpeedFunctionToPathFilter( );
-  ~SpeedFunctionToPathFilter( ) ITK_OVERRIDE;
-  void PrintSelf( std::ostream& os, Indent indent ) const ITK_OVERRIDE;
+  ~SpeedFunctionToPathFilter( ) override;
+  void PrintSelf( std::ostream& os, Indent indent ) const override;
 
   /** Implemention of algorithm. */
-  void GenerateData( void ) ITK_OVERRIDE;
+  void GenerateData( void ) override;
 
   /** Get the number of paths which the user has instructed to extracted. */
-  unsigned int GetNumberOfPathsToExtract( ) const ITK_OVERRIDE;
+  unsigned int GetNumberOfPathsToExtract( ) const override;
 
   /** Compute the arrival function from which to extract the path. */
-  InputImageType * ComputeArrivalFunction( ) ITK_OVERRIDE;
+  InputImageType * ComputeArrivalFunction( ) override;
 
   /** Override handling of optimizer iteration events to accomodate way points. */
-  const PointsContainerType & GetNextEndPoint( ) ITK_OVERRIDE;
+  const PointsContainerType & GetNextEndPoint( ) override;
 
   std::vector< typename PathInformationType::Pointer > m_Information;
   InputImagePointer                                    m_CurrentArrivalFunction;
