@@ -147,27 +147,27 @@ public:
   }
 
   /** Handle optimizer iteration events. */
-  virtual void Execute( const itk::Object * object, const itk::EventObject & event ) ITK_OVERRIDE;
+  void Execute( const itk::Object * object, const itk::EventObject & event ) ITK_OVERRIDE;
 
   /** access the arrival image for debugging purposes */
   itkGetConstMacro( CurrentArrivalFunction, InputImagePointer );
 
 protected:
   SpeedFunctionToPathFilter( );
-  ~SpeedFunctionToPathFilter( );
-  virtual void PrintSelf( std::ostream& os, Indent indent ) const ITK_OVERRIDE;
+  ~SpeedFunctionToPathFilter( ) ITK_OVERRIDE;
+  void PrintSelf( std::ostream& os, Indent indent ) const ITK_OVERRIDE;
 
   /** Implemention of algorithm. */
   void GenerateData( void ) ITK_OVERRIDE;
 
   /** Get the number of paths which the user has instructed to extracted. */
-  virtual unsigned int GetNumberOfPathsToExtract( ) const ITK_OVERRIDE;
+  unsigned int GetNumberOfPathsToExtract( ) const ITK_OVERRIDE;
 
   /** Compute the arrival function from which to extract the path. */
-  virtual InputImageType * ComputeArrivalFunction( ) ITK_OVERRIDE;
+  InputImageType * ComputeArrivalFunction( ) ITK_OVERRIDE;
 
   /** Override handling of optimizer iteration events to accomodate way points. */
-  virtual const PointsContainerType & GetNextEndPoint( ) ITK_OVERRIDE;
+  const PointsContainerType & GetNextEndPoint( ) ITK_OVERRIDE;
 
   std::vector< typename PathInformationType::Pointer > m_Information;
   InputImagePointer                                    m_CurrentArrivalFunction;

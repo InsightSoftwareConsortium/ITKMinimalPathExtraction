@@ -121,11 +121,11 @@ public:
 
   /** This method returns the value of the cost function corresponding
     * to the specified parameters. */
-  virtual MeasureType GetValue( const ParametersType & parameters ) const ITK_OVERRIDE;
+  MeasureType GetValue( const ParametersType & parameters ) const ITK_OVERRIDE;
 
   /** This method returns the derivative of the cost function corresponding
     * to the specified parameters. */
-  virtual void GetDerivative( const ParametersType & parameters,
+  void GetDerivative( const ParametersType & parameters,
                               DerivativeType & derivative ) const ITK_OVERRIDE;
 
   // Set these depending on whether you will be minimizing or maximizing.
@@ -142,7 +142,7 @@ public:
   
 protected:
   SingleImageCostFunction();
-  virtual ~SingleImageCostFunction() {}
+  ~SingleImageCostFunction() ITK_OVERRIDE {}
   void PrintSelf(std::ostream& os, Indent indent) const ITK_OVERRIDE;
 
 private:
