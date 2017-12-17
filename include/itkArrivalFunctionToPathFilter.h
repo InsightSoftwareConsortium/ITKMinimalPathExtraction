@@ -79,7 +79,7 @@ public:
 
 protected:
   ArrivalFunctionToPathCommand(){}
-  ~ArrivalFunctionToPathCommand(){}
+  ~ArrivalFunctionToPathCommand() ITK_OVERRIDE{}
 
 private:
   ITK_DISALLOW_COPY_AND_ASSIGN(ArrivalFunctionToPathCommand);
@@ -212,8 +212,8 @@ public:
 
 protected:
   ArrivalFunctionToPathFilter();
-  ~ArrivalFunctionToPathFilter();
-  virtual void PrintSelf(std::ostream& os, Indent indent) const ITK_OVERRIDE;
+  ~ArrivalFunctionToPathFilter() ITK_OVERRIDE;
+  void PrintSelf(std::ostream& os, Indent indent) const ITK_OVERRIDE;
 
   /** Override since the filter needs all the data for the algorithm */
   void GenerateInputRequestedRegion() ITK_OVERRIDE;
