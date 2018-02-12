@@ -109,7 +109,7 @@ typename ArrivalFunctionToPathFilter<TInputImage,TOutputPath>::InputImageType *
 ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 ::ComputeArrivalFunction()
 {
-  InputImageType * function = (InputImageType *)this->ProcessObject::GetInput(0);
+  auto * function = (InputImageType *)this->ProcessObject::GetInput(0);
   return function;
 }
 
