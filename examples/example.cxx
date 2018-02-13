@@ -20,7 +20,7 @@
 int example_gradientdescent( int argc, char* argv[] )
 {
 // Typedefs
-const unsigned int Dimension = 2;
+constexpr unsigned int Dimension = 2;
 using PixelType = float;
 using OutputPixelType = unsigned char;
 using ImageType = itk::Image< PixelType, Dimension >;
@@ -124,7 +124,7 @@ return EXIT_SUCCESS;
 int example_regularstepgradientdescent( int argc, char* argv[] )
 {
 // Typedefs
-const unsigned int Dimension = 2;
+constexpr unsigned int Dimension = 2;
 using PixelType = float;
 using OutputPixelType = unsigned char;
 using ImageType = itk::Image< PixelType, Dimension >;
