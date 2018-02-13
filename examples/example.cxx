@@ -21,16 +21,16 @@ int example_gradientdescent( int argc, char* argv[] )
 {
 // Typedefs
 const unsigned int Dimension = 2;
-typedef float PixelType;
-typedef unsigned char OutputPixelType;
-typedef itk::Image< PixelType, Dimension > ImageType;
-typedef itk::Image< OutputPixelType, Dimension > OutputImageType;
-typedef itk::ImageFileReader< ImageType > ReaderType;
-typedef itk::ImageFileWriter< OutputImageType > WriterType;
-typedef itk::PolyLineParametricPath< Dimension > PathType;
-typedef itk::SpeedFunctionToPathFilter< ImageType, PathType > PathFilterType;
-typedef PathFilterType::CostFunctionType::CoordRepType CoordRepType;
-typedef itk::PathIterator< OutputImageType, PathType > PathIteratorType;
+using PixelType = float;
+using OutputPixelType = unsigned char;
+using ImageType = itk::Image< PixelType, Dimension >;
+using OutputImageType = itk::Image< OutputPixelType, Dimension >;
+using ReaderType = itk::ImageFileReader< ImageType >;
+using WriterType = itk::ImageFileWriter< OutputImageType >;
+using PathType = itk::PolyLineParametricPath< Dimension >;
+using PathFilterType = itk::SpeedFunctionToPathFilter< ImageType, PathType >;
+using CoordRepType = PathFilterType::CostFunctionType::CoordRepType;
+using PathIteratorType = itk::PathIterator< OutputImageType, PathType >;
 
 // Get filename arguments
 unsigned int argi = 1;
@@ -45,8 +45,7 @@ ImageType::Pointer speed = reader->GetOutput();
 speed->DisconnectPipeline();
 
 // Create interpolator
-typedef itk::LinearInterpolateImageFunction<ImageType, CoordRepType>
-  InterpolatorType;
+using InterpolatorType = itk::LinearInterpolateImageFunction<ImageType, CoordRepType>;
 InterpolatorType::Pointer interp = InterpolatorType::New();
 
 // Create cost function
@@ -55,7 +54,7 @@ PathFilterType::CostFunctionType::Pointer cost =
 cost->SetInterpolator( interp );
 
 // Create optimizer
-typedef itk::GradientDescentOptimizer OptimizerType;
+using OptimizerType = itk::GradientDescentOptimizer;
 OptimizerType::Pointer optimizer = OptimizerType::New();
 optimizer->SetNumberOfIterations( 1000 );
 
@@ -73,7 +72,7 @@ end[0] = 100; end[1] = 10;
 way1[0] = 10; way1[1] = 10;
 
 // Add path information
-typedef PathFilterType::PathInformationType PathInformationType;
+using PathInformationType = PathFilterType::PathInformationType;
 PathInformationType::Pointer info = PathInformationType::New();
 info->SetStartPoint( start );
 info->SetEndPoint( end );
@@ -126,16 +125,16 @@ int example_regularstepgradientdescent( int argc, char* argv[] )
 {
 // Typedefs
 const unsigned int Dimension = 2;
-typedef float PixelType;
-typedef unsigned char OutputPixelType;
-typedef itk::Image< PixelType, Dimension > ImageType;
-typedef itk::Image< OutputPixelType, Dimension > OutputImageType;
-typedef itk::ImageFileReader< ImageType > ReaderType;
-typedef itk::ImageFileWriter< OutputImageType > WriterType;
-typedef itk::PolyLineParametricPath< Dimension > PathType;
-typedef itk::SpeedFunctionToPathFilter< ImageType, PathType > PathFilterType;
-typedef PathFilterType::CostFunctionType::CoordRepType CoordRepType;
-typedef itk::PathIterator< OutputImageType, PathType > PathIteratorType;
+using PixelType = float;
+using OutputPixelType = unsigned char;
+using ImageType = itk::Image< PixelType, Dimension >;
+using OutputImageType = itk::Image< OutputPixelType, Dimension >;
+using ReaderType = itk::ImageFileReader< ImageType >;
+using WriterType = itk::ImageFileWriter< OutputImageType >;
+using PathType = itk::PolyLineParametricPath< Dimension >;
+using PathFilterType = itk::SpeedFunctionToPathFilter< ImageType, PathType >;
+using CoordRepType = PathFilterType::CostFunctionType::CoordRepType;
+using PathIteratorType = itk::PathIterator< OutputImageType, PathType >;
 
 // Get filename arguments
 unsigned int argi = 1;
@@ -150,8 +149,7 @@ ImageType::Pointer speed = reader->GetOutput();
 speed->DisconnectPipeline();
 
 // Create interpolator
-typedef itk::LinearInterpolateImageFunction<ImageType, CoordRepType>
-  InterpolatorType;
+using InterpolatorType = itk::LinearInterpolateImageFunction<ImageType, CoordRepType>;
 InterpolatorType::Pointer interp = InterpolatorType::New();
 
 // Create cost function
@@ -160,7 +158,7 @@ PathFilterType::CostFunctionType::Pointer cost =
 cost->SetInterpolator( interp );
 
 // Create optimizer
-typedef itk::RegularStepGradientDescentOptimizer OptimizerType;
+using OptimizerType = itk::RegularStepGradientDescentOptimizer;
 OptimizerType::Pointer optimizer = OptimizerType::New();
 optimizer->SetNumberOfIterations( 1000 );
 optimizer->SetMaximumStepLength( 0.5 );
@@ -181,7 +179,7 @@ end[0] = 100; end[1] = 10;
 way1[0] = 10; way1[1] = 10;
 
 // Add path information
-typedef PathFilterType::PathInformationType PathInformationType;
+using PathInformationType = PathFilterType::PathInformationType;
 PathInformationType::Pointer info = PathInformationType::New();
 info->SetStartPoint( start );
 info->SetEndPoint( end );

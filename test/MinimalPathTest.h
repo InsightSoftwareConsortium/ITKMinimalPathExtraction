@@ -58,8 +58,8 @@ int ReadPathFile( const char * PathFilename, typename PathFilterType::Pointer pa
     // Path: [272.00, 128.00] [381.00, 001.00]
     // Path: [272.00, 128.00] [002.00, 130.00]
     // Path: [272.00, 128.00] [274.00, 268.00]
-    typedef itk::Point< double, VDimension >             PointType;
-    typedef itk::SpeedFunctionPathInformation<PointType> PathInfoType;
+    using PointType = itk::Point< double, VDimension >;
+    using PathInfoType = itk::SpeedFunctionPathInformation<PointType>;
 
     // NOTE: No checking is done on the path file: the user must ensure it is valid!!!
     std::string filename = PathFilename;
@@ -122,13 +122,13 @@ template <class PathFilterType, unsigned int VDimension>
 int ReadPathImage( const char * PathImagename, typename PathFilterType::Pointer pathFilter )
 {
 
-    typedef itk::Point< double, VDimension >             PointType;
-    typedef itk::SpeedFunctionPathInformation<PointType> PathInfoType;
-    typedef std::vector< PointType >                     PointsContainerType;
+    using PointType = itk::Point< double, VDimension >;
+    using PathInfoType = itk::SpeedFunctionPathInformation<PointType>;
+    using PointsContainerType = std::vector< PointType >;
     
-    typedef itk::Image< unsigned char, VDimension > ImageType;
-    typedef itk::ImageFileReader< ImageType >       ReaderType;
-    typedef typename ImageType::IndexType           IndexType;
+    using ImageType = itk::Image< unsigned char, VDimension >;
+    using ReaderType = itk::ImageFileReader< ImageType >;
+    using IndexType = typename ImageType::IndexType;
 
     typename ReaderType::Pointer reader = ReaderType::New();
     reader->SetFileName(PathImagename);
@@ -138,11 +138,11 @@ int ReadPathImage( const char * PathImagename, typename PathFilterType::Pointer 
     labelIm->DisconnectPipeline();
       
     // iterate over the image and collect PointType locations for each non zero entry
-    typedef std::map< unsigned char, PointsContainerType> PointMapType;
+    using PointMapType = std::map< unsigned char, PointsContainerType>;
 
     PointMapType pmap;
 
-    typedef typename itk::ImageRegionIterator<ImageType> IteratorType;
+    using IteratorType = typename itk::ImageRegionIterator<ImageType>;
     IteratorType it(labelIm, labelIm->GetLargestPossibleRegion());
 
     while (!it.IsAtEnd())
@@ -182,16 +182,16 @@ template <unsigned int VDimension>
 int Test_SpeedToPath_GradientDescent_ND(int argc, char* argv[])
 {
 	const unsigned int Dimension = VDimension;
-    typedef float PixelType;
-    typedef unsigned char OutputPixelType;
-    typedef itk::Image< PixelType, Dimension > ImageType;
-    typedef itk::Image< OutputPixelType, Dimension > OutputImageType;
-    typedef itk::ImageFileReader< ImageType > ReaderType;
-    typedef itk::ImageFileWriter< OutputImageType > WriterType;
-    typedef itk::PolyLineParametricPath< Dimension > PathType;
-    typedef itk::SpeedFunctionToPathFilter< ImageType, PathType > PathFilterType;
-    typedef typename PathFilterType::CostFunctionType::CoordRepType CoordRepType;
-    typedef itk::PathIterator< OutputImageType, PathType > PathIteratorType;
+    using PixelType = float;
+    using OutputPixelType = unsigned char;
+    using ImageType = itk::Image< PixelType, Dimension >;
+    using OutputImageType = itk::Image< OutputPixelType, Dimension >;
+    using ReaderType = itk::ImageFileReader< ImageType >;
+    using WriterType = itk::ImageFileWriter< OutputImageType >;
+    using PathType = itk::PolyLineParametricPath< Dimension >;
+    using PathFilterType = itk::SpeedFunctionToPathFilter< ImageType, PathType >;
+    using CoordRepType = typename PathFilterType::CostFunctionType::CoordRepType;
+    using PathIteratorType = itk::PathIterator< OutputImageType, PathType >;
 
     try
     {
@@ -227,8 +227,7 @@ int Test_SpeedToPath_GradientDescent_ND(int argc, char* argv[])
         speed->DisconnectPipeline();
 
         // Create Interpolator
-        typedef itk::LinearInterpolateImageFunction<ImageType, CoordRepType>
-          InterpolatorType;
+        using InterpolatorType = itk::LinearInterpolateImageFunction<ImageType, CoordRepType>;
         typename InterpolatorType::Pointer interp = InterpolatorType::New();
 
         // Create Cost Function
@@ -237,7 +236,7 @@ int Test_SpeedToPath_GradientDescent_ND(int argc, char* argv[])
         cost->SetInterpolator( interp );
 
         // Create GradientDescentOptimizer
-        typedef itk::GradientDescentOptimizer OptimizerType;
+        using OptimizerType = itk::GradientDescentOptimizer;
         typename OptimizerType::Pointer optimizer = OptimizerType::New();
         optimizer->SetNumberOfIterations( NumberOfIterations );
 
@@ -317,16 +316,16 @@ template <unsigned int VDimension>
 int Test_SpeedToPath_RegularStepGradientDescent_ND(int argc, char* argv[])
 {
 	const unsigned int Dimension = VDimension;
-	typedef float PixelType;
-    typedef unsigned char OutputPixelType;
-    typedef itk::Image< PixelType, Dimension > ImageType;
-    typedef itk::Image< OutputPixelType, Dimension > OutputImageType;
-    typedef itk::ImageFileReader< ImageType > ReaderType;
-    typedef itk::ImageFileWriter< OutputImageType > WriterType;
-    typedef itk::PolyLineParametricPath< Dimension > PathType;
-    typedef itk::SpeedFunctionToPathFilter< ImageType, PathType > PathFilterType;
-    typedef typename PathFilterType::CostFunctionType::CoordRepType CoordRepType;
-    typedef itk::PathIterator< OutputImageType, PathType > PathIteratorType;
+	using PixelType = float;
+    using OutputPixelType = unsigned char;
+    using ImageType = itk::Image< PixelType, Dimension >;
+    using OutputImageType = itk::Image< OutputPixelType, Dimension >;
+    using ReaderType = itk::ImageFileReader< ImageType >;
+    using WriterType = itk::ImageFileWriter< OutputImageType >;
+    using PathType = itk::PolyLineParametricPath< Dimension >;
+    using PathFilterType = itk::SpeedFunctionToPathFilter< ImageType, PathType >;
+    using CoordRepType = typename PathFilterType::CostFunctionType::CoordRepType;
+    using PathIteratorType = itk::PathIterator< OutputImageType, PathType >;
 
     try
     {
@@ -372,8 +371,7 @@ int Test_SpeedToPath_RegularStepGradientDescent_ND(int argc, char* argv[])
             if (spacing[dim] < minspacing) minspacing = spacing[dim];
 
         // Create Interpolator
-        typedef itk::LinearInterpolateImageFunction<ImageType, CoordRepType>
-          InterpolatorType;
+        using InterpolatorType = itk::LinearInterpolateImageFunction<ImageType, CoordRepType>;
         typename InterpolatorType::Pointer interp = InterpolatorType::New();
 
         // Create Cost Function
@@ -382,7 +380,7 @@ int Test_SpeedToPath_RegularStepGradientDescent_ND(int argc, char* argv[])
         cost->SetInterpolator( interp );
 
         // Create RegularStepGradientDescentOptimizer
-        typedef itk::RegularStepGradientDescentOptimizer OptimizerType;
+        using OptimizerType = itk::RegularStepGradientDescentOptimizer;
         typename OptimizerType::Pointer optimizer = OptimizerType::New();
         optimizer->SetNumberOfIterations( NumberOfIterations );
         optimizer->SetMaximumStepLength( 1.0*StepLengthFactor*minspacing );
@@ -465,16 +463,16 @@ template <unsigned int VDimension>
 int Test_SpeedToPath_IterateNeighborhood_ND(int argc, char* argv[])
 {
 	const unsigned int Dimension = VDimension;
-	typedef float PixelType;
-    typedef unsigned char OutputPixelType;
-    typedef itk::Image< PixelType, Dimension > ImageType;
-    typedef itk::Image< OutputPixelType, Dimension > OutputImageType;
-    typedef itk::ImageFileReader< ImageType > ReaderType;
-    typedef itk::ImageFileWriter< OutputImageType > WriterType;
-    typedef itk::PolyLineParametricPath< Dimension > PathType;
-    typedef itk::SpeedFunctionToPathFilter< ImageType, PathType > PathFilterType;
-    typedef typename PathFilterType::CostFunctionType::CoordRepType CoordRepType;
-    typedef itk::PathIterator< OutputImageType, PathType > PathIteratorType;
+	using PixelType = float;
+    using OutputPixelType = unsigned char;
+    using ImageType = itk::Image< PixelType, Dimension >;
+    using OutputImageType = itk::Image< OutputPixelType, Dimension >;
+    using ReaderType = itk::ImageFileReader< ImageType >;
+    using WriterType = itk::ImageFileWriter< OutputImageType >;
+    using PathType = itk::PolyLineParametricPath< Dimension >;
+    using PathFilterType = itk::SpeedFunctionToPathFilter< ImageType, PathType >;
+    using CoordRepType = typename PathFilterType::CostFunctionType::CoordRepType;
+    using PathIteratorType = itk::PathIterator< OutputImageType, PathType >;
 
     try
     {
@@ -510,8 +508,7 @@ int Test_SpeedToPath_IterateNeighborhood_ND(int argc, char* argv[])
         speed->DisconnectPipeline();
 
         // Create Interpolator
-        typedef itk::LinearInterpolateImageFunction<ImageType, CoordRepType>
-          InterpolatorType;
+        using InterpolatorType = itk::LinearInterpolateImageFunction<ImageType, CoordRepType>;
         typename InterpolatorType::Pointer interp = InterpolatorType::New();
 
         // Create Cost Function
@@ -520,7 +517,7 @@ int Test_SpeedToPath_IterateNeighborhood_ND(int argc, char* argv[])
         cost->SetInterpolator( interp );
 
         // Create IterateNeighborhoodOptimizer
-        typedef itk::IterateNeighborhoodOptimizer OptimizerType;
+        using OptimizerType = itk::IterateNeighborhoodOptimizer;
         typename OptimizerType::Pointer optimizer = OptimizerType::New();
         optimizer->MinimizeOn( );
         optimizer->FullyConnectedOn( );
@@ -603,16 +600,16 @@ template <unsigned int VDimension>
 int Test_SpeedToPath_IterateNeighborhood_ExtendedSeed_ND(int argc, char* argv[])
 {
 	const unsigned int Dimension = VDimension;
-	typedef float PixelType;
-    typedef unsigned char OutputPixelType;
-    typedef itk::Image< PixelType, Dimension > ImageType;
-    typedef itk::Image< OutputPixelType, Dimension > OutputImageType;
-    typedef itk::ImageFileReader< ImageType > ReaderType;
-    typedef itk::ImageFileWriter< OutputImageType > WriterType;
-    typedef itk::PolyLineParametricPath< Dimension > PathType;
-    typedef itk::SpeedFunctionToPathFilter< ImageType, PathType > PathFilterType;
-    typedef typename PathFilterType::CostFunctionType::CoordRepType CoordRepType;
-    typedef itk::PathIterator< OutputImageType, PathType > PathIteratorType;
+	using PixelType = float;
+    using OutputPixelType = unsigned char;
+    using ImageType = itk::Image< PixelType, Dimension >;
+    using OutputImageType = itk::Image< OutputPixelType, Dimension >;
+    using ReaderType = itk::ImageFileReader< ImageType >;
+    using WriterType = itk::ImageFileWriter< OutputImageType >;
+    using PathType = itk::PolyLineParametricPath< Dimension >;
+    using PathFilterType = itk::SpeedFunctionToPathFilter< ImageType, PathType >;
+    using CoordRepType = typename PathFilterType::CostFunctionType::CoordRepType;
+    using PathIteratorType = itk::PathIterator< OutputImageType, PathType >;
 
     try
     {
@@ -648,8 +645,7 @@ int Test_SpeedToPath_IterateNeighborhood_ExtendedSeed_ND(int argc, char* argv[])
         speed->DisconnectPipeline();
 
         // Create Interpolator
-        typedef itk::LinearInterpolateImageFunction<ImageType, CoordRepType>
-          InterpolatorType;
+        using InterpolatorType = itk::LinearInterpolateImageFunction<ImageType, CoordRepType>;
         typename InterpolatorType::Pointer interp = InterpolatorType::New();
 
         // Create Cost Function
@@ -659,7 +655,7 @@ int Test_SpeedToPath_IterateNeighborhood_ExtendedSeed_ND(int argc, char* argv[])
 	cost->SetMinimize();
 	
         // Create IterateNeighborhoodOptimizer
-        typedef itk::IterateNeighborhoodOptimizer OptimizerType;
+        using OptimizerType = itk::IterateNeighborhoodOptimizer;
         typename OptimizerType::Pointer optimizer = OptimizerType::New();
         optimizer->MinimizeOn( );
         optimizer->FullyConnectedOn( );
