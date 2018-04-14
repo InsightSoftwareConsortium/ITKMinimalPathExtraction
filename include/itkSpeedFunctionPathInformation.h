@@ -53,6 +53,8 @@ class SpeedFunctionPathInformation :
   public LightObject
 {
 public:
+  ITK_DISALLOW_COPY_AND_ASSIGN(SpeedFunctionPathInformation);
+
   /** Standard class type alias. */
   using Self = SpeedFunctionPathInformation;
   using Superclass = LightObject;
@@ -132,8 +134,6 @@ protected:
     V[0]=P;
     return(V);
   }
-private:
-  ITK_DISALLOW_COPY_AND_ASSIGN(SpeedFunctionPathInformation);
 };
 
 
