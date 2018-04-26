@@ -67,6 +67,8 @@ class ITK_EXPORT SpeedFunctionToPathFilter :
     public ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 {
 public:
+  ITK_DISALLOW_COPY_AND_ASSIGN(SpeedFunctionToPathFilter);
+
   /** Standard class type alias. */
   using Self = SpeedFunctionToPathFilter;
   using Superclass = ArrivalFunctionToPathFilter<TInputImage,TOutputPath>;
@@ -170,10 +172,6 @@ protected:
 
   std::vector< typename PathInformationType::Pointer > m_Information;
   InputImagePointer                                    m_CurrentArrivalFunction;
-
-private:
-  ITK_DISALLOW_COPY_AND_ASSIGN(SpeedFunctionToPathFilter);
-
 };
 
 } // end namespace itk
