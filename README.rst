@@ -1,8 +1,20 @@
 ITKMinimalPathExtraction
 ========================
 
-.. image:: https://circleci.com/gh/InsightSoftwareConsortium/ITKMinimalPathExtraction.svg?style=svg
+.. |CircleCI| image:: https://circleci.com/gh/InsightSoftwareConsortium/ITKMinimalPathExtraction.svg?style=shield
     :target: https://circleci.com/gh/InsightSoftwareConsortium/ITKMinimalPathExtraction
+
+.. |TravisCI| image:: https://travis-ci.org/InsightSoftwareConsortium/ITKMinimalPathExtraction.svg?branch=release
+    :target: https://travis-ci.org/InsightSoftwareConsortium/ITKMinimalPathExtraction
+
+.. |AppVeyor| image:: https://img.shields.io/appveyor/ci/itkrobot/itkminimalpathextraction.svg
+    :target: https://ci.appveyor.com/project/itkrobot/itkminimalpathextraction
+
+=========== =========== ===========
+   Linux      macOS       Windows
+=========== =========== ===========
+|CircleCI|  |TravisCI|  |AppVeyor|
+=========== =========== ===========
 
 This is an `ITK <http://itk.org>`_ module that implements a minimal path
 extraction framework based on Fast Marching arrival functions.
