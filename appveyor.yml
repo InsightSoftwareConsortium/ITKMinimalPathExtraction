@@ -1,6 +1,7 @@
 branches:
- only:
-  - master
+  only:
+    - master
+    - release
 
 version: "0.0.1.{build}"
 
