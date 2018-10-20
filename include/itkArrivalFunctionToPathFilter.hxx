@@ -24,7 +24,7 @@
 namespace itk
 {
 
-template <class TInputImage, class TOutputPath>
+template <typename TInputImage, typename TOutputPath>
 ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 ::ArrivalFunctionToPathFilter()
 {
@@ -33,13 +33,13 @@ ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 }
 
 
-template <class TInputImage, class TOutputPath>
+template <typename TInputImage, typename TOutputPath>
 ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 ::~ArrivalFunctionToPathFilter()
 {
 }
 
-template <class TInputImage, class TOutputPath>
+template <typename TInputImage, typename TOutputPath>
 void
 ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 ::SetPathEndPoint(const PointType &point)
@@ -48,7 +48,7 @@ ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
   this->AddPathEndPoint( point );
 }
 
-template <class TInputImage, class TOutputPath>
+template <typename TInputImage, typename TOutputPath>
 void
 ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 ::AddPathEndPoint(const PointType &point)
@@ -60,7 +60,7 @@ ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 }
 
 
-template <class TInputImage, class TOutputPath>
+template <typename TInputImage, typename TOutputPath>
 void
 ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 ::ClearPathEndPoints()
@@ -73,7 +73,7 @@ ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 }
 
 
-template <class TInputImage, class TOutputPath>
+template <typename TInputImage, typename TOutputPath>
 void
 ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 ::GenerateInputRequestedRegion()
@@ -88,7 +88,7 @@ ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 }
 
 
-template<class TInputImage, class TOutputPath>
+template<typename TInputImage, typename TOutputPath>
 unsigned int
 ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 ::GetNumberOfPathsToExtract() const
@@ -96,7 +96,7 @@ ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
   return m_PointList.size();
 }
 
-template<class TInputImage, class TOutputPath>
+template<typename TInputImage, typename TOutputPath>
 const typename ArrivalFunctionToPathFilter<TInputImage,TOutputPath>::PointsContainerType &
 ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 ::GetNextEndPoint()
@@ -104,7 +104,7 @@ ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
   return m_PointList[m_CurrentOutput];
 }
 
-template<class TInputImage, class TOutputPath>
+template<typename TInputImage, typename TOutputPath>
 typename ArrivalFunctionToPathFilter<TInputImage,TOutputPath>::InputImageType *
 ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 ::ComputeArrivalFunction()
@@ -113,7 +113,7 @@ ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
   return function;
 }
 
-template <class TInputImage, class TOutputPath>
+template <typename TInputImage, typename TOutputPath>
 void
 ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 ::GenerateData( void )
@@ -213,7 +213,7 @@ ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
   m_Optimizer->RemoveObserver( observerTag );
 }
 
-template <class TInputImage, class TOutputPath>
+template <typename TInputImage, typename TOutputPath>
 void
 ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 ::Execute( const Object * object, const EventObject & event )
@@ -267,7 +267,7 @@ ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
   output->AddVertex( cindex );
 }
 
-template<class TInputImage, class TOutputPath>
+template<typename TInputImage, typename TOutputPath>
 void
 ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 ::PrintSelf(std::ostream& os, Indent indent) const

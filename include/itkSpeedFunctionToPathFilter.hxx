@@ -29,7 +29,7 @@ namespace itk
 /**
  *
  */
-template <class TInputImage, class TOutputPath>
+template <typename TInputImage, typename TOutputPath>
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 ::SpeedFunctionToPathFilter()
 {
@@ -40,7 +40,7 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 /**
  *
  */
-template <class TInputImage, class TOutputPath>
+template <typename TInputImage, typename TOutputPath>
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 ::~SpeedFunctionToPathFilter()
 {
@@ -50,7 +50,7 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 /**
  *
  */
-template<class TInputImage, class TOutputPath>
+template<typename TInputImage, typename TOutputPath>
 unsigned int
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 ::GetNumberOfPathsToExtract() const
@@ -62,7 +62,7 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 /**
  *
  */
-template<class TInputImage, class TOutputPath>
+template<typename TInputImage, typename TOutputPath>
 const typename SpeedFunctionToPathFilter<TInputImage,TOutputPath>::PointsContainerType &
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 ::GetNextEndPoint()
@@ -74,7 +74,7 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 /**
  *
  */
-template<class TInputImage, class TOutputPath>
+template<typename TInputImage, typename TOutputPath>
 typename SpeedFunctionToPathFilter<TInputImage,TOutputPath>::InputImageType *
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 ::ComputeArrivalFunction()
@@ -185,7 +185,7 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 /**
  *
  */
-template <class TInputImage, class TOutputPath>
+template <typename TInputImage, typename TOutputPath>
 void
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 ::GenerateData( void )
@@ -212,7 +212,7 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 /**
  *
  */
-template <class TInputImage, class TOutputPath>
+template <typename TInputImage, typename TOutputPath>
 void
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 ::Execute( const Object * object, const EventObject & event )
@@ -278,7 +278,7 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 /**
  *
  */
-template<class TInputImage, class TOutputPath>
+template<typename TInputImage, typename TOutputPath>
 void
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 ::PrintSelf(std::ostream& os, Indent indent) const
