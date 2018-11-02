@@ -102,7 +102,7 @@ int ReadPathFile( const char * PathFilename, typename PathFilterType::Pointer pa
                     std::vector<itksys::String> partsPoint;
                     partsPoint = itksys::SystemTools::SplitString( parts[i].c_str(), ',' );
                     for (unsigned int j=0; j<partsPoint.size(); j++)
-                        point[j] = atof( partsPoint[j].c_str() );
+                        point[j] = std::stod( partsPoint[j].c_str() );
                     if ( i==0 ) info->SetStartPoint( point );
                     else if ( i == numNonNullParts - 1 ) info->SetEndPoint( point );
                     else info->AddWayPoint( point );
@@ -214,8 +214,8 @@ int Test_SpeedToPath_GradientDescent_ND(int argc, char* argv[])
         char* OutputFilename = argv[argi++];
         char* SpeedFilename = argv[argi++];
         char* PathFilename = argv[argi++];
-        float TerminationValue = atof( argv[argi++] );
-        unsigned int NumberOfIterations = atoi( argv[argi++] );
+        float TerminationValue = std::stod( argv[argi++] );
+        unsigned int NumberOfIterations = std::stoi( argv[argi++] );
         // NOTE: Points will be read from the command line later
 
         // Read speed function
@@ -350,10 +350,10 @@ int Test_SpeedToPath_RegularStepGradientDescent_ND(int argc, char* argv[])
         char* OutputFilename = argv[argi++];
         char* SpeedFilename = argv[argi++];
         char* PathFilename = argv[argi++];
-        float TerminationValue = atof( argv[argi++] );
-        unsigned int NumberOfIterations = atoi( argv[argi++] );
-        float StepLengthFactor = atof( argv[argi++] );
-        float StepLengthRelax = atof( argv[argi++] );
+        float TerminationValue = std::stod( argv[argi++] );
+        unsigned int NumberOfIterations = std::stoi( argv[argi++] );
+        float StepLengthFactor = std::stod( argv[argi++] );
+        float StepLengthRelax = std::stod( argv[argi++] );
         // NOTE: Points will be read from the command line later
 
         // Read speed function
@@ -495,8 +495,8 @@ int Test_SpeedToPath_IterateNeighborhood_ND(int argc, char* argv[])
         char* OutputFilename = argv[argi++];
         char* SpeedFilename = argv[argi++];
         char* PathFilename = argv[argi++];
-        float TerminationValue = atof( argv[argi++] );
-        float StepLengthFactor = atof( argv[argi++] );
+        float TerminationValue = std::stod( argv[argi++] );
+        float StepLengthFactor = std::stod( argv[argi++] );
         // NOTE: Points will be read from the command line later
 
         // Read speed function
@@ -632,8 +632,8 @@ int Test_SpeedToPath_IterateNeighborhood_ExtendedSeed_ND(int argc, char* argv[])
         char* OutputFilename = argv[argi++];
         char* SpeedFilename = argv[argi++];
         char* PathImagename = argv[argi++];
-        float TerminationValue = atof( argv[argi++] );
-        float StepLengthFactor = atof( argv[argi++] );
+        float TerminationValue = std::stod( argv[argi++] );
+        float StepLengthFactor = std::stod( argv[argi++] );
         // NOTE: Points will be read from the command line later
 
         // Read speed function
