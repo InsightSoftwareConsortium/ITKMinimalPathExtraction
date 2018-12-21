@@ -20,7 +20,12 @@ setup(
     package_dir={'itk': 'itk'},
     download_url=r'https://github.com/InsightSoftwareConsortium/ITKMinimalPathExtraction',
     description=r'A minimal path extraction framework based on Fast Marching arrival functions.',
-    long_description='ITK is an open-source, cross-platform library that provides developers with an extensive suite of software tools for image analysis. Developed through extreme programming methodologies, ITK employs leading-edge algorithms for registering and segmenting multidimensional scientific images. This is an extension module for ITK based on Mueller, D.  "Fast Marching Minimal Path Extraction in ITK", http://hdl.handle.net/1926/1332 ',
+    long_description='itk-minimalpathextraction provides a minimal path '
+                     'extraction framework based on Fast Marching arrival '
+                     'functions.\n'
+                     'Please refer to:\n'
+                     'Mueller, D. "Fast Marching Minimal Path Extraction in ITK", '
+                     'Insight Journal, January-June 2008, http://hdl.handle.net/1926/1332.',
     classifiers=[
         "License :: OSI Approved :: Apache Software License",
         "Programming Language :: Python",
@@ -42,7 +47,7 @@ setup(
         ],
     license='Apache',
     keywords='ITK InsightToolkit',
-    url=r'https://itk.org/',
+    url=r'https://github.com/InsightSoftwareConsortium/ITKMinimalPathExtraction',
     install_requires=[
         r'itk'
     ]
