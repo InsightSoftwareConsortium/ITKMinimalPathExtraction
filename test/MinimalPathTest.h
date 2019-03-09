@@ -91,17 +91,17 @@ int ReadPathFile( const char * PathFilename, typename PathFilterType::Pointer pa
             itksys::SystemTools::ReplaceString( line, "[", "" );
             std::vector<itksys::String> parts;
             parts = itksys::SystemTools::SplitString( line.c_str(), ']' );
-            unsigned int numNonNullParts = 0;
+            std::vector<std::string>::size_type numNonNullParts = 0;
             for (auto & part : parts)
                 if ( part.length() != 0 ) numNonNullParts++;
-            for (unsigned int i=0; i<numNonNullParts; i++)
+            for (std::vector<std::string>::size_type i=0; i<numNonNullParts; i++)
             {
                 if ( parts[i].length() != 0 )
                 {
                     typename PathFilterType::PointType point;
                     std::vector<itksys::String> partsPoint;
                     partsPoint = itksys::SystemTools::SplitString( parts[i].c_str(), ',' );
-                    for (unsigned int j=0; j<partsPoint.size(); j++)
+                    for (std::vector<std::string>::size_type j=0; j<partsPoint.size(); j++)
                         point[j] = std::stod( partsPoint[j].c_str() );
                     if ( i==0 ) info->SetStartPoint( point );
                     else if ( i == numNonNullParts - 1 ) info->SetEndPoint( point );
