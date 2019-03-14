@@ -89,8 +89,7 @@ int ReadPathFile( const char * PathFilename, typename PathFilterType::Pointer pa
             itksys::SystemTools::ReplaceString( line, "Path: ", "" );
             itksys::SystemTools::ReplaceString( line, " ", "" );
             itksys::SystemTools::ReplaceString( line, "[", "" );
-            std::vector<itksys::String> parts;
-            parts = itksys::SystemTools::SplitString( line.c_str(), ']' );
+            std::vector<std::string> parts = itksys::SystemTools::SplitString( line, ']' );
             std::vector<std::string>::size_type numNonNullParts = 0;
             for (auto & part : parts)
                 if ( part.length() != 0 ) numNonNullParts++;
@@ -99,8 +98,7 @@ int ReadPathFile( const char * PathFilename, typename PathFilterType::Pointer pa
                 if ( parts[i].length() != 0 )
                 {
                     typename PathFilterType::PointType point;
-                    std::vector<itksys::String> partsPoint;
-                    partsPoint = itksys::SystemTools::SplitString( parts[i].c_str(), ',' );
+                    std::vector<std::string> partsPoint = itksys::SystemTools::SplitString( parts[i], ',' );
                     for (std::vector<std::string>::size_type j=0; j<partsPoint.size(); j++)
                         point[j] = std::stod( partsPoint[j].c_str() );
                     if ( i==0 ) info->SetStartPoint( point );
@@ -125,7 +123,7 @@ int ReadPathImage( const char * PathImagename, typename PathFilterType::Pointer 
     using PointType = itk::Point< double, VDimension >;
     using PathInfoType = itk::SpeedFunctionPathInformation<PointType>;
     using PointsContainerType = std::vector< PointType >;
-    
+
     using ImageType = itk::Image< unsigned char, VDimension >;
     using ReaderType = itk::ImageFileReader< ImageType >;
     using IndexType = typename ImageType::IndexType;
@@ -136,7 +134,7 @@ int ReadPathImage( const char * PathImagename, typename PathFilterType::Pointer 
     typename ImageType::Pointer labelIm = reader->GetOutput();
     labelIm->Update();
     labelIm->DisconnectPipeline();
-      
+
     // iterate over the image and collect PointType locations for each non zero entry
     using PointMapType = std::map< unsigned char, PointsContainerType>;
 
@@ -163,7 +161,7 @@ int ReadPathImage( const char * PathImagename, typename PathFilterType::Pointer 
     /*   { */
     /* 	std::cout << pmap[1][ii] << std::endl; */
     /*   } */
-    
+
     info->SetStartPoint(pmap[1]);
     info->SetEndPoint(pmap[2]);
     pmap.erase(1);
@@ -653,7 +651,7 @@ int Test_SpeedToPath_IterateNeighborhood_ExtendedSeed_ND(int argc, char* argv[])
             PathFilterType::CostFunctionType::New();
         cost->SetInterpolator( interp );
 	cost->SetMinimize();
-	
+
         // Create IterateNeighborhoodOptimizer
         using OptimizerType = itk::IterateNeighborhoodOptimizer;
         typename OptimizerType::Pointer optimizer = OptimizerType::New();
