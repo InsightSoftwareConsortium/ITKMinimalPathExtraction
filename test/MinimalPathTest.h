@@ -123,7 +123,7 @@ int ReadPathImage( const char * PathImagename, typename PathFilterType::Pointer 
     using PointType = itk::Point< double, VDimension >;
     using PathInfoType = itk::SpeedFunctionPathInformation<PointType>;
     using PointsContainerType = std::vector< PointType >;
-    
+
     using ImageType = itk::Image< unsigned char, VDimension >;
     using ReaderType = itk::ImageFileReader< ImageType >;
     using IndexType = typename ImageType::IndexType;
@@ -134,7 +134,7 @@ int ReadPathImage( const char * PathImagename, typename PathFilterType::Pointer 
     typename ImageType::Pointer labelIm = reader->GetOutput();
     labelIm->Update();
     labelIm->DisconnectPipeline();
-      
+
     // iterate over the image and collect PointType locations for each non zero entry
     using PointMapType = std::map< unsigned char, PointsContainerType>;
 
@@ -161,7 +161,7 @@ int ReadPathImage( const char * PathImagename, typename PathFilterType::Pointer 
     /*   { */
     /* 	std::cout << pmap[1][ii] << std::endl; */
     /*   } */
-    
+
     info->SetStartPoint(pmap[1]);
     info->SetEndPoint(pmap[2]);
     pmap.erase(1);
@@ -651,7 +651,7 @@ int Test_SpeedToPath_IterateNeighborhood_ExtendedSeed_ND(int argc, char* argv[])
             PathFilterType::CostFunctionType::New();
         cost->SetInterpolator( interp );
 	cost->SetMinimize();
-	
+
         // Create IterateNeighborhoodOptimizer
         using OptimizerType = itk::IterateNeighborhoodOptimizer;
         typename OptimizerType::Pointer optimizer = OptimizerType::New();
