@@ -1,6 +1,6 @@
 variables:
   ITKGitTag: v5.0rc01
-  CMakeBuildType: MinSizeRel
+  CMakeBuildType: Release
 
 trigger:
   batch: true
