@@ -1,20 +1,9 @@
 ITKMinimalPathExtraction
 ========================
 
-.. |CircleCI| image:: https://circleci.com/gh/InsightSoftwareConsortium/ITKMinimalPathExtraction.svg?style=shield
-    :target: https://circleci.com/gh/InsightSoftwareConsortium/ITKMinimalPathExtraction
-
-.. |TravisCI| image:: https://travis-ci.org/InsightSoftwareConsortium/ITKMinimalPathExtraction.svg?branch=master
-    :target: https://travis-ci.org/InsightSoftwareConsortium/ITKMinimalPathExtraction
-
-.. |AppVeyor| image:: https://img.shields.io/appveyor/ci/itkrobot/itkminimalpathextraction.svg
-    :target: https://ci.appveyor.com/project/itkrobot/itkminimalpathextraction
-
-=========== =========== ===========
-   Linux      macOS       Windows
-=========== =========== ===========
-|CircleCI|  |TravisCI|  |AppVeyor|
-=========== =========== ===========
+.. image::  https://dev.azure.com/InsightSoftwareConsortium/ITKModules/_apis/build/status/InsightSoftwareConsortium.ITKMinimalPathExtraction?branchName=master
+    :target: https://dev.azure.com/InsightSoftwareConsortium/ITKModules/_build/latest?definitionId=16&branchName=master
+    :alt: Build Status
 
 
 Overview
