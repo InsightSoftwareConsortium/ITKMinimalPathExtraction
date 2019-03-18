@@ -25,6 +25,10 @@ A more detailed description can be found in
 Installation
 ------------
 
+To install the binary Python packages::
+
+  python -m pip install itk-minimalpathextraction
+
 Since ITK 4.8.0, this module is available in the ITK source tree as a remote
 module. To enable it, set::
 
