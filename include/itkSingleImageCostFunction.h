@@ -110,6 +110,10 @@ public:
   itkSetConstObjectMacro( Image, ImageType );
   itkGetConstObjectMacro( Image, ImageType );
 
+  /** Get/set the DerivativeThreshold.  */
+  itkSetMacro( DerivativeThreshold, DerivativeType::ValueType );
+  itkGetConstReferenceMacro( DerivativeThreshold, DerivativeType::ValueType );
+
   /** Initialize the cost function */
   virtual void Initialize(void) throw ( ExceptionObject );
 
@@ -150,6 +154,7 @@ private:
   /** Used to define the value outside the image buffer. Important when
    *  path points are on the edge of an image */
   ImagePixelType                              m_OutsideValue;
+  typename DerivativeType::ValueType          m_DerivativeThreshold;
   
 };
 
