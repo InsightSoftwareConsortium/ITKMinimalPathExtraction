@@ -237,3 +237,43 @@ add_test(
     0.25
     0.5
 )
+
+## Repeat the synthetic tests with small voxels
+## Data is the same, but headers have been modified so
+## that spacing is 0.01
+## sp suffix stands for small pixels
+add_test(
+  NAME MinimalPathExtraction_Noise_01_NeighborhoodIterate_sp
+  COMMAND MinimalPathExtractionTestDriver
+    --compare ${TESTING_OUTPUT_PATH}/Noise-01-IterateNeighborhood-sp.png ${BASELINE_DIR}/Noise-01-IterateNeighborhood-sp.png
+    Test_SpeedToPath_IterateNeighborhood_2D
+    ${TESTING_OUTPUT_PATH}/Noise-01-IterateNeighborhood-sp.png
+    ${DATA_DIR}/Noise-01-Speed-sp.mhd
+    ${DATA_DIR}/Noise-01-sp.path
+    0.01
+    1
+)
+add_test(
+  NAME MinimalPathExtraction_Noise_01_GradientDescent_sp
+  COMMAND MinimalPathExtractionTestDriver
+    #--compare ${TESTING_OUTPUT_PATH}/Noise-01-GradientDescent.png ${BASELINE_DIR}/Noise-01-GradientDescent.png
+    Test_SpeedToPath_GradientDescent_2D
+    ${TESTING_OUTPUT_PATH}/Noise-01-GradientDescent-sp.png
+    ${DATA_DIR}/Noise-01-Speed-sp.mhd
+    ${DATA_DIR}/Noise-01-sp.path
+    0.01
+    1000
+)
+add_test(
+  NAME MinimalPathExtraction_Noise_01_RegularStepGradientDescent_sp
+  COMMAND MinimalPathExtractionTestDriver
+    #--compare ${TESTING_OUTPUT_PATH}/Noise-01-RegularStepGradientDescent.png ${BASELINE_DIR}/Noise-01-RegularStepGradientDescent.png
+    Test_SpeedToPath_RegularStepGradientDescent_2D
+    ${TESTING_OUTPUT_PATH}/Noise-01-RegularStepGradientDescent-sp.png
+    ${DATA_DIR}/Noise-01-Speed-sp.mhd
+    ${DATA_DIR}/Noise-01-sp.path
+    1.0
+    1000
+    1.0
+    0.5
+)
