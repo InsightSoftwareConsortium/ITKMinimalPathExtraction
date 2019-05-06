@@ -42,6 +42,7 @@ add_test(
     ${DATA_DIR}/Noise-01.path
     1.0
     1000
+    1.0
 )
 add_test(
   NAME MinimalPathExtraction_Noise_01_RegularStepGradientDescent
@@ -89,6 +90,7 @@ add_test(
     ${DATA_DIR}/Synthetic-01.path
     1.0
     1000
+    1.0
 )
 add_test(
   NAME MinimalPathExtraction_Synthetic_01_RegularStepGradientDescent
@@ -125,6 +127,7 @@ add_test(
     ${DATA_DIR}/Synthetic-02.path
     1.0
     3000
+    1.0
 )
 add_test(
   NAME MinimalPathExtraction_Synthetic_02_RegularStepGradientDescent
@@ -173,6 +176,7 @@ add_test(
     ${DATA_DIR}/Synthetic-04.path
     1.0
     3000
+    1.0
 )
 add_test(
   NAME MinimalPathExtraction_Synthetic_04_RegularStepGradientDescent
@@ -256,13 +260,14 @@ add_test(
 add_test(
   NAME MinimalPathExtraction_Noise_01_GradientDescent_sp
   COMMAND MinimalPathExtractionTestDriver
-    #--compare ${TESTING_OUTPUT_PATH}/Noise-01-GradientDescent.png ${BASELINE_DIR}/Noise-01-GradientDescent.png
+    --compare ${TESTING_OUTPUT_PATH}/Noise-01-GradientDescent-sp.png ${BASELINE_DIR}/Noise-01-GradientDescent-sp.png
     Test_SpeedToPath_GradientDescent_2D
     ${TESTING_OUTPUT_PATH}/Noise-01-GradientDescent-sp.png
     ${DATA_DIR}/Noise-01-Speed-sp.mhd
     ${DATA_DIR}/Noise-01-sp.path
     0.01
     1000
+    0.01
 )
 add_test(
   NAME MinimalPathExtraction_Noise_01_RegularStepGradientDescent_sp
@@ -272,7 +277,7 @@ add_test(
     ${TESTING_OUTPUT_PATH}/Noise-01-RegularStepGradientDescent-sp.png
     ${DATA_DIR}/Noise-01-Speed-sp.mhd
     ${DATA_DIR}/Noise-01-sp.path
-    1.0
+    0.01
     1000
     1.0
     0.5
@@ -297,8 +302,9 @@ add_test(
     ${TESTING_OUTPUT_PATH}/Synthetic-01-GradientDescent-sp.png
     ${DATA_DIR}/Synthetic-01-Speed-sp.mhd
     ${DATA_DIR}/Synthetic-01-sp.path
-    1.0
+    0.01
     1000
+    0.01
 )
 add_test(
   NAME MinimalPathExtraction_Synthetic_01_RegularStepGradientDescent_sp
@@ -308,7 +314,7 @@ add_test(
     ${TESTING_OUTPUT_PATH}/Synthetic-01-RegularStepGradientDescent-sp.png
     ${DATA_DIR}/Synthetic-01-Speed-sp.mhd
     ${DATA_DIR}/Synthetic-01-sp.path
-    1.0
+    0.01
     1000
     1.0
     0.5
@@ -334,8 +340,9 @@ add_test(
     ${TESTING_OUTPUT_PATH}/Synthetic-02-GradientDescent-sp.png
     ${DATA_DIR}/Synthetic-02-Speed-sp.mhd
     ${DATA_DIR}/Synthetic-02-sp.path
-    1.0
+    0.01
     3000
+    0.01
 )
 add_test(
   NAME MinimalPathExtraction_Synthetic_02_RegularStepGradientDescent_sp
@@ -345,7 +352,7 @@ add_test(
     ${TESTING_OUTPUT_PATH}/Synthetic-02-RegularStepGradientDescent-sp.png
     ${DATA_DIR}/Synthetic-02-Speed-sp.mhd
     ${DATA_DIR}/Synthetic-02-sp.path
-    1.0
+    0.01
     3000
     1.0
     0.5
@@ -383,8 +390,9 @@ add_test(
     ${TESTING_OUTPUT_PATH}/Synthetic-04-GradientDescent-sp.mhd
     ${DATA_DIR}/Synthetic-04-Speed-sp.mhd
     ${DATA_DIR}/Synthetic-04-sp.path
-    1.0
+    0.01
     3000
+    0.01
 )
 add_test(
   NAME MinimalPathExtraction_Synthetic_04_RegularStepGradientDescent_sp
@@ -394,8 +402,39 @@ add_test(
     ${TESTING_OUTPUT_PATH}/Synthetic-04-RegularStepGradientDescent-sp.mhd
     ${DATA_DIR}/Synthetic-04-Speed-sp.mhd
     ${DATA_DIR}/Synthetic-04-sp.path
-    1.0
+    0.01
     3000
     1.0
     0.5
+    )
+
+  ## test with path termination at the corner of mask, meaning
+  ## that some neighbours are not initialised in the arrival image.
+  ## The resulting gradient therefore needs to be computed carefully,
+  ## or the first step can put the point almost anywhere
+
+add_test(
+  NAME MinimalPathExtraction_Synthetic_01_B_GradientDescent_sp
+  COMMAND MinimalPathExtractionTestDriver
+    --compare ${TESTING_OUTPUT_PATH}/Synthetic-01-B-GradientDescent-sp.png ${BASELINE_DIR}/Synthetic-01-B-GradientDescent-sp.png
+    Test_SpeedToPath_GradientDescent_2D
+    ${TESTING_OUTPUT_PATH}/Synthetic-01-B-GradientDescent-sp.png
+    ${DATA_DIR}/Synthetic-01-sp-Speed.mhd
+    ${DATA_DIR}/Synthetic-01-B-sp.path
+    0.01
+    1000
+    0.01
+)
+
+add_test(
+  NAME MinimalPathExtraction_Synthetic_01_C_GradientDescent_sp
+  COMMAND MinimalPathExtractionTestDriver
+    --compare ${TESTING_OUTPUT_PATH}/Synthetic-01-B-GradientDescent-sp.png ${BASELINE_DIR}/Synthetic-01-B-GradientDescent-sp.png
+    Test_SpeedToPath_GradientDescent_2D
+    ${TESTING_OUTPUT_PATH}/Synthetic-01-C-GradientDescent-sp.png
+    ${DATA_DIR}/Synthetic-01-sp-Speed2.mhd
+    ${DATA_DIR}/Synthetic-01-C-sp.path
+    0.01
+    1000
+    0.01
 )

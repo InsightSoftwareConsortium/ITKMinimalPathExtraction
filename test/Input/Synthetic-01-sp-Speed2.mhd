@@ -1,0 +1,14 @@
+ObjectType = Image
+NDims = 3
+BinaryData = True
+BinaryDataByteOrderMSB = False
+CompressedData = False
+TransformMatrix = 1 0 0 0 1 0 0 0 1
+Offset = 0 0 0
+CenterOfRotation = 0 0 0
+AnatomicalOrientation = RAI
+ElementSpacing = 0.01 0.01 0.01
+ITK_FileNotes = Created by Convert3D
+DimSize = 300 300 1
+ElementType = MET_FLOAT
+ElementDataFile = Synthetic-01-sp-Speed2.raw
