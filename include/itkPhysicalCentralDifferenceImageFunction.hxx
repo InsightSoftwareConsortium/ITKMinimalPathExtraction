@@ -57,11 +57,9 @@ PhysicalCentralDifferenceImageFunction<TInputImage, TCoordRep>::Evaluate(const P
     PointType pointRight(point);
     pointRight[dim] += 1 * Superclass::m_Image->GetSpacing()[dim];
     TCoordRep valueRight = m_Interpolator->Evaluate(pointRight);
-
     // Compute derivative
     derivative[dim] = (valueRight - valueLeft) * (0.5 / Superclass::m_Image->GetSpacing()[dim]);
   }
-
   return (derivative);
 }
 

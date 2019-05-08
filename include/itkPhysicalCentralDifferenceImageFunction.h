@@ -21,10 +21,35 @@
 #include "itkImageFunction.h"
 #include "itkCovariantVector.h"
 #include "itkImageBase.h"
-#include "itkLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateSelectedNeighborsImageFunction.h"
 
 namespace itk
 {
+
+namespace Functor {
+template <typename TInput>
+class ValidNeighbor
+{
+ public:
+  ValidNeighbor() = default;
+  ~ValidNeighbor() = default;
+  bool operator!=(const ValidNeighbor &) const
+  {
+    return false;
+  }
+
+  bool operator==(const ValidNeighbor & other) const
+  {
+    return !( *this != other );
+  }
+
+  inline bool operator()(const TInput & A) const
+  { return A < m_IllegalValue; }
+
+ private:
+  TInput m_IllegalValue = static_cast< TInput >( itk::NumericTraits< TInput >::max()/2 );
+};
+}
 
 /**
  * \class PhysicalCentralDifferenceImageFunction
@@ -78,7 +103,7 @@ public:
   using PointType = typename Superclass::PointType;
 
   /** Linear interpolate function type alias. */
-  using InterpolateImageFunctionType = LinearInterpolateImageFunction<TInputImage, TCoordRep>;
+using InterpolateImageFunctionType = LinearInterpolateSelectedNeighborsImageFunction<TInputImage, TCoordRep, Functor::ValidNeighbor<typename TInputImage::PixelType> >;
 
   /** Set the input image.
    * \warning this method caches BufferedRegion information.
