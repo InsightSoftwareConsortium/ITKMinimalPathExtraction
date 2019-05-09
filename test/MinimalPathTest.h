@@ -36,6 +36,7 @@
 #include "itkPolyLineParametricPath.h"
 #include "itkNearestNeighborInterpolateImageFunction.h"
 #include "itkLinearInterpolateImageFunction.h"
+#include "itkLinearInterpolateSelectedNeighborsImageFunction.h"
 #include "itkArrivalFunctionToPathFilter.h"
 #include "itkSpeedFunctionToPathFilter.h"
 #include "itkSpeedFunctionPathInformation.h"
@@ -48,6 +49,30 @@
 #include "itkSpatialObjectPoint.h"
 #include "itkSpatialObjectWriter.h"
 
+/////////////////////////////////////////////////////////////
+// functor selecting valid neighbors for the SelectedNeighbors interpolator
+template <typename TInput>
+class ValidNeighbor
+{
+ public:
+  ValidNeighbor() = default;
+  ~ValidNeighbor() = default;
+  bool operator!=(const ValidNeighbor &) const
+  {
+    return false;
+  }
+
+  bool operator==(const ValidNeighbor & other) const
+  {
+    return !( *this != other );
+  }
+
+  inline bool operator()(const TInput & A) const
+  { return A < m_IllegalValue; }
+
+ private:
+  TInput m_IllegalValue = static_cast< TInput >( itk::NumericTraits< TInput >::max()/2 );
+};
 /////////////////////////////////////////////////////////////
 // Reads a *.path file and adds the path info to the given filter
 template <class PathFilterType, unsigned int VDimension>
@@ -234,12 +259,13 @@ Test_SpeedToPath_GradientDescent_ND(int argc, char * argv[])
     speed->DisconnectPipeline();
 
     // Create Interpolator
-    using InterpolatorType = itk::LinearInterpolateImageFunction<ImageType, CoordRepType>;
+    using InterpolatorType = itk::LinearInterpolateSelectedNeighborsImageFunction<ImageType, CoordRepType, ValidNeighbor<typename PathFilterType::InputImagePixelType> >;
     typename InterpolatorType::Pointer interp = InterpolatorType::New();
 
     // Create Cost Function
     typename PathFilterType::CostFunctionType::Pointer cost = PathFilterType::CostFunctionType::New();
     cost->SetInterpolator(interp);
+    cost->SetDerivativeThreshold(itk::NumericTraits<typename PathFilterType::InputImagePixelType>::max());
 
     // Create GradientDescentOptimizer
     using OptimizerType = itk::GradientDescentOptimizer;

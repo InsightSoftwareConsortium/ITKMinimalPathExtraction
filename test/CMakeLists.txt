@@ -429,12 +429,12 @@ add_test(
 add_test(
   NAME MinimalPathExtraction_Synthetic_01_C_GradientDescent_sp
   COMMAND MinimalPathExtractionTestDriver
-    --compare ${TESTING_OUTPUT_PATH}/Synthetic-01-B-GradientDescent-sp.png ${BASELINE_DIR}/Synthetic-01-B-GradientDescent-sp.png
+    --compare ${TESTING_OUTPUT_PATH}/Synthetic-01-C-GradientDescent-sp.png ${BASELINE_DIR}/Synthetic-01-C-GradientDescent-sp.png
     Test_SpeedToPath_GradientDescent_2D
     ${TESTING_OUTPUT_PATH}/Synthetic-01-C-GradientDescent-sp.png
     ${DATA_DIR}/Synthetic-01-sp-Speed2.mhd
     ${DATA_DIR}/Synthetic-01-C-sp.path
     0.01
     1000
-    0.01
+    0.000001
 )
