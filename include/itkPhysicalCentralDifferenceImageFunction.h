@@ -21,35 +21,10 @@
 #include "itkImageFunction.h"
 #include "itkCovariantVector.h"
 #include "itkImageBase.h"
-#include "itkLinearInterpolateSelectedNeighborsImageFunction.h"
+#include "itkLinearInterpolateImageFunction.h"
 
 namespace itk
 {
-
-namespace Functor {
-template <typename TInput>
-class ValidNeighbor
-{
- public:
-  ValidNeighbor() = default;
-  ~ValidNeighbor() = default;
-  bool operator!=(const ValidNeighbor &) const
-  {
-    return false;
-  }
-
-  bool operator==(const ValidNeighbor & other) const
-  {
-    return !( *this != other );
-  }
-
-  inline bool operator()(const TInput & A) const
-  { return A < m_IllegalValue; }
-
- private:
-  TInput m_IllegalValue = static_cast< TInput >( itk::NumericTraits< TInput >::max()/2 );
-};
-}
 
 /**
  * \class PhysicalCentralDifferenceImageFunction
@@ -103,7 +78,13 @@ public:
   using PointType = typename Superclass::PointType;
 
   /** Linear interpolate function type alias. */
-using InterpolateImageFunctionType = LinearInterpolateSelectedNeighborsImageFunction<TInputImage, TCoordRep, Functor::ValidNeighbor<typename TInputImage::PixelType> >;
+  /** Type of the Interpolator class */
+  using InterpolatorType = InterpolateImageFunction< InputImageType, TCoordRep >;
+  using DefaultInterpolatorType = LinearInterpolateImageFunction< InputImageType, TCoordRep >;
+
+  /** Get/set the Interpolator. */
+  itkSetObjectMacro( Interpolator, InterpolatorType );
+  itkGetConstObjectMacro( Interpolator, InterpolatorType );
 
   /** Set the input image.
    * \warning this method caches BufferedRegion information.
@@ -162,7 +143,8 @@ protected:
   PrintSelf(std::ostream & os, Indent indent) const override;
 
 private:
-  typename InterpolateImageFunctionType::Pointer m_Interpolator;
+  typename InterpolatorType::Pointer m_Interpolator;
+
 };
 
 } // end namespace itk

@@ -106,6 +106,13 @@ public:
   itkSetObjectMacro(Interpolator, InterpolatorType);
   itkGetConstObjectMacro(Interpolator, InterpolatorType);
 
+  void SetGradientInterpolatorType(typename InterpolatorType::Pointer Interp)
+  {
+    if (m_GradientImageFunction)
+      {
+	m_GradientImageFunction->SetInterpolator(Interp);
+      }
+  }
   /** Get/set the Image.  */
   itkSetConstObjectMacro(Image, ImageType);
   itkGetConstObjectMacro(Image, ImageType);
