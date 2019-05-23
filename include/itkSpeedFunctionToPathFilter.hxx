@@ -67,16 +67,14 @@ SpeedFunctionToPathFilter<TInputImage, TOutputPath>::ComputeArrivalFunction()
   typename FastMarchingType::Pointer marching = FastMarchingType::New();
   marching->SetInput(speed);
   marching->SetGenerateGradientImage(false);
-  marching->SetTargetOffset(2.0 * Superclass::m_TerminationValue);
   marching->SetTargetReachedModeToAllTargets();
-
   // Add next and previous front sources as target points to
   // limit the front propagation to just the required zones
   PointsContainerType PrevFront = m_Information[Superclass::m_CurrentOutput]->PeekPreviousFront();
   PointsContainerType NextFront = m_Information[Superclass::m_CurrentOutput]->PeekNextFront();
   using IndexTypeVec = std::vector<IndexType>;
   IndexTypeVec PrevIndexVec(0);
-
+  IndexTypeVec NextIndexVec(0);
 
   typename NodeContainer::Pointer targets = NodeContainer::New();
   targets->Initialize();
@@ -88,7 +86,7 @@ SpeedFunctionToPathFilter<TInputImage, TOutputPath>::ComputeArrivalFunction()
     speed->TransformPhysicalPointToIndex(*it, indexTargetPrevious);
     nodeTargetPrevious.SetValue(0.0);
     nodeTargetPrevious.SetIndex(indexTargetPrevious);
-    targets->InsertElement(0, nodeTargetPrevious);
+    targets->InsertElement(targets->Size(), nodeTargetPrevious);
     PrevIndexVec.push_back(indexTargetPrevious);
   }
 
@@ -99,9 +97,10 @@ SpeedFunctionToPathFilter<TInputImage, TOutputPath>::ComputeArrivalFunction()
     speed->TransformPhysicalPointToIndex(*it, indexTargetNext);
     nodeTargetNext.SetValue(0.0);
     nodeTargetNext.SetIndex(indexTargetNext);
-    targets->InsertElement(1, nodeTargetNext);
+    targets->InsertElement(targets->Size(), nodeTargetNext);
   }
   marching->SetTargetPoints(targets);
+
 
   // Get the next Front source point and add as trial point
   typename NodeContainer::Pointer trial = NodeContainer::New();
@@ -117,7 +116,7 @@ SpeedFunctionToPathFilter<TInputImage, TOutputPath>::ComputeArrivalFunction()
     speed->TransformPhysicalPointToIndex(*it, indexTrial);
     nodeTrial.SetValue(0.0);
     nodeTrial.SetIndex(indexTrial);
-    trial->InsertElement(0, nodeTrial);
+    trial->InsertElement(trial->Size(), nodeTrial);
     CurrentIndexVec.push_back(indexTrial);
   }
   marching->SetTrialPoints(trial);
