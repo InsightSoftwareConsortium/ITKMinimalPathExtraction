@@ -101,6 +101,7 @@ public:
   /** Some convenient type alias. */
   using ContinuousIndexType = typename Superclass::ContinuousIndexType;
   using IndexType = typename Superclass::IndexType;
+  using IndexTypeVec = typename std::vector < IndexType >;
   using PointType = typename Superclass::PointType;
   using CostFunctionType = typename Superclass::CostFunctionType;
   using OptimizerType = typename Superclass::OptimizerType;
@@ -182,6 +183,8 @@ protected:
   /** Override handling of optimizer iteration events to accomodate way points. */
   const PointsContainerType &
   GetNextEndPoint() override;
+
+  IndexTypeVec GetNeighbors(IndexTypeVec idxs);
 
   std::vector<typename PathInformationType::Pointer> m_Information;
   InputImagePointer                                  m_CurrentArrivalFunction;
