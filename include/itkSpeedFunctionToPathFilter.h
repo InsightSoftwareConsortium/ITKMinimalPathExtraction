@@ -102,6 +102,7 @@ public:
   using ContinuousIndexType = typename Superclass::ContinuousIndexType;
   using IndexType = typename Superclass::IndexType;
   using IndexTypeVec = typename std::vector < IndexType >;
+  using IndexTypeSet = typename std::set < IndexType >;
   using PointType = typename Superclass::PointType;
   using CostFunctionType = typename Superclass::CostFunctionType;
   using OptimizerType = typename Superclass::OptimizerType;
@@ -162,6 +163,10 @@ public:
   /** access the arrival image for debugging purposes */
   itkGetConstMacro(CurrentArrivalFunction, InputImagePointer);
 
+  /** Set/get the radius of target neighbourhood used to ensure smooth gradients */
+itkSetMacro( TargetRadius, typename InputImageType::SizeType::SizeValueType);
+itkGetConstMacro( TargetRadius, typename InputImageType::SizeType::SizeValueType);
+
 protected:
   SpeedFunctionToPathFilter();
   ~SpeedFunctionToPathFilter() override;
@@ -184,10 +189,12 @@ protected:
   const PointsContainerType &
   GetNextEndPoint() override;
 
-  IndexTypeVec GetNeighbors(IndexTypeVec idxs);
+  IndexTypeSet GetNeighbors(IndexTypeVec idxs);
 
   std::vector<typename PathInformationType::Pointer> m_Information;
   InputImagePointer                                  m_CurrentArrivalFunction;
+
+  typename InputImageType::SizeType::SizeValueType   m_TargetRadius;
 };
 
 } // end namespace itk

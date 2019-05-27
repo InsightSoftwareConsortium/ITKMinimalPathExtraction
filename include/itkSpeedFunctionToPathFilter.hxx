@@ -22,6 +22,7 @@
 #include "itkSpeedFunctionToPathFilter.h"
 #include "itkFastMarchingUpwindGradientImageFilter.h"
 #include <itkConstNeighborhoodIterator.h>
+#include <itkConstantBoundaryCondition.h>
 
 namespace itk
 {
@@ -29,7 +30,9 @@ namespace itk
 template <typename TInputImage, typename TOutputPath>
 SpeedFunctionToPathFilter<TInputImage, TOutputPath>::SpeedFunctionToPathFilter()
   : m_CurrentArrivalFunction(nullptr)
-{}
+{
+  m_TargetRadius = 2;
+}
 
 
 template <typename TInputImage, typename TOutputPath>
@@ -57,25 +60,44 @@ SpeedFunctionToPathFilter<TInputImage, TOutputPath>::GetNextEndPoint()
 */
 
 template<typename TInputImage, typename TOutputPath>
-typename SpeedFunctionToPathFilter<TInputImage,TOutputPath>::IndexTypeVec
+typename SpeedFunctionToPathFilter<TInputImage,TOutputPath>::IndexTypeSet
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 ::GetNeighbors(IndexTypeVec idxs)
 {
   InputImagePointer speed =
     const_cast< InputImageType * >( this->GetInput() );
 
-  using IndexTypeSet = typename std::set < IndexType >;
+  using BoundaryConditionType = ConstantBoundaryCondition<InputImageType>;
 
   IndexTypeSet UniqueIndexes;
+  typename InputImageType::SizeType radius;
+  radius.Fill(m_TargetRadius);
+  ConstNeighborhoodIterator<InputImageType, BoundaryConditionType>
+    niterator(radius, speed, speed->GetLargestPossibleRegion());
 
-  ConstNeighborhoodIterator<InputImageType> niterator(1, speed, speed->GetLargestPossibleRegion());
+  BoundaryConditionType bc;
+  bc.SetConstant(0);
+  niterator.SetBoundaryCondition(bc);
+  niterator.NeedToUseBoundaryConditionOn();
 
   for (auto it = idxs.begin(); it != idxs.end(); it++ )
     {
-    UniqueIndexes.insert(*it);
-
+      niterator.SetLocation(*it);
+      if ( niterator.GetCenterPixel() > 0 )
+	{
+	  // Visit the entire neighborhood (including center) and
+	  // add any pixel that has a nonzero speed function value
+	  for (auto NB = 0; NB < niterator.Size(); NB++)
+	    {
+	      if ( niterator.GetPixel(NB) > 0 )
+		{
+		  UniqueIndexes.insert(niterator.GetIndex(NB));
+		}
+	    }
+	}
     }
 
+  return(UniqueIndexes);
 }
 
 template <typename TInputImage, typename TOutputPath>
@@ -109,9 +131,6 @@ SpeedFunctionToPathFilter<TInputImage, TOutputPath>::ComputeArrivalFunction()
     IndexType indexTargetPrevious;
     NodeType  nodeTargetPrevious;
     speed->TransformPhysicalPointToIndex(*it, indexTargetPrevious);
-    nodeTargetPrevious.SetValue(0.0);
-    nodeTargetPrevious.SetIndex(indexTargetPrevious);
-    targets->InsertElement(targets->Size(), nodeTargetPrevious);
     PrevIndexVec.push_back(indexTargetPrevious);
   }
 
@@ -120,19 +139,23 @@ SpeedFunctionToPathFilter<TInputImage, TOutputPath>::ComputeArrivalFunction()
     IndexType indexTargetNext;
     NodeType  nodeTargetNext;
     speed->TransformPhysicalPointToIndex(*it, indexTargetNext);
-    nodeTargetNext.SetValue(0.0);
-    nodeTargetNext.SetIndex(indexTargetNext);
-    targets->InsertElement(targets->Size(), nodeTargetNext);
     NextIndexVec.push_back(indexTargetNext);
   }
 
   IndexTypeVec AllTargets( PrevIndexVec );
   AllTargets.insert(AllTargets.end(), NextIndexVec.begin(), NextIndexVec.end());
 
-  GetNeighbors( AllTargets );
+  IndexTypeSet UniqueTargets = GetNeighbors( AllTargets );
   // Add neighbours of all the targets points to ensure that the
   // gradients in the neighborhood of each potential destination point
   // is smooth.
+  for (auto it = UniqueTargets.begin(); it != UniqueTargets.end(); it++)
+    {
+      NodeType nodeTarget;
+      nodeTarget.SetValue( 0.0 );
+      nodeTarget.SetIndex( *it );
+      targets->InsertElement( targets->Size(), nodeTarget );
+    }
   marching->SetTargetPoints( targets );
 
   // Get the next Front source point and add as trial point
