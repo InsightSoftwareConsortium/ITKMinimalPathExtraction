@@ -53,8 +53,7 @@ namespace itk
     baseIndex[dim] = Math::Floor< IndexValueType >(index[dim]);
     distance[dim] = index[dim] - static_cast< InternalComputationType >( baseIndex[dim] );
     }
-
-  // The iInterpolated value is the weighted sum of each of the surrounding
+  // The interpolated value is the weighted sum of each of the surrounding
   // neighbors. The weight for each neighbor is the fraction overlap
   // of the neighbor pixel with respect to a pixel centered on point.
 
@@ -72,6 +71,7 @@ namespace itk
 
   // Number of neighbors used in the interpolation
   constexpr unsigned long numberOfNeighbors = 1 << TInputImage::ImageDimension;
+  InternalComputationType TotalOverlap = 0.0;
 
   for ( unsigned int counter = 0; counter < numberOfNeighbors; ++counter )
     {
@@ -110,10 +110,11 @@ namespace itk
 
     if (m_NeighborCheck(nval))
       {
+      TotalOverlap += overlap;
       value += static_cast< RealType >( nval ) * overlap;
       }
     }
-  return ( static_cast< OutputType >( value ) );
+  return ( static_cast< OutputType >( value/TotalOverlap ) );
 }
 
   template< typename TInputImage, typename TCoordRep, typename TNeighborCheckFunction >
