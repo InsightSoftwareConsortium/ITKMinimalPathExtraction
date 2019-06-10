@@ -114,6 +114,11 @@ namespace itk
       value += static_cast< RealType >( nval ) * overlap;
       }
     }
+  if (TotalOverlap == 0)
+    {
+      itkWarningMacro("LinearInterpolateSelectedNeighbors - no valid neighbors");
+      return(static_cast< OutputType >(inputImagePtr->GetPixel(baseIndex)));
+    }
   return ( static_cast< OutputType >( value/TotalOverlap ) );
 }
 
