@@ -72,7 +72,8 @@ public:
   void
   Execute(const itk::Object * object, const itk::EventObject & event) override
   {
-    if (!itk::IterationEvent().CheckEvent(&event))
+    if (!itk::IterationEvent().CheckEvent(&event) &&
+	!itk::EndEvent().CheckEvent(&event))
     {
       return;
     }
