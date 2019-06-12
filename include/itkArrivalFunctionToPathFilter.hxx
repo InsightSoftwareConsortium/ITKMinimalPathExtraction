@@ -195,7 +195,10 @@ ArrivalFunctionToPathFilter<TInputImage, TOutputPath>::GenerateData()
     m_Optimizer->SetInitialPosition(end);
 
     // Use optimizer to back propagate from end point
-    m_Optimizer->StartOptimization();
+    m_TrackingPath = false;
+    do {
+      m_Optimizer->StartOptimization();
+    } while(m_TrackingPath);
   }
 
   // Clean up by removing observer

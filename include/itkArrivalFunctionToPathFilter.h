@@ -250,6 +250,11 @@ protected:
   typename OptimizerType::MeasureType m_TerminationValue;
   std::vector<PointsContainerType>    m_PointList;
   unsigned int                        m_CurrentOutput;
+
+  // variable for communicating state of a multisegment path
+  // Sometimes an optimizer may terminate during one segment of the
+  // path, and needs to be restarted
+  bool m_TrackingPath;
 };
 
 } // end namespace itk
