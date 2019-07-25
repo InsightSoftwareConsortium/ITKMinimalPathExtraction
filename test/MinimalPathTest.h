@@ -406,7 +406,7 @@ Test_SpeedToPath_RegularStepGradientDescent_ND(int argc, char * argv[])
         minspacing = spacing[dim];
 
     // Create Interpolator
-    using InterpolatorType = itk::LinearInterpolateImageFunction<ImageType, CoordRepType>;
+    using InterpolatorType = itk::LinearInterpolateSelectedNeighborsImageFunction<ImageType, CoordRepType, ValidNeighbor<typename PathFilterType::InputImagePixelType>>;
     typename InterpolatorType::Pointer interp = InterpolatorType::New();
 
     // Create Cost Function

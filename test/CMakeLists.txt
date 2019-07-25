@@ -216,6 +216,20 @@ add_test(
     0.25
     0.5
 )
+
+add_test(
+  NAME MinimalPathExtraction_Real_DSA_01_01_RegularStepGradientDescentShort
+  COMMAND MinimalPathExtractionTestDriver
+    --compare ${TESTING_OUTPUT_PATH}/Real-DSA-01-01-RegularStepGradientDescent.png ${BASELINE_DIR}/Real-DSA-01-01-RegularStepGradientDescent.png
+    Test_SpeedToPath_RegularStepGradientDescent_2D
+    ${TESTING_OUTPUT_PATH}/Real-DSA-01-01-RegularStepGradientDescent.png
+    ${DATA_DIR}/Real-DSA-01-Speed-01.mhd
+    ${DATA_DIR}/Real-DSA-01_short.path
+    3.0
+    4000
+    0.25
+    0.5
+)
 #Real-DSA-01-02
 add_test(
   NAME MinimalPathExtraction_Real_DSA_01_02_NeighborhoodIterate
@@ -424,6 +438,20 @@ add_test(
     0.01
     1000
     0.01
+)
+
+add_test(
+  NAME MinimalPathExtraction_Synthetic_01_B_RegularStepGradientDescent_sp
+  COMMAND MinimalPathExtractionTestDriver
+    --compare ${TESTING_OUTPUT_PATH}/Synthetic-01-B-GradientDescent-sp.png ${BASELINE_DIR}/Synthetic-01-B-GradientDescent-sp.png
+    Test_SpeedToPath_RegularStepGradientDescent_2D
+    ${TESTING_OUTPUT_PATH}/Synthetic-01-B-GradientDescent-sp.png
+    ${DATA_DIR}/Synthetic-01-sp-Speed.mhd
+    ${DATA_DIR}/Synthetic-01-B-sp.path
+    0.01
+    3000
+    0.005
+    0.001
 )
 
 add_test(
