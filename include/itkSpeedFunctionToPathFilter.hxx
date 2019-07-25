@@ -32,6 +32,8 @@ SpeedFunctionToPathFilter<TInputImage, TOutputPath>::SpeedFunctionToPathFilter()
   : m_CurrentArrivalFunction(nullptr)
 {
   m_TargetRadius = 2;
+  m_AutoTerminate = true;
+  m_AutoTerminateFactor = 0.5;
 }
 
 
@@ -100,6 +102,50 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
   return(UniqueIndexes);
 }
 
+
+template <typename TInputImage, typename TOutputPath>
+typename SpeedFunctionToPathFilter<TInputImage,TOutputPath>::InputImagePixelType
+SpeedFunctionToPathFilter<TInputImage,TOutputPath>::GetTrialGradient(IndexTypeVec idxs)
+{
+  InputImagePointer arrival =  m_CurrentArrivalFunction;
+
+  using BoundaryConditionType = ConstantBoundaryCondition<InputImageType>;
+
+  IndexTypeSet UniqueIndexes;
+  typename InputImageType::SizeType radius;
+  radius.Fill(1);
+  ConstNeighborhoodIterator<InputImageType, BoundaryConditionType>
+    niterator(radius, arrival, arrival->GetLargestPossibleRegion());
+
+  BoundaryConditionType bc;
+  bc.SetConstant(itk::NumericTraits<InputImagePixelType>::max());
+  niterator.SetBoundaryCondition(bc);
+  niterator.NeedToUseBoundaryConditionOn();
+
+  // looking for the smallest nonzero difference
+  InputImagePixelType mindiff(itk::NumericTraits<InputImagePixelType>::max());
+
+  for (auto it = idxs.begin(); it != idxs.end(); it++ )
+    {
+      niterator.SetLocation(*it);
+      InputImagePixelType CP = niterator.GetCenterPixel();
+      // Visit the entire neighborhood (including center) and
+      // add any pixel that has a nonzero arrival function value
+      for (auto NB = 0; NB < niterator.Size(); NB++)
+	{
+	  // CP values should always be zero
+	  InputImagePixelType NPD = niterator.GetPixel(NB) - CP;
+	  if (NPD  > 0 )
+	    {
+	      mindiff=std::min(mindiff, NPD);
+	    }
+	}
+    }
+
+  return(mindiff);
+}
+
+
 template <typename TInputImage, typename TOutputPath>
 typename SpeedFunctionToPathFilter<TInputImage, TOutputPath>::InputImageType *
 SpeedFunctionToPathFilter<TInputImage, TOutputPath>::ComputeArrivalFunction()
@@ -141,7 +187,6 @@ SpeedFunctionToPathFilter<TInputImage, TOutputPath>::ComputeArrivalFunction()
     speed->TransformPhysicalPointToIndex(*it, indexTargetNext);
     NextIndexVec.push_back(indexTargetNext);
   }
-
   IndexTypeVec AllTargets( PrevIndexVec );
   AllTargets.insert(AllTargets.end(), NextIndexVec.begin(), NextIndexVec.end());
 
@@ -200,8 +245,18 @@ SpeedFunctionToPathFilter<TInputImage, TOutputPath>::ComputeArrivalFunction()
     m_Information[Superclass::m_CurrentOutput]->SetPrevious(PrevFront[MinPos]);
   }
 
+  if (m_AutoTerminate)
+    {
+      // Examine the neighbours of the trial points to determine the minimum neighbour
+      // difference, for the purpose of estimating a good termination value.
+      InputImagePixelType MD = GetTrialGradient( CurrentIndexVec );
+      std::cout << "Min diff for termination = " << MD << std::endl;
+      this->SetTerminationValue( MD * this->GetAutoTerminateFactor() );
+    }
   // Make the arrival function flat inside the seeds, otherwise the
   // optimizer will cross over them. This only matters if the seeds are extended
+  // Not sure that this is needed any more. Expect it was a side effect of only
+  // adding a single point to the trial set.
   if (CurrentIndexVec.size() > 1)
   {
     for (auto vi = CurrentIndexVec.begin(); vi != CurrentIndexVec.end(); vi++)

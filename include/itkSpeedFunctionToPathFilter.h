@@ -164,8 +164,18 @@ public:
   itkGetConstMacro(CurrentArrivalFunction, InputImagePointer);
 
   /** Set/get the radius of target neighbourhood used to ensure smooth gradients */
-itkSetMacro( TargetRadius, typename InputImageType::SizeType::SizeValueType);
-itkGetConstMacro( TargetRadius, typename InputImageType::SizeType::SizeValueType);
+  itkSetMacro( TargetRadius, typename InputImageType::SizeType::SizeValueType);
+  itkGetConstMacro( TargetRadius, typename InputImageType::SizeType::SizeValueType);
+
+  /** Set/get the auto termination factor. The termination value is set to this factor
+      multiplied by the minimum non zero difference between target point and
+      neighbours */
+  itkSetMacro( AutoTerminateFactor , double);
+  itkGetConstMacro( AutoTerminateFactor , double);
+
+  itkSetMacro( AutoTerminate, bool );
+  itkGetConstMacro( AutoTerminate, bool );
+  itkBooleanMacro( AutoTerminate );
 
 protected:
   SpeedFunctionToPathFilter();
@@ -190,11 +200,15 @@ protected:
   GetNextEndPoint() override;
 
   IndexTypeSet GetNeighbors(IndexTypeVec idxs);
+  InputImagePixelType GetTrialGradient(IndexTypeVec idxs);
 
   std::vector<typename PathInformationType::Pointer> m_Information;
   InputImagePointer                                  m_CurrentArrivalFunction;
 
   typename InputImageType::SizeType::SizeValueType   m_TargetRadius;
+
+  bool m_AutoTerminate;
+  double m_AutoTerminateFactor;
 };
 
 } // end namespace itk
