@@ -230,6 +230,21 @@ int example_regularstepgradientdescent( int argc, char* argv[] )
 
 int main( int argc, char* argv[] )
 {
-    return example_gradientdescent( argc, argv );
-    //return example_regularstepgradientdescent( argc, argv );
+  if( argc < 3 )
+    {
+    std::cerr << "Usage: MinimalPathExamples <SpeedImage> <OutputImage> [UseRegularStepGradientDescentOptimizer]" << std::endl;
+    return EXIT_FAILURE;
+    }
+
+  int useRegularStepGradientDescentOptimizer = 0;
+  if ( argc > 3 )
+    {
+    useRegularStepGradientDescentOptimizer = std::atoi( argv[3] );
+    }
+
+  if ( useRegularStepGradientDescentOptimizer )
+    {
+    return example_regularstepgradientdescent( argc, argv );
+    }
+  return example_gradientdescent( argc, argv );
 }
