@@ -115,10 +115,10 @@ public:
   itkGetConstReferenceMacro( DerivativeThreshold, DerivativeType::ValueType );
 
   /** Initialize the cost function */
-  virtual void Initialize(void);
+  virtual void Initialize();
 
   /** Return the number of parameters required by the Transform */
-  unsigned int GetNumberOfParameters(void) const override
+  unsigned int GetNumberOfParameters() const override
   { return ImageDimension; }
 
   /** This method returns the value of the cost function corresponding
@@ -141,7 +141,7 @@ public:
     m_OutsideValue = itk::NumericTraits< ImagePixelType >::NonpositiveMin();
   }
 
-  
+
 protected:
   SingleImageCostFunction();
   ~SingleImageCostFunction() override {}
@@ -155,7 +155,7 @@ private:
    *  path points are on the edge of an image */
   ImagePixelType                              m_OutsideValue;
   typename DerivativeType::ValueType          m_DerivativeThreshold;
-  
+
 };
 
 } // end namespace itk

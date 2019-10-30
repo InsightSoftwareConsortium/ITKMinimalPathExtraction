@@ -26,20 +26,14 @@
 namespace itk
 {
 
-/**
- *
- */
 template <typename TInputImage, typename TOutputPath>
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
-::SpeedFunctionToPathFilter()
+::SpeedFunctionToPathFilter():
+  m_CurrentArrivalFunction( nullptr )
 {
-  m_CurrentArrivalFunction = nullptr;
 }
 
 
-/**
- *
- */
 template <typename TInputImage, typename TOutputPath>
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 ::~SpeedFunctionToPathFilter()
@@ -47,9 +41,6 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 }
 
 
-/**
- *
- */
 template<typename TInputImage, typename TOutputPath>
 unsigned int
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
@@ -59,9 +50,6 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 }
 
 
-/**
- *
- */
 template<typename TInputImage, typename TOutputPath>
 const typename SpeedFunctionToPathFilter<TInputImage,TOutputPath>::PointsContainerType &
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
@@ -71,9 +59,6 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 }
 
 
-/**
- *
- */
 template<typename TInputImage, typename TOutputPath>
 typename SpeedFunctionToPathFilter<TInputImage,TOutputPath>::InputImageType *
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
@@ -101,7 +86,7 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
   using IndexTypeVec = std::vector < IndexType >;
   IndexTypeVec PrevIndexVec(0);
 
-  
+
   typename NodeContainer::Pointer targets = NodeContainer::New();
   targets->Initialize();
 
@@ -115,7 +100,7 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
       targets->InsertElement( 0, nodeTargetPrevious );
       PrevIndexVec.push_back(indexTargetPrevious);
     }
-  
+
   for (auto it = NextFront.begin(); it != NextFront.end(); it++)
     {
       IndexType indexTargetNext;
@@ -176,19 +161,16 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
           m_CurrentArrivalFunction->SetPixel(*vi, 0);
         }
     }
-  
+
   m_Information[Superclass::m_CurrentOutput]->Advance();
   return m_CurrentArrivalFunction;
 }
 
 
-/**
- *
- */
 template <typename TInputImage, typename TOutputPath>
 void
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
-::GenerateData( void )
+::GenerateData( )
 {
   // Get the speed function
   InputImagePointer speed =
@@ -209,9 +191,6 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 }
 
 
-/**
- *
- */
 template <typename TInputImage, typename TOutputPath>
 void
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
@@ -275,9 +254,6 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 }
 
 
-/**
- *
- */
 template<typename TInputImage, typename TOutputPath>
 void
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>

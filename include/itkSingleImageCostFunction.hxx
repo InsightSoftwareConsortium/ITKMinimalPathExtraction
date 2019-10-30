@@ -23,9 +23,6 @@
 namespace itk
 {
 
-/*
- * Constructor
- */
 template <class TImage>
 SingleImageCostFunction<TImage>
 ::SingleImageCostFunction()
@@ -37,13 +34,10 @@ SingleImageCostFunction<TImage>
 }
 
 
-/*
- * Initialize
- */
 template <class TImage>
 void
 SingleImageCostFunction<TImage>
-::Initialize(void)
+::Initialize()
 {
   // Ensure image is provided
   if( !m_Image )
