@@ -43,7 +43,7 @@ SingleImageCostFunction<TImage>
 template <class TImage>
 void
 SingleImageCostFunction<TImage>
-::Initialize(void) throw ( ExceptionObject )
+::Initialize(void)
 {
   // Ensure image is provided
   if( !m_Image )
