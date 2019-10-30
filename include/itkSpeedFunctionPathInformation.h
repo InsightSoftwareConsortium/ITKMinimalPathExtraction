@@ -49,7 +49,7 @@ namespace itk
  * \ingroup MinimalPathExtraction
  */
 template <typename TPoint>
-class SpeedFunctionPathInformation :
+class ITK_TEMPLATE_EXPORT SpeedFunctionPathInformation :
   public LightObject
 {
 public:

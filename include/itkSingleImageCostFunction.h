@@ -49,7 +49,7 @@ namespace itk
  * \ingroup MinimalPathExtraction
  */
 template <class TImage>
-class ITK_EXPORT SingleImageCostFunction :
+class ITK_TEMPLATE_EXPORT SingleImageCostFunction :
     public SingleValuedCostFunction
 {
 public:

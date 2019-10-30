@@ -66,7 +66,7 @@ namespace itk
  */
 template <class TInputImage,
           class TOutputPath = PolyLineParametricPath<TInputImage::ImageDimension> >
-class ITK_EXPORT SpeedFunctionToPathFilter :
+class ITK_TEMPLATE_EXPORT SpeedFunctionToPathFilter :
     public ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 {
 public:
