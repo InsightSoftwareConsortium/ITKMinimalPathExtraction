@@ -194,10 +194,8 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 template <typename TInputImage, typename TOutputPath>
 void
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
-::Execute( const Object * object, const EventObject & event )
+::Execute( const Object * object, const EventObject & itkNotUsed( event ))
 {
-  (void) event;
-
   // Cast object to optmizer
   typename OptimizerType::Pointer optimizer = (OptimizerType*)
       dynamic_cast< const OptimizerType* >( object );
