@@ -63,7 +63,8 @@ public:
   /** Execute */
   void Execute(itk::Object *caller, const itk::EventObject & event) override
     {
-    Execute( (const itk::Object *)caller, event);
+    const itk::Object * constCaller = const_cast< const itk::Object * >( caller );
+    Execute( constCaller, event);
     }
 
   /** Execute */
