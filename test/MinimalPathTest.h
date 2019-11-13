@@ -406,6 +406,8 @@ int Test_SpeedToPath_RegularStepGradientDescent_ND(int argc, char* argv[])
         pathFilter->Update( );
         time.Stop( );
         std::cout << std::setprecision(3) << "Path computed in: " << time.GetMean() << " seconds" << std::endl;
+        std::cout << "Number of paths: " << pathFilter->GetNumberOfOutputs() << std::endl;
+        std::cout << "Number of path 0 vertices: " << pathFilter->GetOutput(0)->GetVertexList()->Size() << std::endl;
 
         // Allocate output image
         typename OutputImageType::Pointer output = OutputImageType::New();

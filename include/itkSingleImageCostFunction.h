@@ -1,19 +1,20 @@
 /*=========================================================================
-
-  Program:   Insight Segmentation & Registration Toolkit
-  Module:    $RCSfile: itkSingleImageCostFunction.h,v $
-  Language:  C++
-  Date:      $Date$
-  Version:   $Revision$
-
-  Copyright (c) Insight Software Consortium. All rights reserved.
-  See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.  See the above copyright notices for more information.
-
-=========================================================================*/
+ *
+ *  Copyright Insight Software Consortium
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0.txt
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *=========================================================================*/
 #ifndef itkSingleImageCostFunction_h
 #define itkSingleImageCostFunction_h
 
@@ -48,8 +49,8 @@ namespace itk
  *
  * \ingroup MinimalPathExtraction
  */
-template <class TImage>
-class ITK_EXPORT SingleImageCostFunction :
+template <typename TImage>
+class ITK_TEMPLATE_EXPORT SingleImageCostFunction :
     public SingleValuedCostFunction
 {
 public:
@@ -115,10 +116,10 @@ public:
   itkGetConstReferenceMacro( DerivativeThreshold, DerivativeType::ValueType );
 
   /** Initialize the cost function */
-  virtual void Initialize(void);
+  virtual void Initialize();
 
   /** Return the number of parameters required by the Transform */
-  unsigned int GetNumberOfParameters(void) const override
+  unsigned int GetNumberOfParameters() const override
   { return ImageDimension; }
 
   /** This method returns the value of the cost function corresponding
@@ -141,7 +142,7 @@ public:
     m_OutsideValue = itk::NumericTraits< ImagePixelType >::NonpositiveMin();
   }
 
-  
+
 protected:
   SingleImageCostFunction();
   ~SingleImageCostFunction() override {}
@@ -155,7 +156,7 @@ private:
    *  path points are on the edge of an image */
   ImagePixelType                              m_OutsideValue;
   typename DerivativeType::ValueType          m_DerivativeThreshold;
-  
+
 };
 
 } // end namespace itk

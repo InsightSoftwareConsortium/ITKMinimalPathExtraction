@@ -1,19 +1,20 @@
 /*=========================================================================
-
-  Program:   Insight Segmentation & Registration Toolkit
-  Module:    $RCSfile: itkArrivalFunctionToPathFilter.h,v $
-  Language:  C++
-  Date:      $Date$
-  Version:   $Revision$
-
-  Copyright (c) Insight Software Consortium. All rights reserved.
-  See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.  See the above copyright notices for more information.
-
-=========================================================================*/
+ *
+ *  Copyright Insight Software Consortium
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0.txt
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *=========================================================================*/
 #ifndef itkArrivalFunctionToPathFilter_h
 #define itkArrivalFunctionToPathFilter_h
 
@@ -38,8 +39,8 @@ namespace itk
  *
  */
 
-template <class TFilter>
-class ArrivalFunctionToPathCommand : public itk::Command
+template <typename TFilter>
+class ITK_TEMPLATE_EXPORT ArrivalFunctionToPathCommand : public itk::Command
 {
 public:
   ITK_DISALLOW_COPY_AND_ASSIGN(ArrivalFunctionToPathCommand);
@@ -62,7 +63,8 @@ public:
   /** Execute */
   void Execute(itk::Object *caller, const itk::EventObject & event) override
     {
-    Execute( (const itk::Object *)caller, event);
+    const itk::Object * constCaller = const_cast< const itk::Object * >( caller );
+    Execute( constCaller, event);
     }
 
   /** Execute */
@@ -137,9 +139,9 @@ private:
  *
  * \ingroup MinimalPathExtraction
  */
-template <class TInputImage,
-          class TOutputPath = PolyLineParametricPath<TInputImage::ImageDimension> >
-class ITK_EXPORT ArrivalFunctionToPathFilter :
+template <typename TInputImage,
+          typename TOutputPath = PolyLineParametricPath<TInputImage::ImageDimension> >
+class ITK_TEMPLATE_EXPORT ArrivalFunctionToPathFilter :
     public ImageToPathFilter<TInputImage,TOutputPath>
 {
 public:
@@ -220,7 +222,7 @@ protected:
   void GenerateInputRequestedRegion() override;
 
   /** Implemention of algorithm */
-  void GenerateData(void) override;
+  void GenerateData() override;
 
   /** Get the arrival function from which to extract the path. */
   virtual unsigned int GetNumberOfPathsToExtract( ) const;

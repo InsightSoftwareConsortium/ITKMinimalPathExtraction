@@ -1,20 +1,20 @@
 /*=========================================================================
-
-  Program:   Insight Segmentation & Registration Toolkit
-  Module:    $RCSfile: itkSpeedFunctionToPathFilter.hxx,v $
-  Language:  C++
-  Date:      $Date$
-  Version:   $Revision$
-
-  Copyright (c) Insight Software Consortium. All rights reserved.
-  See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.  See the above copyright notices for more information.
-
-=========================================================================*/
-
+ *
+ *  Copyright Insight Software Consortium
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0.txt
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *=========================================================================*/
 #ifndef itkSpeedFunctionToPathFilter_hxx
 #define itkSpeedFunctionToPathFilter_hxx
 
@@ -26,20 +26,14 @@
 namespace itk
 {
 
-/**
- *
- */
 template <typename TInputImage, typename TOutputPath>
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
-::SpeedFunctionToPathFilter()
+::SpeedFunctionToPathFilter():
+  m_CurrentArrivalFunction( nullptr )
 {
-  m_CurrentArrivalFunction = nullptr;
 }
 
 
-/**
- *
- */
 template <typename TInputImage, typename TOutputPath>
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 ::~SpeedFunctionToPathFilter()
@@ -47,9 +41,6 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 }
 
 
-/**
- *
- */
 template<typename TInputImage, typename TOutputPath>
 unsigned int
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
@@ -59,9 +50,6 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 }
 
 
-/**
- *
- */
 template<typename TInputImage, typename TOutputPath>
 const typename SpeedFunctionToPathFilter<TInputImage,TOutputPath>::PointsContainerType &
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
@@ -71,9 +59,6 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 }
 
 
-/**
- *
- */
 template<typename TInputImage, typename TOutputPath>
 typename SpeedFunctionToPathFilter<TInputImage,TOutputPath>::InputImageType *
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
@@ -101,7 +86,7 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
   using IndexTypeVec = std::vector < IndexType >;
   IndexTypeVec PrevIndexVec(0);
 
-  
+
   typename NodeContainer::Pointer targets = NodeContainer::New();
   targets->Initialize();
 
@@ -115,7 +100,7 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
       targets->InsertElement( 0, nodeTargetPrevious );
       PrevIndexVec.push_back(indexTargetPrevious);
     }
-  
+
   for (auto it = NextFront.begin(); it != NextFront.end(); it++)
     {
       IndexType indexTargetNext;
@@ -176,19 +161,16 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
           m_CurrentArrivalFunction->SetPixel(*vi, 0);
         }
     }
-  
+
   m_Information[Superclass::m_CurrentOutput]->Advance();
   return m_CurrentArrivalFunction;
 }
 
 
-/**
- *
- */
 template <typename TInputImage, typename TOutputPath>
 void
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
-::GenerateData( void )
+::GenerateData( )
 {
   // Get the speed function
   InputImagePointer speed =
@@ -209,16 +191,11 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 }
 
 
-/**
- *
- */
 template <typename TInputImage, typename TOutputPath>
 void
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>
-::Execute( const Object * object, const EventObject & event )
+::Execute( const Object * object, const EventObject & itkNotUsed( event ))
 {
-  (void) event;
-
   // Cast object to optmizer
   typename OptimizerType::Pointer optimizer = (OptimizerType*)
       dynamic_cast< const OptimizerType* >( object );
@@ -275,9 +252,6 @@ SpeedFunctionToPathFilter<TInputImage,TOutputPath>
 }
 
 
-/**
- *
- */
 template<typename TInputImage, typename TOutputPath>
 void
 SpeedFunctionToPathFilter<TInputImage,TOutputPath>

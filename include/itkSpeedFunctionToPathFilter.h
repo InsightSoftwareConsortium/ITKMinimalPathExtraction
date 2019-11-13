@@ -1,19 +1,20 @@
 /*=========================================================================
-
-  Program:   Insight Segmentation & Registration Toolkit
-  Module:    $RCSfile: itkSpeedFunctionToPathFilter.h,v $
-  Language:  C++
-  Date:      $Date$
-  Version:   $Revision$
-
-  Copyright (c) Insight Software Consortium. All rights reserved.
-  See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.  See the above copyright notices for more information.
-
-=========================================================================*/
+ *
+ *  Copyright Insight Software Consortium
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0.txt
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *=========================================================================*/
 #ifndef itkSpeedFunctionToPathFilter_h
 #define itkSpeedFunctionToPathFilter_h
 
@@ -32,14 +33,14 @@ namespace itk
  * For each end- and way-point, a Fast Marching arrival function is
  * computed. The minimal path is extracted for each segment and
  * concatenated to obtain the total path between the start- and
- * end-points, while passing near the given way-points 
+ * end-points, while passing near the given way-points
  * (according to the TerminationValue of ArrivalFunctionToPathFilter).
  *
  * The user must provide the following:
  *    1. A real-valued speed function as the filter input
- *    2. At least one PathInfo object using AddPathInfo().
+ *    2. At least one PathInfo object using AddPathInformation().
  * The speed function must be a real-valued (float or double) image
- * in the range [0,1]. If multiple PathInfo objects are added,
+ * in the range [0,1]. If multiple PathInformation objects are added,
  * multiple paths are extracted and saved to separate filter outputs.
  *
  * A cost function optimizer may also be provided. If an optimizer
@@ -47,7 +48,7 @@ namespace itk
  * with default settings. Other suitable optimizers include
  * GradientDescentOptimizer and IterateNeighborhoodOptimizer.
  * See itkArrivalFunctionToPathFilter.h for more details.
- * Note, that the path finding terminates early if the optimizer 
+ * Note, that the path finding terminates early if the optimizer
  * runs out of the image bounds, possibly depending on the speed function.
  *
  * This filter is based on the methods described in:
@@ -64,9 +65,9 @@ namespace itk
  *
  * \ingroup MinimalPathExtraction
  */
-template <class TInputImage,
-          class TOutputPath = PolyLineParametricPath<TInputImage::ImageDimension> >
-class ITK_EXPORT SpeedFunctionToPathFilter :
+template <typename TInputImage,
+          typename TOutputPath = PolyLineParametricPath<TInputImage::ImageDimension> >
+class ITK_TEMPLATE_EXPORT SpeedFunctionToPathFilter :
     public ArrivalFunctionToPathFilter<TInputImage,TOutputPath>
 {
 public:
@@ -162,7 +163,7 @@ protected:
   void PrintSelf( std::ostream& os, Indent indent ) const override;
 
   /** Implemention of algorithm. */
-  void GenerateData( void ) override;
+  void GenerateData( ) override;
 
   /** Get the number of paths which the user has instructed to extracted. */
   unsigned int GetNumberOfPathsToExtract( ) const override;
