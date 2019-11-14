@@ -100,6 +100,9 @@ public:
   /** RealType type alias support */
   using RealType = typename Superclass::RealType;
 
+  /** Size type alias support */
+  using SizeType = typename Superclass::SizeType;
+
   /** Dimension underlying input image. */
   static constexpr unsigned int ImageDimension = Superclass::ImageDimension;
 
@@ -125,6 +128,12 @@ public:
                                                 index) const override
   {
     return this->EvaluateUnoptimized(index);
+  }
+
+  SizeType
+  GetRadius() const override
+  {
+    return SizeType::Filled(1);
   }
 
 protected:
