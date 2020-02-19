@@ -38,8 +38,7 @@ namespace itk
  *
  * \ingroup MinimalPathExtraction
  */
-class MinimalPathExtraction_EXPORT IterateNeighborhoodOptimizer :
-    public SingleValuedNonLinearOptimizer
+class MinimalPathExtraction_EXPORT IterateNeighborhoodOptimizer : public SingleValuedNonLinearOptimizer
 {
 public:
   ITK_DISALLOW_COPY_AND_ASSIGN(IterateNeighborhoodOptimizer);
@@ -51,38 +50,54 @@ public:
   using ConstPointer = SmartPointer<const Self>;
 
   /** Method for creation through the object factory. */
-  itkNewMacro( Self );
+  itkNewMacro(Self);
 
   /** Run-time type information (and related methods). */
-  itkTypeMacro( IterateNeighborhoodOptimizer, SingleValuedNonLinearOptimizer );
+  itkTypeMacro(IterateNeighborhoodOptimizer, SingleValuedNonLinearOptimizer);
 
   /** Configure whether the local maxima or minima is found.
    *  The default is to minimize the cost function (maximize = false ).*/
-  itkGetConstReferenceMacro( Maximize, bool );
-  itkSetMacro( Maximize, bool );
-  itkBooleanMacro( Maximize );
-  bool GetMinimize( ) const
-    { return !m_Maximize; }
-  void SetMinimize(bool v)
-    { this->SetMaximize(!v); }
-  void MinimizeOn()
-    { this->MaximizeOff(); }
-  void MinimizeOff()
-    { this->MaximizeOn(); }
+  itkGetConstReferenceMacro(Maximize, bool);
+  itkSetMacro(Maximize, bool);
+  itkBooleanMacro(Maximize);
+  bool
+  GetMinimize() const
+  {
+    return !m_Maximize;
+  }
+  void
+  SetMinimize(bool v)
+  {
+    this->SetMaximize(!v);
+  }
+  void
+  MinimizeOn()
+  {
+    this->MaximizeOff();
+  }
+  void
+  MinimizeOff()
+  {
+    this->MaximizeOn();
+  }
 
   /** Advance one step. */
-  virtual void AdvanceOneStep( void );
+  virtual void
+  AdvanceOneStep(void);
 
   /** Start optimization. */
-  void StartOptimization( void ) override;
+  void
+  StartOptimization(void) override;
 
   /** Resume previously stopped optimization with current parameters
    * \sa StopOptimization. */
-  void ResumeOptimization( void );
+  void
+  ResumeOptimization(void);
 
   /** Stop optimization.
    * \sa ResumeOptimization */
-  void StopOptimization( void );
+  void
+  StopOptimization(void);
 
   /**
    * Get/set whether the nieghborhood is defined by face connectivity or
@@ -96,19 +111,20 @@ public:
    *  The default is [1.0,1.0] and MUST be specified for all 3-D images
    *  and 2-D images with non-unity spacing. */
   using NeighborhoodSizeType = Array<double>;
-  itkSetMacro( NeighborhoodSize, NeighborhoodSizeType );
-  itkGetConstReferenceMacro( NeighborhoodSize, NeighborhoodSizeType );
+  itkSetMacro(NeighborhoodSize, NeighborhoodSizeType);
+  itkGetConstReferenceMacro(NeighborhoodSize, NeighborhoodSizeType);
 
   /** Get the current iteration number. */
-  itkGetConstMacro( CurrentIteration, unsigned int );
+  itkGetConstMacro(CurrentIteration, unsigned int);
 
   /** Get the current value. */
-  itkGetConstReferenceMacro( CurrentValue, double );
+  itkGetConstReferenceMacro(CurrentValue, double);
 
 protected:
   IterateNeighborhoodOptimizer();
-  ~IterateNeighborhoodOptimizer() override {};
-  void PrintSelf(std::ostream& os, Indent indent) const override;
+  ~IterateNeighborhoodOptimizer() override{};
+  void
+  PrintSelf(std::ostream & os, Indent indent) const override;
 
 private:
   bool                 m_Stop;
@@ -117,7 +133,6 @@ private:
   double               m_CurrentValue;
   unsigned long        m_CurrentIteration;
   NeighborhoodSizeType m_NeighborhoodSize;
-
 };
 
 } // end namespace itk

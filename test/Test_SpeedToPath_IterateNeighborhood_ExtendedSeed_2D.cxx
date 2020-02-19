@@ -17,7 +17,8 @@
  *=========================================================================*/
 #include "MinimalPathTest.h"
 
-int Test_SpeedToPath_IterateNeighborhood_ExtendedSeed_2D(int argc, char* argv[])
+int
+Test_SpeedToPath_IterateNeighborhood_ExtendedSeed_2D(int argc, char * argv[])
 {
-    return Test_SpeedToPath_IterateNeighborhood_ExtendedSeed_ND<2>(argc, argv);
+  return Test_SpeedToPath_IterateNeighborhood_ExtendedSeed_ND<2>(argc, argv);
 }

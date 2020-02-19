@@ -39,11 +39,9 @@ namespace itk
  *
  * \ingroup MinimalPathExtraction
  */
-template < typename TInputImage, typename TCoordRep = float >
-class ITK_TEMPLATE_EXPORT PhysicalCentralDifferenceImageFunction :
-  public ImageFunction< TInputImage,
-                        CovariantVector<double, TInputImage::ImageDimension>,
-                        TCoordRep >
+template <typename TInputImage, typename TCoordRep = float>
+class ITK_TEMPLATE_EXPORT PhysicalCentralDifferenceImageFunction
+  : public ImageFunction<TInputImage, CovariantVector<double, TInputImage::ImageDimension>, TCoordRep>
 {
 public:
   ITK_DISALLOW_COPY_AND_ASSIGN(PhysicalCentralDifferenceImageFunction);
@@ -53,10 +51,8 @@ public:
 
   /** Standard class type alias. */
   using Self = PhysicalCentralDifferenceImageFunction;
-  using Superclass = ImageFunction<TInputImage,
-                        CovariantVector<double,
-                        itkGetStaticConstMacro(ImageDimension)>,
-                        TCoordRep>;
+  using Superclass =
+    ImageFunction<TInputImage, CovariantVector<double, itkGetStaticConstMacro(ImageDimension)>, TCoordRep>;
   using Pointer = SmartPointer<Self>;
   using ConstPointer = SmartPointer<const Self>;
 
@@ -88,26 +84,28 @@ public:
    * \warning this method caches BufferedRegion information.
    * If the BufferedRegion has changed, user must call
    * SetInputImage again to update cached values. */
-  void SetInputImage( const InputImageType * ptr ) override
+  void
+  SetInputImage(const InputImageType * ptr) override
+  {
+    this->Superclass::SetInputImage(ptr);
+    if (m_Interpolator.IsNotNull())
     {
-        this->Superclass::SetInputImage( ptr );
-        if ( m_Interpolator.IsNotNull() )
-          {
-          m_Interpolator->SetInputImage( ptr );
-          }
+      m_Interpolator->SetInputImage(ptr);
     }
+  }
 
   /** Evalulate the image derivative by central differencing at specified index.
    *
    *  No bounds checking is done. The point is assume to lie within the
    *  image buffer. ImageFunction::IsInsideBuffer() can be used to check
    *  bounds before calling this method. */
-  OutputType EvaluateAtIndex( const IndexType& index ) const override
-    {
+  OutputType
+  EvaluateAtIndex(const IndexType & index) const override
+  {
     PointType point;
-    m_Interpolator->GetInputImage()->TransformIndexToPhysicalPoint( index, point );
-    return this->Evaluate( point );
-    }
+    m_Interpolator->GetInputImage()->TransformIndexToPhysicalPoint(index, point);
+    return this->Evaluate(point);
+  }
 
   /** Evalulate the image derivative by central differencing at specified
    *  continuous index.
@@ -115,13 +113,13 @@ public:
    *  No bounds checking is done. The point is assume to lie within the
    *  image buffer. ImageFunction::IsInsideBuffer() can be used to check
    *  bounds before calling this method. */
-  OutputType EvaluateAtContinuousIndex(
-    const ContinuousIndexType& cindex ) const override
-    {
+  OutputType
+  EvaluateAtContinuousIndex(const ContinuousIndexType & cindex) const override
+  {
     PointType point;
-    m_Interpolator->GetInputImage()->TransformContinuousIndexToPhysicalPoint( cindex, point );
-    return this->Evaluate( point );
-    }
+    m_Interpolator->GetInputImage()->TransformContinuousIndexToPhysicalPoint(cindex, point);
+    return this->Evaluate(point);
+  }
 
   /** Evalulate the image derivative by central differencing at specified
    *  physical point.
@@ -129,22 +127,23 @@ public:
    *  No bounds checking is done. The point is assume to lie within the
    *  image buffer. ImageFunction::IsInsideBuffer() can be used to check
    *  bounds before calling this method. */
-   OutputType Evaluate( const PointType& point ) const override;
+  OutputType
+  Evaluate(const PointType & point) const override;
 
 protected:
   PhysicalCentralDifferenceImageFunction();
   ~PhysicalCentralDifferenceImageFunction() override{};
-  void PrintSelf(std::ostream& os, Indent indent) const override;
+  void
+  PrintSelf(std::ostream & os, Indent indent) const override;
 
 private:
   typename InterpolateImageFunctionType::Pointer m_Interpolator;
-
 };
 
 } // end namespace itk
 
 #ifndef ITK_MANUAL_INSTANTIATION
-# include "itkPhysicalCentralDifferenceImageFunction.hxx"
+#  include "itkPhysicalCentralDifferenceImageFunction.hxx"
 #endif
 
 #endif
