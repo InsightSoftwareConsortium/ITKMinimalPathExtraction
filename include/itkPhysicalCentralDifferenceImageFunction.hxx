@@ -25,8 +25,7 @@ namespace itk
 
 
 template <class TInputImage, class TCoordRep>
-PhysicalCentralDifferenceImageFunction<TInputImage,TCoordRep>
-::PhysicalCentralDifferenceImageFunction()
+PhysicalCentralDifferenceImageFunction<TInputImage, TCoordRep>::PhysicalCentralDifferenceImageFunction()
 {
   m_Interpolator = InterpolateImageFunctionType::New();
 }
@@ -34,39 +33,36 @@ PhysicalCentralDifferenceImageFunction<TInputImage,TCoordRep>
 
 template <class TInputImage, class TCoordRep>
 void
-PhysicalCentralDifferenceImageFunction<TInputImage,TCoordRep>
-::PrintSelf(std::ostream& os, Indent indent) const
+PhysicalCentralDifferenceImageFunction<TInputImage, TCoordRep>::PrintSelf(std::ostream & os, Indent indent) const
 {
-  this->Superclass::PrintSelf(os,indent);
+  this->Superclass::PrintSelf(os, indent);
 }
 
 
 template <class TInputImage, class TCoordRep>
-typename PhysicalCentralDifferenceImageFunction<TInputImage,TCoordRep>::OutputType
-PhysicalCentralDifferenceImageFunction<TInputImage,TCoordRep>
-::Evaluate( const PointType& point ) const
+typename PhysicalCentralDifferenceImageFunction<TInputImage, TCoordRep>::OutputType
+PhysicalCentralDifferenceImageFunction<TInputImage, TCoordRep>::Evaluate(const PointType & point) const
 {
   OutputType derivative;
-  derivative.Fill( 0.0 );
+  derivative.Fill(0.0);
 
-  for(unsigned int dim=0; dim<TInputImage::ImageDimension; dim++)
-    {
+  for (unsigned int dim = 0; dim < TInputImage::ImageDimension; dim++)
+  {
     // Get the left neighbor
-    PointType pointLeft( point );
+    PointType pointLeft(point);
     pointLeft[dim] += -1 * Superclass::m_Image->GetSpacing()[dim];
-    TCoordRep valueLeft = m_Interpolator->Evaluate( pointLeft );
+    TCoordRep valueLeft = m_Interpolator->Evaluate(pointLeft);
 
     // Get the right neighbor
-    PointType pointRight( point );
+    PointType pointRight(point);
     pointRight[dim] += 1 * Superclass::m_Image->GetSpacing()[dim];
-    TCoordRep valueRight = m_Interpolator->Evaluate( pointRight );
+    TCoordRep valueRight = m_Interpolator->Evaluate(pointRight);
 
     // Compute derivative
-    derivative[dim] = (valueRight - valueLeft) *
-                      (0.5 / Superclass::m_Image->GetSpacing()[dim]);
-    }
+    derivative[dim] = (valueRight - valueLeft) * (0.5 / Superclass::m_Image->GetSpacing()[dim]);
+  }
 
-  return ( derivative );
+  return (derivative);
 }
 
 } // end namespace itk

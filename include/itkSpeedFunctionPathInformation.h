@@ -50,8 +50,7 @@ namespace itk
  * \ingroup MinimalPathExtraction
  */
 template <typename TPoint>
-class ITK_TEMPLATE_EXPORT SpeedFunctionPathInformation :
-  public LightObject
+class ITK_TEMPLATE_EXPORT SpeedFunctionPathInformation : public LightObject
 {
 public:
   ITK_DISALLOW_COPY_AND_ASSIGN(SpeedFunctionPathInformation);
@@ -71,69 +70,94 @@ public:
 
   /** Some point type alias. */
   using PointType = TPoint;
-  using PointsContainerType = std::vector< PointType >;
+  using PointsContainerType = std::vector<PointType>;
 
-  void ClearInfo();
+  void
+  ClearInfo();
 
-  void SetStartPoint( const PointType & start );
+  void
+  SetStartPoint(const PointType & start);
 
-  void SetEndPoint( const PointType & end );
+  void
+  SetEndPoint(const PointType & end);
 
-  void AddWayPoint( const PointType & way );
+  void
+  AddWayPoint(const PointType & way);
 
 
   /** Methods for adding extended path components **/
-  void SetStartPoint( const PointsContainerType & start );
+  void
+  SetStartPoint(const PointsContainerType & start);
 
-  void SetEndPoint( const PointsContainerType & end );
+  void
+  SetEndPoint(const PointsContainerType & end);
 
-  void AddWayPoint( const PointsContainerType & way );
+  void
+  AddWayPoint(const PointsContainerType & way);
 
   // methods for modifying path seeds - needed when using
   // an extended seed.
-  void SetCurrent( const PointsContainerType & newcurrent );
-  void SetPrevious( const PointsContainerType & newprevious );
-  void SetNext( const PointsContainerType & newnext );
+  void
+  SetCurrent(const PointsContainerType & newcurrent);
+  void
+  SetPrevious(const PointsContainerType & newprevious);
+  void
+  SetNext(const PointsContainerType & newnext);
 
-  void SetCurrent( const PointType & current );
-  void SetPrevious( const PointType & newprevious );
-  void SetNext( const PointType & newnext );
+  void
+  SetCurrent(const PointType & current);
+  void
+  SetPrevious(const PointType & newprevious);
+  void
+  SetNext(const PointType & newnext);
 
-  void Advance();
+  void
+  Advance();
 
-  unsigned int GetNumberOfPoints( ) const;
+  unsigned int
+  GetNumberOfPoints() const;
 
-  const PointsContainerType & GetStartPoint( ) const;
+  const PointsContainerType &
+  GetStartPoint() const;
 
-  const PointsContainerType & GetEndPoint( ) const;
+  const PointsContainerType &
+  GetEndPoint() const;
 
-  const PointsContainerType & GetWayPoint( SizeValueType i ) const;
+  const PointsContainerType &
+  GetWayPoint(SizeValueType i) const;
 
-  bool HasNextFront( ) const;
+  bool
+  HasNextFront() const;
 
-  const PointsContainerType & GetCurrentFrontAndAdvance( );
+  const PointsContainerType &
+  GetCurrentFrontAndAdvance();
 
-  const PointsContainerType & PeekCurrentFront( ) const;
+  const PointsContainerType &
+  PeekCurrentFront() const;
 
-  const PointsContainerType & PeekNextFront( ) const;
+  const PointsContainerType &
+  PeekNextFront() const;
 
-  const PointsContainerType & PeekPreviousFront( ) const;
+  const PointsContainerType &
+  PeekPreviousFront() const;
 
 
 protected:
-  SpeedFunctionPathInformation( );
-  ~SpeedFunctionPathInformation( ) override;
-  void PrintSelf( std::ostream& os, Indent indent ) const override;
+  SpeedFunctionPathInformation();
+  ~SpeedFunctionPathInformation() override;
+  void
+  PrintSelf(std::ostream & os, Indent indent) const override;
 
-  std::vector< PointsContainerType > m_Information;
-  SizeValueType                      m_Front;
+  std::vector<PointsContainerType> m_Information;
+  SizeValueType                    m_Front;
 
 
-  PointsContainerType PtoPVec(const PointType & P)
+  PointsContainerType
+  PtoPVec(const PointType & P)
   {
     PointsContainerType V(1);
-    V[0]=P;
-    return(V);
+    V[0] = P;
+    return (V);
   }
 };
 
@@ -141,7 +165,7 @@ protected:
 } // end namespace itk
 
 #ifndef ITK_MANUAL_INSTANTIATION
-#include "itkSpeedFunctionPathInformation.hxx"
+#  include "itkSpeedFunctionPathInformation.hxx"
 #endif
 
 #endif

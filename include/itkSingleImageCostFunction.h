@@ -50,8 +50,7 @@ namespace itk
  * \ingroup MinimalPathExtraction
  */
 template <typename TImage>
-class ITK_TEMPLATE_EXPORT SingleImageCostFunction :
-    public SingleValuedCostFunction
+class ITK_TEMPLATE_EXPORT SingleImageCostFunction : public SingleValuedCostFunction
 {
 public:
   ITK_DISALLOW_COPY_AND_ASSIGN(SingleImageCostFunction);
@@ -66,7 +65,7 @@ public:
   itkNewMacro(Self);
 
   /** Run-time type information (and related methods). */
-  itkTypeMacro( SingleImageCostFunction, SingleValuedCostFunction );
+  itkTypeMacro(SingleImageCostFunction, SingleValuedCostFunction);
 
   /** MeasureType type alias.
    *  It defines a type used to return the cost function value. */
@@ -92,61 +91,69 @@ public:
   using CoordRepType = Superclass::ParametersValueType;
 
   /** Type for locations */
-  using IndexType = Index< ImageDimension >;
-  using PointType = Point< CoordRepType, ImageDimension >;
-  using ContinuousIndexType = ContinuousIndex< CoordRepType, ImageDimension >;
+  using IndexType = Index<ImageDimension>;
+  using PointType = Point<CoordRepType, ImageDimension>;
+  using ContinuousIndexType = ContinuousIndex<CoordRepType, ImageDimension>;
 
   /** Type of the Interpolator class */
-  using InterpolatorType = InterpolateImageFunction< ImageType, CoordRepType >;
-  using DefaultInterpolatorType = LinearInterpolateImageFunction< ImageType, CoordRepType >;
+  using InterpolatorType = InterpolateImageFunction<ImageType, CoordRepType>;
+  using DefaultInterpolatorType = LinearInterpolateImageFunction<ImageType, CoordRepType>;
 
   /** Type of the GradientImageFunction class */
-  using GradientImageFunctionType = PhysicalCentralDifferenceImageFunction< ImageType, CoordRepType >;
+  using GradientImageFunctionType = PhysicalCentralDifferenceImageFunction<ImageType, CoordRepType>;
 
   /** Get/set the Interpolator. */
-  itkSetObjectMacro( Interpolator, InterpolatorType );
-  itkGetConstObjectMacro( Interpolator, InterpolatorType );
+  itkSetObjectMacro(Interpolator, InterpolatorType);
+  itkGetConstObjectMacro(Interpolator, InterpolatorType);
 
   /** Get/set the Image.  */
-  itkSetConstObjectMacro( Image, ImageType );
-  itkGetConstObjectMacro( Image, ImageType );
+  itkSetConstObjectMacro(Image, ImageType);
+  itkGetConstObjectMacro(Image, ImageType);
 
   /** Get/set the DerivativeThreshold.  */
-  itkSetMacro( DerivativeThreshold, DerivativeType::ValueType );
-  itkGetConstReferenceMacro( DerivativeThreshold, DerivativeType::ValueType );
+  itkSetMacro(DerivativeThreshold, DerivativeType::ValueType);
+  itkGetConstReferenceMacro(DerivativeThreshold, DerivativeType::ValueType);
 
   /** Initialize the cost function */
-  virtual void Initialize();
+  virtual void
+  Initialize();
 
   /** Return the number of parameters required by the Transform */
-  unsigned int GetNumberOfParameters() const override
-  { return ImageDimension; }
+  unsigned int
+  GetNumberOfParameters() const override
+  {
+    return ImageDimension;
+  }
 
   /** This method returns the value of the cost function corresponding
-    * to the specified parameters. */
-  MeasureType GetValue( const ParametersType & parameters ) const override;
+   * to the specified parameters. */
+  MeasureType
+  GetValue(const ParametersType & parameters) const override;
 
   /** This method returns the derivative of the cost function corresponding
-    * to the specified parameters. */
-  void GetDerivative( const ParametersType & parameters,
-                              DerivativeType & derivative ) const override;
+   * to the specified parameters. */
+  void
+  GetDerivative(const ParametersType & parameters, DerivativeType & derivative) const override;
 
   // Set these depending on whether you will be minimizing or maximizing.
   // They control the value returned when the point isn't inside the buffer.
-  void SetMinimize()
+  void
+  SetMinimize()
   {
-    m_OutsideValue = itk::NumericTraits< ImagePixelType >::max();
+    m_OutsideValue = itk::NumericTraits<ImagePixelType>::max();
   }
-  void SetMaximize()
+  void
+  SetMaximize()
   {
-    m_OutsideValue = itk::NumericTraits< ImagePixelType >::NonpositiveMin();
+    m_OutsideValue = itk::NumericTraits<ImagePixelType>::NonpositiveMin();
   }
 
 
 protected:
   SingleImageCostFunction();
   ~SingleImageCostFunction() override {}
-  void PrintSelf(std::ostream& os, Indent indent) const override;
+  void
+  PrintSelf(std::ostream & os, Indent indent) const override;
 
 private:
   ImageConstPointer                           m_Image;
@@ -154,15 +161,14 @@ private:
   typename GradientImageFunctionType::Pointer m_GradientImageFunction;
   /** Used to define the value outside the image buffer. Important when
    *  path points are on the edge of an image */
-  ImagePixelType                              m_OutsideValue;
-  typename DerivativeType::ValueType          m_DerivativeThreshold;
-
+  ImagePixelType                     m_OutsideValue;
+  typename DerivativeType::ValueType m_DerivativeThreshold;
 };
 
 } // end namespace itk
 
 #ifndef ITK_MANUAL_INSTANTIATION
-#include "itkSingleImageCostFunction.hxx"
+#  include "itkSingleImageCostFunction.hxx"
 #endif
 
 #endif

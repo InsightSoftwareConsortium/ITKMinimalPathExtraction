@@ -51,39 +51,41 @@ public:
   using Pointer = itk::SmartPointer<Self>;
 
   /** Method for creation through the object factory. */
-  itkNewMacro( Self );
+  itkNewMacro(Self);
 
   /** Some useful type alias. */
   using FilterType = TFilter;
 
   /** Get/set the Filter. */
-  itkSetObjectMacro( Filter, FilterType );
-  itkGetConstObjectMacro( Filter, FilterType );
+  itkSetObjectMacro(Filter, FilterType);
+  itkGetConstObjectMacro(Filter, FilterType);
 
   /** Execute */
-  void Execute(itk::Object *caller, const itk::EventObject & event) override
-    {
-    const itk::Object * constCaller = const_cast< const itk::Object * >( caller );
-    Execute( constCaller, event);
-    }
+  void
+  Execute(itk::Object * caller, const itk::EventObject & event) override
+  {
+    const itk::Object * constCaller = const_cast<const itk::Object *>(caller);
+    Execute(constCaller, event);
+  }
 
   /** Execute */
-  void Execute(const itk::Object * object, const itk::EventObject & event) override
+  void
+  Execute(const itk::Object * object, const itk::EventObject & event) override
+  {
+    if (!itk::IterationEvent().CheckEvent(&event))
     {
-    if( ! itk::IterationEvent().CheckEvent( &event ) )
-      {
       return;
-      }
-    // Pass event to Filter
-    if ( m_Filter.IsNotNull() )
-      {
-      m_Filter->Execute( object, event );
-      }
     }
+    // Pass event to Filter
+    if (m_Filter.IsNotNull())
+    {
+      m_Filter->Execute(object, event);
+    }
+  }
 
 protected:
-  ArrivalFunctionToPathCommand(){}
-  ~ArrivalFunctionToPathCommand() override{}
+  ArrivalFunctionToPathCommand() {}
+  ~ArrivalFunctionToPathCommand() override {}
 
 private:
   typename FilterType::Pointer m_Filter;
@@ -139,22 +141,20 @@ private:
  *
  * \ingroup MinimalPathExtraction
  */
-template <typename TInputImage,
-          typename TOutputPath = PolyLineParametricPath<TInputImage::ImageDimension> >
-class ITK_TEMPLATE_EXPORT ArrivalFunctionToPathFilter :
-    public ImageToPathFilter<TInputImage,TOutputPath>
+template <typename TInputImage, typename TOutputPath = PolyLineParametricPath<TInputImage::ImageDimension>>
+class ITK_TEMPLATE_EXPORT ArrivalFunctionToPathFilter : public ImageToPathFilter<TInputImage, TOutputPath>
 {
 public:
   ITK_DISALLOW_COPY_AND_ASSIGN(ArrivalFunctionToPathFilter);
 
   /** Standard class type alias. */
   using Self = ArrivalFunctionToPathFilter;
-  using Superclass = ImageToPathFilter<TInputImage,TOutputPath>;
+  using Superclass = ImageToPathFilter<TInputImage, TOutputPath>;
   using Pointer = SmartPointer<Self>;
   using ConstPointer = SmartPointer<const Self>;
 
   /** Run-time type information (and related methods). */
-  itkTypeMacro(ArrivalFunctionToPathFilter,ImageToPathFilter);
+  itkTypeMacro(ArrivalFunctionToPathFilter, ImageToPathFilter);
 
   /** Method for creation through the object factory. */
   itkNewMacro(Self);
@@ -175,34 +175,37 @@ public:
   static constexpr unsigned int InputImageDimension = InputImageType::ImageDimension;
 
   /** Some convenient type alias. */
-  using IndexType = Index< InputImageDimension >;
-  using ContinuousIndexType = ContinuousIndex< double, InputImageDimension >;
-  using PointType = Point< double, InputImageDimension >;
-  using CommandType = ArrivalFunctionToPathCommand< Self >;
-  using CostFunctionType = SingleImageCostFunction< InputImageType >;
+  using IndexType = Index<InputImageDimension>;
+  using ContinuousIndexType = ContinuousIndex<double, InputImageDimension>;
+  using PointType = Point<double, InputImageDimension>;
+  using CommandType = ArrivalFunctionToPathCommand<Self>;
+  using CostFunctionType = SingleImageCostFunction<InputImageType>;
   using OptimizerType = SingleValuedNonLinearOptimizer;
   using DefaultOptimizerType = RegularStepGradientDescentOptimizer;
 
   /** The points are in vectors to support extended "nodes" */
-  using PointsContainerType = std::vector < PointType>;
+  using PointsContainerType = std::vector<PointType>;
 
   /** Get/set the Optimizer. */
-  itkSetObjectMacro( Optimizer, OptimizerType );
-  itkGetConstObjectMacro( Optimizer, OptimizerType );
+  itkSetObjectMacro(Optimizer, OptimizerType);
+  itkGetConstObjectMacro(Optimizer, OptimizerType);
 
   /** Get/set the cost function. The filter (not the user) is responsible
    *  for connecting the arrival function to the cost function. */
-  itkSetObjectMacro( CostFunction, CostFunctionType );
-  itkGetConstObjectMacro( CostFunction, CostFunctionType );
+  itkSetObjectMacro(CostFunction, CostFunctionType);
+  itkGetConstObjectMacro(CostFunction, CostFunctionType);
 
   /** Clears the list of end points and adds the given point to the list. */
-  virtual void SetPathEndPoint( const PointType & point );
+  virtual void
+  SetPathEndPoint(const PointType & point);
 
   /** Adds the given point to the list. */
-  virtual void AddPathEndPoint( const PointType & point );
+  virtual void
+  AddPathEndPoint(const PointType & point);
 
   /** Clear the list of end points. */
-  virtual void ClearPathEndPoints();
+  virtual void
+  ClearPathEndPoints();
 
   /** Get/set the termination. Once the current optimizer value falls below
    *  TerminationValue, no further points will be appended to the path.
@@ -211,40 +214,47 @@ public:
   itkGetMacro(TerminationValue, typename OptimizerType::MeasureType);
 
   /** Handle optimizer iteration events. */
-  virtual void Execute( const itk::Object * object, const itk::EventObject & event );
+  virtual void
+  Execute(const itk::Object * object, const itk::EventObject & event);
 
 protected:
   ArrivalFunctionToPathFilter();
   ~ArrivalFunctionToPathFilter() override;
-  void PrintSelf(std::ostream& os, Indent indent) const override;
+  void
+  PrintSelf(std::ostream & os, Indent indent) const override;
 
   /** Override since the filter needs all the data for the algorithm */
-  void GenerateInputRequestedRegion() override;
+  void
+  GenerateInputRequestedRegion() override;
 
   /** Implemention of algorithm */
-  void GenerateData() override;
+  void
+  GenerateData() override;
 
   /** Get the arrival function from which to extract the path. */
-  virtual unsigned int GetNumberOfPathsToExtract( ) const;
+  virtual unsigned int
+  GetNumberOfPathsToExtract() const;
 
   /** Compute the arrival function from which to extract the path.
    *  In this case it is simply the filter input. */
-  virtual InputImageType * ComputeArrivalFunction( );
+  virtual InputImageType *
+  ComputeArrivalFunction();
 
   /** Get the next end point from which to back propagate. */
-  virtual const PointsContainerType & GetNextEndPoint( );
+  virtual const PointsContainerType &
+  GetNextEndPoint();
 
-  typename CostFunctionType::Pointer m_CostFunction;
-  typename OptimizerType::Pointer m_Optimizer;
+  typename CostFunctionType::Pointer  m_CostFunction;
+  typename OptimizerType::Pointer     m_Optimizer;
   typename OptimizerType::MeasureType m_TerminationValue;
-  std::vector<PointsContainerType> m_PointList;
-  unsigned int m_CurrentOutput;
+  std::vector<PointsContainerType>    m_PointList;
+  unsigned int                        m_CurrentOutput;
 };
 
 } // end namespace itk
 
 #ifndef ITK_MANUAL_INSTANTIATION
-#include "itkArrivalFunctionToPathFilter.hxx"
+#  include "itkArrivalFunctionToPathFilter.hxx"
 #endif
 
 #endif
