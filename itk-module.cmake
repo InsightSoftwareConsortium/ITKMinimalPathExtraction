@@ -1,13 +1,7 @@
-set(DOCUMENTATION "This module implements a minimal path extraction framework
-based on Fast Marching arrival functions.
-
-A more detailed description can be found in the Insight Journal article::
-
-  Mueller, D. \"Fast Marching Minimal Path Extraction in ITK\"
-  http://hdl.handle.net/1926/1332
-  http://www.insight-journal.org/browse/publication/213
-  March, 2008.
-")
+# the top-level README is used for describing this module, just
+# re-used it for documentation here
+get_filename_component(MY_CURRENT_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+file(READ "${MY_CURRENT_DIR}/README.rst" DOCUMENTATION)
 
 itk_module(MinimalPathExtraction
   ENABLE_SHARED
@@ -19,7 +13,8 @@ itk_module(MinimalPathExtraction
   TEST_DEPENDS
     ITKTestKernel
     ITKIOSpatialObjects
-  EXCLUDE_FROM_DEFAULT
   DESCRIPTION
     "${DOCUMENTATION}"
+  EXCLUDE_FROM_DEFAULT
+  ENABLE_SHARED
 )
