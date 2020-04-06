@@ -1,0 +1,32 @@
+name: Python Packages
+
+on: [push]
+
+inputs:
+  ITKGitTag:
+    description: 'ITKGitTag to build against'
+    required: false
+    default: 'v5.1rc03'
+
+jobs:
+  Linux:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Fetch build script
+      run: |
+        curl -L https://raw.githubusercontent.com/InsightSoftwareConsortium/ITKPythonPackage/master/scripts/dockcross-manylinux-download-cache-and-build-module-wheels.sh -O
+        chmod u+x dockcross-manylinux-download-cache-and-build-module-wheels.sh
+
+    - name: Build Python packages
+      run: |
+        export ITK_PACKAGE_VERSION=${{ inputs.ITKGitTag }}
+        ./dockcross-manylinux-download-cache-and-build-module-wheels.sh
+
+    - name: Upload wheel artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: LinuxWheels
+        path: dist
