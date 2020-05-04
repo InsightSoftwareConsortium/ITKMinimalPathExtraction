@@ -1,6 +1,8 @@
 ITKMinimalPathExtraction
 ========================
 
+.. image:: https://github.com/InsightSoftwareConsortium/ITKMinimalPathExtraction/workflows/Build,%20test,%20package/badge.svg
+
 .. image::  https://dev.azure.com/InsightSoftwareConsortium/ITKModules/_apis/build/status/InsightSoftwareConsortium.ITKMinimalPathExtraction?branchName=master
     :target: https://dev.azure.com/InsightSoftwareConsortium/ITKModules/_build/latest?definitionId=16&branchName=master
     :alt: Build Status
