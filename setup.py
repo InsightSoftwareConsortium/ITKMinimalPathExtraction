@@ -13,7 +13,7 @@ except ImportError:
 
 setup(
     name='itk-minimalpathextraction',
-    version='1.1rc1',
+    version='1.1.0',
     author='Insight Software Consortium',
     author_email='itk+community@discourse.itk.org',
     packages=['itk'],
@@ -49,6 +49,6 @@ setup(
     keywords='ITK InsightToolkit',
     url=r'https://github.com/InsightSoftwareConsortium/ITKMinimalPathExtraction',
     install_requires=[
-        r'itk>=5.1rc3'
+        r'itk>=5.1.0'
     ]
     )
