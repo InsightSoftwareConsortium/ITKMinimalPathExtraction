@@ -42,6 +42,7 @@ add_test(
     ${DATA_DIR}/Noise-01.path
     1.0
     1000
+    1.0
 )
 add_test(
   NAME MinimalPathExtraction_Noise_01_RegularStepGradientDescent
@@ -89,6 +90,7 @@ add_test(
     ${DATA_DIR}/Synthetic-01.path
     1.0
     1000
+    1.0
 )
 add_test(
   NAME MinimalPathExtraction_Synthetic_01_RegularStepGradientDescent
@@ -125,6 +127,7 @@ add_test(
     ${DATA_DIR}/Synthetic-02.path
     1.0
     3000
+    1.0
 )
 add_test(
   NAME MinimalPathExtraction_Synthetic_02_RegularStepGradientDescent
@@ -173,6 +176,7 @@ add_test(
     ${DATA_DIR}/Synthetic-04.path
     1.0
     3000
+    1.0
 )
 add_test(
   NAME MinimalPathExtraction_Synthetic_04_RegularStepGradientDescent
@@ -212,6 +216,20 @@ add_test(
     0.25
     0.5
 )
+
+add_test(
+  NAME MinimalPathExtraction_Real_DSA_01_01_RegularStepGradientDescentShort
+  COMMAND MinimalPathExtractionTestDriver
+    --compare ${TESTING_OUTPUT_PATH}/Real-DSA-01-01-RegularStepGradientDescent.png ${BASELINE_DIR}/Real-DSA-01-01-RegularStepGradientDescent.png
+    Test_SpeedToPath_RegularStepGradientDescent_2D
+    ${TESTING_OUTPUT_PATH}/Real-DSA-01-01-RegularStepGradientDescent.png
+    ${DATA_DIR}/Real-DSA-01-Speed-01.mhd
+    ${DATA_DIR}/Real-DSA-01_short.path
+    3.0
+    4000
+    0.25
+    0.5
+)
 #Real-DSA-01-02
 add_test(
   NAME MinimalPathExtraction_Real_DSA_01_02_NeighborhoodIterate
@@ -236,4 +254,215 @@ add_test(
     4000
     0.25
     0.5
+)
+
+## Repeat the synthetic tests with small voxels
+## Data is the same, but headers have been modified so
+## that spacing is 0.01
+## sp suffix stands for small pixels
+add_test(
+  NAME MinimalPathExtraction_Noise_01_NeighborhoodIterate_sp
+  COMMAND MinimalPathExtractionTestDriver
+    --compare ${TESTING_OUTPUT_PATH}/Noise-01-IterateNeighborhood-sp.png ${BASELINE_DIR}/Noise-01-IterateNeighborhood-sp.png
+    Test_SpeedToPath_IterateNeighborhood_2D
+    ${TESTING_OUTPUT_PATH}/Noise-01-IterateNeighborhood-sp.png
+    ${DATA_DIR}/Noise-01-Speed-sp.mhd
+    ${DATA_DIR}/Noise-01-sp.path
+    0.01
+    1
+)
+add_test(
+  NAME MinimalPathExtraction_Noise_01_GradientDescent_sp
+  COMMAND MinimalPathExtractionTestDriver
+    --compare ${TESTING_OUTPUT_PATH}/Noise-01-GradientDescent-sp.png ${BASELINE_DIR}/Noise-01-GradientDescent-sp.png
+    Test_SpeedToPath_GradientDescent_2D
+    ${TESTING_OUTPUT_PATH}/Noise-01-GradientDescent-sp.png
+    ${DATA_DIR}/Noise-01-Speed-sp.mhd
+    ${DATA_DIR}/Noise-01-sp.path
+    0.01
+    1000
+    0.01
+)
+add_test(
+  NAME MinimalPathExtraction_Noise_01_RegularStepGradientDescent_sp
+  COMMAND MinimalPathExtractionTestDriver
+    #--compare ${TESTING_OUTPUT_PATH}/Noise-01-RegularStepGradientDescent.png ${BASELINE_DIR}/Noise-01-RegularStepGradientDescent.png
+    Test_SpeedToPath_RegularStepGradientDescent_2D
+    ${TESTING_OUTPUT_PATH}/Noise-01-RegularStepGradientDescent-sp.png
+    ${DATA_DIR}/Noise-01-Speed-sp.mhd
+    ${DATA_DIR}/Noise-01-sp.path
+    0.01
+    1000
+    1.0
+    0.5
+)
+#Synthetic-01
+add_test(
+  NAME MinimalPathExtraction_Synthetic_01_NeighborhoodIterate_sp
+  COMMAND MinimalPathExtractionTestDriver
+    --compare ${TESTING_OUTPUT_PATH}/Synthetic-01-IterateNeighborhood-sp.png ${BASELINE_DIR}/Synthetic-01-IterateNeighborhood-sp.png
+    Test_SpeedToPath_IterateNeighborhood_2D
+    ${TESTING_OUTPUT_PATH}/Synthetic-01-IterateNeighborhood-sp.png
+    ${DATA_DIR}/Synthetic-01-Speed-sp.mhd
+    ${DATA_DIR}/Synthetic-01-sp.path
+    0.01
+    1.0
+)
+add_test(
+  NAME MinimalPathExtraction_Synthetic_01_GradientDescent_sp
+  COMMAND MinimalPathExtractionTestDriver
+    --compare ${TESTING_OUTPUT_PATH}/Synthetic-01-GradientDescent-sp.png ${BASELINE_DIR}/Synthetic-01-GradientDescent-sp.png
+    Test_SpeedToPath_GradientDescent_2D
+    ${TESTING_OUTPUT_PATH}/Synthetic-01-GradientDescent-sp.png
+    ${DATA_DIR}/Synthetic-01-Speed-sp.mhd
+    ${DATA_DIR}/Synthetic-01-sp.path
+    0.01
+    1000
+    0.01
+)
+add_test(
+  NAME MinimalPathExtraction_Synthetic_01_RegularStepGradientDescent_sp
+  COMMAND MinimalPathExtractionTestDriver
+    --compare ${TESTING_OUTPUT_PATH}/Synthetic-01-RegularStepGradientDescent-sp.png ${BASELINE_DIR}/Synthetic-01-RegularStepGradientDescent-sp.png
+    Test_SpeedToPath_RegularStepGradientDescent_2D
+    ${TESTING_OUTPUT_PATH}/Synthetic-01-RegularStepGradientDescent-sp.png
+    ${DATA_DIR}/Synthetic-01-Speed-sp.mhd
+    ${DATA_DIR}/Synthetic-01-sp.path
+    0.01
+    1000
+    1.0
+    0.5
+)
+
+#Synthetic-02
+add_test(
+  NAME MinimalPathExtraction_Synthetic_02_NeighborhoodIterate_sp
+  COMMAND MinimalPathExtractionTestDriver
+    --compare ${TESTING_OUTPUT_PATH}/Synthetic-02-IterateNeighborhood-sp.png ${BASELINE_DIR}/Synthetic-02-IterateNeighborhood-sp.png
+    Test_SpeedToPath_IterateNeighborhood_2D
+    ${TESTING_OUTPUT_PATH}/Synthetic-02-IterateNeighborhood-sp.png
+    ${DATA_DIR}/Synthetic-02-Speed-sp.mhd
+    ${DATA_DIR}/Synthetic-02-sp.path
+    0.01
+    1.0
+)
+add_test(
+  NAME MinimalPathExtraction_Synthetic_02_GradientDescent_sp
+  COMMAND MinimalPathExtractionTestDriver
+  --compare ${TESTING_OUTPUT_PATH}/Synthetic-02-GradientDescent-sp.png ${BASELINE_DIR}/Synthetic-02-GradientDescent-sp.png
+  Test_SpeedToPath_GradientDescent_2D
+    ${TESTING_OUTPUT_PATH}/Synthetic-02-GradientDescent-sp.png
+    ${DATA_DIR}/Synthetic-02-Speed-sp.mhd
+    ${DATA_DIR}/Synthetic-02-sp.path
+    0.01
+    3000
+    0.01
+)
+add_test(
+  NAME MinimalPathExtraction_Synthetic_02_RegularStepGradientDescent_sp
+  COMMAND MinimalPathExtractionTestDriver
+    --compare ${TESTING_OUTPUT_PATH}/Synthetic-02-RegularStepGradientDescent-sp.png ${BASELINE_DIR}/Synthetic-02-RegularStepGradientDescent-sp.png
+    Test_SpeedToPath_RegularStepGradientDescent_2D
+    ${TESTING_OUTPUT_PATH}/Synthetic-02-RegularStepGradientDescent-sp.png
+    ${DATA_DIR}/Synthetic-02-Speed-sp.mhd
+    ${DATA_DIR}/Synthetic-02-sp.path
+    0.01
+    3000
+    1.0
+    0.5
+)
+#Synthetic-03 - why no gradient descent for this one? Paths too narrow?
+add_test(
+  NAME MinimalPathExtraction_Synthetic_03_NeighborhoodIterate_sp
+  COMMAND MinimalPathExtractionTestDriver
+    --compare ${TESTING_OUTPUT_PATH}/Synthetic-03-IterateNeighborhood-sp.png ${BASELINE_DIR}/Synthetic-03-IterateNeighborhood-sp.png
+    Test_SpeedToPath_IterateNeighborhood_2D
+    ${TESTING_OUTPUT_PATH}/Synthetic-03-IterateNeighborhood-sp.png
+    ${DATA_DIR}/Synthetic-03-Speed-sp.mhd
+    ${DATA_DIR}/Synthetic-03-sp.path
+    0.01
+    1.0
+)
+
+#Synthetic-04
+add_test(
+  NAME MinimalPathExtraction_Synthetic_04_NeighborhoodIterate_sp
+  COMMAND MinimalPathExtractionTestDriver
+    --compare ${TESTING_OUTPUT_PATH}/Synthetic-04-IterateNeighborhood-sp.mhd ${BASELINE_DIR}/Synthetic-04-IterateNeighborhood-sp.mhd
+    Test_SpeedToPath_IterateNeighborhood_3D
+    ${TESTING_OUTPUT_PATH}/Synthetic-04-IterateNeighborhood-sp.mhd
+    ${DATA_DIR}/Synthetic-04-Speed-sp.mhd
+    ${DATA_DIR}/Synthetic-04-sp.path
+    0.01
+    1.0
+)
+add_test(
+  NAME MinimalPathExtraction_Synthetic_04_GradientDescent_sp
+  COMMAND MinimalPathExtractionTestDriver
+    --compare ${TESTING_OUTPUT_PATH}/Synthetic-04-GradientDescent-sp.mhd ${BASELINE_DIR}/Synthetic-04-GradientDescent-sp.mhd
+    Test_SpeedToPath_GradientDescent_3D
+    ${TESTING_OUTPUT_PATH}/Synthetic-04-GradientDescent-sp.mhd
+    ${DATA_DIR}/Synthetic-04-Speed-sp.mhd
+    ${DATA_DIR}/Synthetic-04-sp.path
+    0.01
+    3000
+    0.01
+)
+add_test(
+  NAME MinimalPathExtraction_Synthetic_04_RegularStepGradientDescent_sp
+  COMMAND MinimalPathExtractionTestDriver
+    --compare ${TESTING_OUTPUT_PATH}/Synthetic-04-RegularStepGradientDescent-sp.mhd ${BASELINE_DIR}/Synthetic-04-RegularStepGradientDescent-sp.mhd
+    Test_SpeedToPath_RegularStepGradientDescent_3D
+    ${TESTING_OUTPUT_PATH}/Synthetic-04-RegularStepGradientDescent-sp.mhd
+    ${DATA_DIR}/Synthetic-04-Speed-sp.mhd
+    ${DATA_DIR}/Synthetic-04-sp.path
+    0.01
+    3000
+    1.0
+    0.5
+    )
+
+  ## test with path termination at the corner of mask, meaning
+  ## that some neighbours are not initialised in the arrival image.
+  ## The resulting gradient therefore needs to be computed carefully,
+  ## or the first step can put the point almost anywhere
+
+add_test(
+  NAME MinimalPathExtraction_Synthetic_01_B_GradientDescent_sp
+  COMMAND MinimalPathExtractionTestDriver
+    --compare ${TESTING_OUTPUT_PATH}/Synthetic-01-B-GradientDescent-sp.png ${BASELINE_DIR}/Synthetic-01-B-GradientDescent-sp.png
+    Test_SpeedToPath_GradientDescent_2D
+    ${TESTING_OUTPUT_PATH}/Synthetic-01-B-GradientDescent-sp.png
+    ${DATA_DIR}/Synthetic-01-sp-Speed.mhd
+    ${DATA_DIR}/Synthetic-01-B-sp.path
+    0.01
+    1000
+    0.01
+)
+
+add_test(
+  NAME MinimalPathExtraction_Synthetic_01_B_RegularStepGradientDescent_sp
+  COMMAND MinimalPathExtractionTestDriver
+    --compare ${TESTING_OUTPUT_PATH}/Synthetic-01-B-GradientDescent-sp.png ${BASELINE_DIR}/Synthetic-01-B-GradientDescent-sp.png
+    Test_SpeedToPath_RegularStepGradientDescent_2D
+    ${TESTING_OUTPUT_PATH}/Synthetic-01-B-GradientDescent-sp.png
+    ${DATA_DIR}/Synthetic-01-sp-Speed.mhd
+    ${DATA_DIR}/Synthetic-01-B-sp.path
+    0.01
+    3000
+    0.005
+    0.001
+)
+
+add_test(
+  NAME MinimalPathExtraction_Synthetic_01_C_GradientDescent_sp
+  COMMAND MinimalPathExtractionTestDriver
+    --compare ${TESTING_OUTPUT_PATH}/Synthetic-01-C-GradientDescent-sp.png ${BASELINE_DIR}/Synthetic-01-C-GradientDescent-sp.png
+    Test_SpeedToPath_GradientDescent_2D
+    ${TESTING_OUTPUT_PATH}/Synthetic-01-C-GradientDescent-sp.png
+    ${DATA_DIR}/Synthetic-01-sp-Speed2.mhd
+    ${DATA_DIR}/Synthetic-01-C-sp.path
+    0.01
+    1000
+    0.000001
 )
