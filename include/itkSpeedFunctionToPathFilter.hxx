@@ -20,7 +20,8 @@
 
 #include "itkMath.h"
 #include "itkFastMarchingUpwindGradientImageFilter.h"
-
+#include <itkConstNeighborhoodIterator.h>
+#include <itkConstantBoundaryCondition.h>
 
 namespace itk
 {
@@ -28,7 +29,11 @@ namespace itk
 template <typename TInputImage, typename TOutputPath>
 SpeedFunctionToPathFilter<TInputImage, TOutputPath>::SpeedFunctionToPathFilter()
   : m_CurrentArrivalFunction(nullptr)
-{}
+{
+  m_TargetRadius = 2;
+  m_AutoTerminate = true;
+  m_AutoTerminateFactor = 0.5;
+}
 
 
 template <typename TInputImage, typename TOutputPath>
@@ -50,6 +55,95 @@ SpeedFunctionToPathFilter<TInputImage, TOutputPath>::GetNextEndPoint()
   return m_Information[Superclass::m_CurrentOutput]->GetEndPoint();
 }
 
+/**
+* take a collection of indexes and produce the equivalent of a
+* dilated version.
+*/
+
+template<typename TInputImage, typename TOutputPath>
+typename SpeedFunctionToPathFilter<TInputImage,TOutputPath>::IndexTypeSet
+SpeedFunctionToPathFilter<TInputImage,TOutputPath>
+::GetNeighbors(IndexTypeVec idxs)
+{
+  InputImagePointer speed =
+    const_cast< InputImageType * >( this->GetInput() );
+
+  using BoundaryConditionType = ConstantBoundaryCondition<InputImageType>;
+
+  IndexTypeSet UniqueIndexes;
+  typename InputImageType::SizeType radius;
+  radius.Fill(m_TargetRadius);
+  ConstNeighborhoodIterator<InputImageType, BoundaryConditionType>
+    niterator(radius, speed, speed->GetLargestPossibleRegion());
+
+  BoundaryConditionType bc;
+  bc.SetConstant(0);
+  niterator.SetBoundaryCondition(bc);
+  niterator.NeedToUseBoundaryConditionOn();
+
+  for (auto it = idxs.begin(); it != idxs.end(); it++ )
+    {
+      niterator.SetLocation(*it);
+      if ( niterator.GetCenterPixel() > 0 )
+	{
+	  // Visit the entire neighborhood (including center) and
+	  // add any pixel that has a nonzero speed function value
+	  for (auto NB = 0; NB < niterator.Size(); NB++)
+	    {
+	      if ( niterator.GetPixel(NB) > 0 )
+		{
+		  UniqueIndexes.insert(niterator.GetIndex(NB));
+		}
+	    }
+	}
+    }
+
+  return(UniqueIndexes);
+}
+
+
+template <typename TInputImage, typename TOutputPath>
+typename SpeedFunctionToPathFilter<TInputImage,TOutputPath>::InputImagePixelType
+SpeedFunctionToPathFilter<TInputImage,TOutputPath>::GetTrialGradient(IndexTypeVec idxs)
+{
+  InputImagePointer arrival =  m_CurrentArrivalFunction;
+
+  using BoundaryConditionType = ConstantBoundaryCondition<InputImageType>;
+
+  IndexTypeSet UniqueIndexes;
+  typename InputImageType::SizeType radius;
+  radius.Fill(1);
+  ConstNeighborhoodIterator<InputImageType, BoundaryConditionType>
+    niterator(radius, arrival, arrival->GetLargestPossibleRegion());
+
+  BoundaryConditionType bc;
+  bc.SetConstant(itk::NumericTraits<InputImagePixelType>::max());
+  niterator.SetBoundaryCondition(bc);
+  niterator.NeedToUseBoundaryConditionOn();
+
+  // looking for the smallest nonzero difference
+  InputImagePixelType mindiff(itk::NumericTraits<InputImagePixelType>::max());
+
+  for (auto it = idxs.begin(); it != idxs.end(); it++ )
+    {
+      niterator.SetLocation(*it);
+      InputImagePixelType CP = niterator.GetCenterPixel();
+      // Visit the entire neighborhood (including center) and
+      // add any pixel that has a nonzero arrival function value
+      for (auto NB = 0; NB < niterator.Size(); NB++)
+	{
+	  // CP values should always be zero
+	  InputImagePixelType NPD = niterator.GetPixel(NB) - CP;
+	  if (NPD  > 0 )
+	    {
+	      mindiff=std::min(mindiff, NPD);
+	    }
+	}
+    }
+
+  return(mindiff);
+}
+
 
 template <typename TInputImage, typename TOutputPath>
 typename SpeedFunctionToPathFilter<TInputImage, TOutputPath>::InputImageType *
@@ -66,16 +160,13 @@ SpeedFunctionToPathFilter<TInputImage, TOutputPath>::ComputeArrivalFunction()
   typename FastMarchingType::Pointer marching = FastMarchingType::New();
   marching->SetInput(speed);
   marching->SetGenerateGradientImage(false);
-  marching->SetTargetOffset(2.0 * Superclass::m_TerminationValue);
   marching->SetTargetReachedModeToAllTargets();
-
   // Add next and previous front sources as target points to
   // limit the front propagation to just the required zones
   PointsContainerType PrevFront = m_Information[Superclass::m_CurrentOutput]->PeekPreviousFront();
   PointsContainerType NextFront = m_Information[Superclass::m_CurrentOutput]->PeekNextFront();
-  using IndexTypeVec = std::vector<IndexType>;
   IndexTypeVec PrevIndexVec(0);
-
+  IndexTypeVec NextIndexVec(0);
 
   typename NodeContainer::Pointer targets = NodeContainer::New();
   targets->Initialize();
@@ -85,9 +176,6 @@ SpeedFunctionToPathFilter<TInputImage, TOutputPath>::ComputeArrivalFunction()
     IndexType indexTargetPrevious;
     NodeType  nodeTargetPrevious;
     speed->TransformPhysicalPointToIndex(*it, indexTargetPrevious);
-    nodeTargetPrevious.SetValue(0.0);
-    nodeTargetPrevious.SetIndex(indexTargetPrevious);
-    targets->InsertElement(0, nodeTargetPrevious);
     PrevIndexVec.push_back(indexTargetPrevious);
   }
 
@@ -96,11 +184,23 @@ SpeedFunctionToPathFilter<TInputImage, TOutputPath>::ComputeArrivalFunction()
     IndexType indexTargetNext;
     NodeType  nodeTargetNext;
     speed->TransformPhysicalPointToIndex(*it, indexTargetNext);
-    nodeTargetNext.SetValue(0.0);
-    nodeTargetNext.SetIndex(indexTargetNext);
-    targets->InsertElement(1, nodeTargetNext);
+    NextIndexVec.push_back(indexTargetNext);
   }
-  marching->SetTargetPoints(targets);
+  IndexTypeVec AllTargets( PrevIndexVec );
+  AllTargets.insert(AllTargets.end(), NextIndexVec.begin(), NextIndexVec.end());
+
+  IndexTypeSet UniqueTargets = GetNeighbors( AllTargets );
+  // Add neighbours of all the targets points to ensure that the
+  // gradients in the neighborhood of each potential destination point
+  // is smooth.
+  for (auto it = UniqueTargets.begin(); it != UniqueTargets.end(); it++)
+    {
+      NodeType nodeTarget;
+      nodeTarget.SetValue( 0.0 );
+      nodeTarget.SetIndex( *it );
+      targets->InsertElement( targets->Size(), nodeTarget );
+    }
+  marching->SetTargetPoints( targets );
 
   // Get the next Front source point and add as trial point
   typename NodeContainer::Pointer trial = NodeContainer::New();
@@ -116,7 +216,7 @@ SpeedFunctionToPathFilter<TInputImage, TOutputPath>::ComputeArrivalFunction()
     speed->TransformPhysicalPointToIndex(*it, indexTrial);
     nodeTrial.SetValue(0.0);
     nodeTrial.SetIndex(indexTrial);
-    trial->InsertElement(0, nodeTrial);
+    trial->InsertElement(trial->Size(), nodeTrial);
     CurrentIndexVec.push_back(indexTrial);
   }
   marching->SetTrialPoints(trial);
@@ -144,8 +244,18 @@ SpeedFunctionToPathFilter<TInputImage, TOutputPath>::ComputeArrivalFunction()
     m_Information[Superclass::m_CurrentOutput]->SetPrevious(PrevFront[MinPos]);
   }
 
+  if (m_AutoTerminate)
+    {
+      // Examine the neighbours of the trial points to determine the minimum neighbour
+      // difference, for the purpose of estimating a good termination value.
+      InputImagePixelType MD = GetTrialGradient( CurrentIndexVec );
+      std::cout << "Min diff for termination = " << MD << std::endl;
+      this->SetTerminationValue( MD * this->GetAutoTerminateFactor() );
+    }
   // Make the arrival function flat inside the seeds, otherwise the
   // optimizer will cross over them. This only matters if the seeds are extended
+  // Not sure that this is needed any more. Expect it was a side effect of only
+  // adding a single point to the trial set.
   if (CurrentIndexVec.size() > 1)
   {
     for (auto vi = CurrentIndexVec.begin(); vi != CurrentIndexVec.end(); vi++)

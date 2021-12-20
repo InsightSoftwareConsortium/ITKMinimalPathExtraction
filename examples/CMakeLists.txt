@@ -16,3 +16,6 @@ include(${ITK_USE_FILE})
 
 add_executable(MinimalPathExamples example.cxx)
 target_link_libraries(MinimalPathExamples ${ITK_LIBRARIES})
+
+add_executable(interptest interpolator.cxx)
+target_link_libraries(interptest ${ITK_LIBRARIES})

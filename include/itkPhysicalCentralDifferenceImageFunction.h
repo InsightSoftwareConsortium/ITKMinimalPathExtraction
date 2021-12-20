@@ -78,7 +78,13 @@ public:
   using PointType = typename Superclass::PointType;
 
   /** Linear interpolate function type alias. */
-  using InterpolateImageFunctionType = LinearInterpolateImageFunction<TInputImage, TCoordRep>;
+  /** Type of the Interpolator class */
+  using InterpolatorType = InterpolateImageFunction< InputImageType, TCoordRep >;
+  using DefaultInterpolatorType = LinearInterpolateImageFunction< InputImageType, TCoordRep >;
+
+  /** Get/set the Interpolator. */
+  itkSetObjectMacro( Interpolator, InterpolatorType );
+  itkGetConstObjectMacro( Interpolator, InterpolatorType );
 
   /** Set the input image.
    * \warning this method caches BufferedRegion information.
@@ -137,7 +143,8 @@ protected:
   PrintSelf(std::ostream & os, Indent indent) const override;
 
 private:
-  typename InterpolateImageFunctionType::Pointer m_Interpolator;
+  typename InterpolatorType::Pointer m_Interpolator;
+
 };
 
 } // end namespace itk

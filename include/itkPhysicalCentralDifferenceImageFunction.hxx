@@ -26,7 +26,7 @@ namespace itk
 template <class TInputImage, class TCoordRep>
 PhysicalCentralDifferenceImageFunction<TInputImage, TCoordRep>::PhysicalCentralDifferenceImageFunction()
 {
-  m_Interpolator = InterpolateImageFunctionType::New();
+  m_Interpolator = DefaultInterpolatorType::New();
 }
 
 
@@ -56,11 +56,9 @@ PhysicalCentralDifferenceImageFunction<TInputImage, TCoordRep>::Evaluate(const P
     PointType pointRight(point);
     pointRight[dim] += 1 * Superclass::m_Image->GetSpacing()[dim];
     TCoordRep valueRight = m_Interpolator->Evaluate(pointRight);
-
     // Compute derivative
     derivative[dim] = (valueRight - valueLeft) * (0.5 / Superclass::m_Image->GetSpacing()[dim]);
   }
-
   return (derivative);
 }
 
