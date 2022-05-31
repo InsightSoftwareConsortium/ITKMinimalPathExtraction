@@ -25,7 +25,7 @@ setup(
                      'functions.\n'
                      'Please refer to:\n'
                      'Mueller, D. "Fast Marching Minimal Path Extraction in ITK", '
-                     'Insight Journal, January-June 2008, http://hdl.handle.net/1926/1332.',
+                     'Insight Journal, January-June 2008, https://hdl.handle.net/1926/1332.',
     classifiers=[
         "License :: OSI Approved :: Apache Software License",
         "Programming Language :: Python",

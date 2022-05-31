@@ -7,17 +7,17 @@ ITKMinimalPathExtraction
 Overview
 --------
 
-This is an `ITK <http://itk.org>`_ module that implements a minimal path
+This is an `ITK <https://itk.org>`_ module that implements a minimal path
 extraction framework based on Fast Marching arrival functions.
 
 A more detailed description can be found in
-`the Insight Journal article <http://hdl.handle.net/1926/1332>`_::
+`the Insight Journal article <https://hdl.handle.net/1926/1332>`_::
 
   Mueller, D.
   "Fast Marching Minimal Path Extraction in ITK"
   The Insight Journal. January-June, 2008.
-  http://hdl.handle.net/1926/1332
-  http://www.insight-journal.org/browse/publication/213
+  https://hdl.handle.net/1926/1332
+  https://www.insight-journal.org/browse/publication/213
 
 
 Installation
