@@ -6,7 +6,7 @@
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
  *
- *         http://www.apache.org/licenses/LICENSE-2.0.txt
+ *         https://www.apache.org/licenses/LICENSE-2.0.txt
  *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
@@ -67,7 +67,6 @@ SpeedFunctionToPathFilter<TInputImage, TOutputPath>::ComputeArrivalFunction()
   marching->SetInput(speed);
   marching->SetGenerateGradientImage(false);
   marching->SetTargetOffset(2.0 * Superclass::m_TerminationValue);
-  marching->SetTargetReachedModeToAllTargets();
 
   // Add next and previous front sources as target points to
   // limit the front propagation to just the required zones
@@ -101,6 +100,8 @@ SpeedFunctionToPathFilter<TInputImage, TOutputPath>::ComputeArrivalFunction()
     targets->InsertElement(1, nodeTargetNext);
   }
   marching->SetTargetPoints(targets);
+
+  marching->SetTargetReachedModeToAllTargets();
 
   // Get the next Front source point and add as trial point
   typename NodeContainer::Pointer trial = NodeContainer::New();

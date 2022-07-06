@@ -136,7 +136,6 @@ jobs:
       max-parallel: 2
       matrix:
         python-version: [37, 38, 39, 310]
-
     steps:
     - uses: actions/checkout@v2
 
@@ -169,7 +168,6 @@ jobs:
     runs-on: macos-10.15
     strategy:
       max-parallel: 2
-
     steps:
     - uses: actions/checkout@v2
 
@@ -203,7 +201,6 @@ jobs:
       max-parallel: 2
       matrix:
         python-version-minor: [7, 8, 9, 10]
-
     steps:
     - name: Get specific version of CMake, Ninja
       uses: lukka/get-cmake@v3.18.3
