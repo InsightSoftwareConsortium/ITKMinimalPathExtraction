@@ -4,7 +4,7 @@ on: [push,pull_request]
 
 env:
   itk-git-tag: "master"
-  itk-wheel-tag: "4.3rc04"
+  itk-wheel-tag: "5.3rc04"
 
 jobs:
   build-test-cxx:
