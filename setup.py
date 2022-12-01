@@ -49,6 +49,6 @@ setup(
     keywords='ITK InsightToolkit',
     url=r'https://github.com/InsightSoftwareConsortium/ITKMinimalPathExtraction',
     install_requires=[
-        r'itk>=5.3rc4.post2'
+        r'itk>=v5.3.0'
     ]
     )
