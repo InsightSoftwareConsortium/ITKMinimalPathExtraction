@@ -200,7 +200,7 @@ jobs:
     strategy:
       max-parallel: 2
       matrix:
-        python-version-minor: [7, 8, 9, 10, 11]
+        python-version-minor: ["7", "8", "9", "10", "11"]
     steps:
     - name: Get specific version of CMake, Ninja
       uses: lukka/get-cmake@v3.22.2
@@ -226,6 +226,15 @@ jobs:
         7z x doxygen-1.8.11.windows.bin.zip -o/c/P/doxygen -aoa -r
         curl -L "https://data.kitware.com/api/v1/file/5bbf87ba8d777f06b91f27d6/download/grep-win.zip" -o "grep-win.zip"
         7z x grep-win.zip -o/c/P/grep -aoa -r
+
+        ITK_PYTHON_PACKAGE_TAG="0f5effc39afbf7cb1ac5ab20faa0996ddb12b34d"
+        echo "Updating ITKPythonPackage build scripts to ${ITK_PYTHON_PACKAGE_TAG}"
+        pushd /c/P/IPP
+        git remote add InsightSoftwareConsortium https://github.com/InsightSoftwareConsortium/ITKPythonPackage.git --tags
+        git fetch InsightSoftwareConsortium
+        git checkout ${ITK_PYTHON_PACKAGE_TAG}
+        git status
+        popd
 
     - name: 'Build 🐍 Python 📦 package'
       shell: cmd
