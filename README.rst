@@ -1,8 +1,7 @@
 ITKMinimalPathExtraction
 ========================
 
-.. image:: https://github.com/InsightSoftwareConsortium/ITKMinimalPathExtraction/workflows/Build,%20test,%20package/badge.svg
-
+.. image:: https://github.com/InsightSoftwareConsortium/ITKMinimalPathExtraction/actions/workflows/build-test-package.yml/badge.svg
 
 Overview
 --------
