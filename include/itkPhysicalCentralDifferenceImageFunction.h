@@ -52,12 +52,12 @@ public:
   /** Standard class type alias. */
   using Self = PhysicalCentralDifferenceImageFunction;
   using Superclass =
-    ImageFunction<TInputImage, CovariantVector<double, itkGetStaticConstMacro(ImageDimension)>, TCoordRep>;
+    ImageFunction<TInputImage, CovariantVector<double, Self::ImageDimension>, TCoordRep>;
   using Pointer = SmartPointer<Self>;
   using ConstPointer = SmartPointer<const Self>;
 
   /** Run-time type information (and related methods). */
-  itkTypeMacro(PhysicalCentralDifferenceImageFunction, ImageFunction);
+  itkOverrideGetNameOfClassMacro(PhysicalCentralDifferenceImageFunction);
 
   /** Method for creation through the object factory. */
   itkNewMacro(Self);
