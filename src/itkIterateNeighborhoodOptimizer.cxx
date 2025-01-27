@@ -198,10 +198,10 @@ IterateNeighborhoodOptimizer ::AdvanceOneStep()
               newPosition = neighborPosition;
             }
           } // end for k
-        }   // end spaceDimension == 3
-      }     // end for j
-    }       // end for i
-  }         // end m_FullyConnected
+        } // end spaceDimension == 3
+      } // end for j
+    } // end for i
+  } // end m_FullyConnected
 
   if (bestValue == m_CurrentValue)
   {
