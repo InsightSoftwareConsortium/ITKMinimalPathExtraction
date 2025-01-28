@@ -30,7 +30,7 @@ example_gradientdescent(int argc, char * argv[])
   using WriterType = itk::ImageFileWriter<OutputImageType>;
   using PathType = itk::PolyLineParametricPath<Dimension>;
   using PathFilterType = itk::SpeedFunctionToPathFilter<ImageType, PathType>;
-  using CoordRepType = PathFilterType::CostFunctionType::CoordRepType;
+  using CoordinateType = PathFilterType::CostFunctionType::CoordinateType;
   using PathIteratorType = itk::PathIterator<OutputImageType, PathType>;
 
   // Get filename arguments
@@ -46,7 +46,7 @@ example_gradientdescent(int argc, char * argv[])
   speed->DisconnectPipeline();
 
   // Create interpolator
-  using InterpolatorType = itk::LinearInterpolateImageFunction<ImageType, CoordRepType>;
+  using InterpolatorType = itk::LinearInterpolateImageFunction<ImageType, CoordinateType>;
   InterpolatorType::Pointer interp = InterpolatorType::New();
 
   // Create cost function
@@ -137,7 +137,7 @@ example_regularstepgradientdescent(int argc, char * argv[])
   using WriterType = itk::ImageFileWriter<OutputImageType>;
   using PathType = itk::PolyLineParametricPath<Dimension>;
   using PathFilterType = itk::SpeedFunctionToPathFilter<ImageType, PathType>;
-  using CoordRepType = PathFilterType::CostFunctionType::CoordRepType;
+  using CoordinateType = PathFilterType::CostFunctionType::CoordinateType;
   using PathIteratorType = itk::PathIterator<OutputImageType, PathType>;
 
   // Get filename arguments
@@ -153,7 +153,7 @@ example_regularstepgradientdescent(int argc, char * argv[])
   speed->DisconnectPipeline();
 
   // Create interpolator
-  using InterpolatorType = itk::LinearInterpolateImageFunction<ImageType, CoordRepType>;
+  using InterpolatorType = itk::LinearInterpolateImageFunction<ImageType, CoordinateType>;
   InterpolatorType::Pointer interp = InterpolatorType::New();
 
   // Create cost function
