@@ -4,7 +4,7 @@ build-backend = "scikit_build_core.build"
 
 [project]
 name = "itk-minimalpathextraction"
-version = "2.0.0"
+version = "2.0.1"
 description = "A minimal path extraction framework based on Fast Marching arrival functions."
 readme = "README.rst"
 license = {file = "LICENSE"}
@@ -34,7 +34,7 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Medical Science Apps.",
     "Topic :: Software Development :: Libraries",
 ]
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 dependencies = [
     "itk == 5.4.*",
 ]
